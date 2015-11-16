@@ -16,7 +16,7 @@ html
   body
     .navbar.navbar-material-light-blue-800.navbar-fixed-top.shadow-z-2.navbar-my
       .container
-        .navbar-header.active
+        .navbar-header
           button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-responsive-collapse')
             span.icon-bar
             span.icon-bar
@@ -50,7 +50,7 @@ html
           //- form.navbar-form.navbar-left
           //-   input.form-control.col-lg-8(type='text', placeholder='Search')
           ul.nav.navbar-nav.navbar-right
-            li.active
+            li
               a(href='/demo') WebSocket Demo
             li
               a(href='/test') Test
@@ -85,5 +85,6 @@ html
     script(src='../bower_components/jquery/dist/jquery.js')
     script(src='../bower_components/bootstrap-material-design/dist/js/material.min.js')
     script(src='../bower_components/bootstrap-material-design/dist/js/ripples.min.js')
+    script(src='/javascript/script.js')
     script(type='text/javascript').
       $.material.init();
