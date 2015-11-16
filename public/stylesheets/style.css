@@ -1,8 +1,40 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-color: white;
 }
 
-a {
-  color: #00B7FF;
+.navbar-my {
+	padding: 0 40px;
+}
+
+.container-main {
+	padding-top: 80px; 
+}
+
+.grid-head-main {
+	margin: 1% 0;
+	padding: 20px;
+}
+
+.grid-content-main {
+	margin: 1% 1%;
+	width: 31.333333%;
+}
+
+.btn-navbar {
+	margin-right: 20px;
+}
+
+.logo-navbar {
+	position: absolute;
+	padding-top: 11px;
+	padding-bottom: 10px;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	height: 100%;
+	background-color: white;
+}
+
+.resize-vertical {
+	resize: vertical;
 }

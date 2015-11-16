@@ -10,7 +10,17 @@ var client = require('./connectMosca');
 var Col = mongoose.model('pubsubDB', { type: String ,topic: String ,message: String });
 
 router.get('/', function(req, res, next) {
-  	res.render('index', { title: 'Express' });
+  // res.render('index', { title: 'Express' });
+  res.render('index');
+});
+
+/* GET demo page. */
+router.get('/demo', function(req, res){
+  res.render('demo');
+});
+
+router.get('/test', function(req, res){
+  res.render('test');
 });
 
 io.sockets.on('connection', function (socket) {

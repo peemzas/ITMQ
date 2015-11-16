@@ -1,11 +1,89 @@
 doctype html
 html
   head
-    title= title
+    title MQTT Broker
+
+    //Material Design
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css')
+    link(rel='stylesheet', href='../bower_components/bootstrap-material-design/dist/css/roboto.min.css')
+    link(rel='stylesheet', href='../bower_components/bootstrap-material-design/dist/css/material-fullpalette.min.css')
+    link(rel='stylesheet', href='../bower_components/bootstrap-material-design/dist/css/ripples.min.css')
+    link(rel='stylesheet', href='//fezvrasta.github.io/snackbarjs/dist/snackbar.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-    script(src='/javascripts/dist/jquery-1.11.3.js')
-    script(src='/javascripts/dist/jquery-1.11.3.min.js')
-    script(src='/javascripts/showData.js')
-    script(src='/javascripts/socket.io/socket.io.js')
+
+    //Mobile Support
+    meta(name='viewport', content='width=device-width, initial-scale=1')
   body
+    .navbar.navbar-material-light-blue-800.navbar-fixed-top.shadow-z-2.navbar-my
+      .container
+        .navbar-header.active
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-responsive-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/') MQTT IT@KMITL
+        .navbar-collapse.collapse.navbar-responsive-collapse
+          //- ul.nav.navbar-nav.navbar-left
+          //-   a(href='javascript:void(0)')
+          //-     img.logo(src='http://localhost:3000/images/logo1.png', alt='My_Logo').logo-navbar
+          //-   li.active
+          //-     a(href='javascript:void(0)') Active
+          //-   li
+          //-     a(href='javascript:void(0)') Link
+          //-   li.dropdown
+          //-     a.dropdown-toggle(href='bootstrap-elements.html', data-target='#', data-toggle='dropdown')
+          //-       | Dropdown 
+          //-       b.caret
+          //-     ul.dropdown-menu
+          //-       li
+          //-         a(href='javascript:void(0)') Action
+          //-       li
+          //-         a(href='javascript:void(0)') Another action
+          //-       li
+          //-         a(href='javascript:void(0)') Something else here
+          //-       li.divider
+          //-       li.dropdown-header Dropdown header
+          //-       li
+          //-         a(href='javascript:void(0)') Separated link
+          //-       li
+          //-         a(href='javascript:void(0)') One more separated link
+          //- form.navbar-form.navbar-left
+          //-   input.form-control.col-lg-8(type='text', placeholder='Search')
+          ul.nav.navbar-nav.navbar-right
+            li.active
+              a(href='/demo') WebSocket Demo
+            li
+              a(href='/test') Test
+            li
+              a(href='javascript:void(0)') Pricing
+            li
+              a(href='javascript:void(0)') Contact
+            //- li.btn.btn-primary.btn-raised.btn-material-blue-A200.btn-navbar
+            //-   | Register
+            li.btn.btn-primary.btn-raised.btn-material-green.btn-navbar
+              | Log in
+            //- li
+            //-   a(href='javascript:void(0)') Link
+            //- li.dropdown
+            //-   a.dropdown-toggle(href='bootstrap-elements.html', data-target='#', data-toggle='dropdown')
+            //-     | Dropdown 
+            //-     b.caret
+            //-   ul.dropdown-menu
+            //-     li
+            //-       a(href='javascript:void(0)') Action
+            //-     li
+            //-       a(href='javascript:void(0)') Another action
+            //-     li
+            //-       a(href='javascript:void(0)') Something else here
+            //-     li.divider
+            //-     li
+            //-       a(href='javascript:void(0)') Separated link
+
     block content
+
+    //Java Scripts
+    script(src='../bower_components/jquery/dist/jquery.js')
+    script(src='../bower_components/bootstrap-material-design/dist/js/material.min.js')
+    script(src='../bower_components/bootstrap-material-design/dist/js/ripples.min.js')
+    script(type='text/javascript').
+      $.material.init();

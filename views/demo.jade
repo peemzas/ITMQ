@@ -1,0 +1,141 @@
+extends layout
+
+block content
+  .container.container-main
+    .row
+      .col-xs-12
+        .panel
+          .panel-heading
+            h2 Connection
+          .panel-body
+            form
+              .col-md-5
+                label Host
+                input#urlInput.form-control(type='text', placeholder='URL', value='node.it.kmitl.ac.th')
+              .col-md-1
+                label Port
+                input#portInput.form-control(type='text', placeholder='URL', value='8883')
+              .col-md-4
+                label ClientID
+                input#clientIdInput.form-control(type='text')
+              .col-md-2
+                a#connectButton.btn.btn-primary.btn-raised.btn-material-blue(onclick='websocketclient.connect();') Connect
+              //- .col-md-2
+              //-   a#disconnectButton.btn.btn-primary.btn-raised.btn-material-blue(onclick='websocketclient.disconnect();') Disconnect
+              .col-md-4
+                label Username
+                input#userInput.form-control(type='text')
+              .col-md-3
+                label Password
+                input#pwInput.form-control(type='password')
+              .col-md-2
+                label Keep Alive
+                input#keepAliveInput.form-control(type='text', value='60')
+              .col-md-1
+                label SSL
+                .checkbox
+                  label
+                    input#sslInput(type='checkbox')
+              .col-md-2
+                label Clean Session
+                .checkbox
+                  label
+                    input#cleanSessionInput(type='checkbox', checked='checked', disabled='')
+              .col-md-8
+                label Last-Will Topic
+                input#lwTopicInput.form-control(type='text')
+              .col-md-2
+                label Last-Will QoS
+                select#lwQosInput.form-control.hidden-field(data-id='1447572063439-ftoeF')
+                  option 0
+                  option 1
+                  option 2
+              .col-md-2
+                label Last-Will Retain
+                .checkbox
+                  label
+                    input#LWRInput(type='checkbox')
+              .col-md-12
+                label Last-Will Messsage
+                textarea#LWMInput.form-control.resize-vertical
+    .row
+      .col-md-8
+        .panel
+          .panel-heading
+            h2 Publish
+          .panel-body
+            form
+              .col-md-6
+                label Topic
+                input#publishTopic.form-control(type='text', value='testtopic/1')
+              .col-md-2
+                label(for='publishQoSInput') QoS
+                select#publishQoSInput.form-control.hidden-field(data-id='1447611272137-1ZWOc')
+                  option 0
+                  option 1
+                  option 2
+              .col-md-2
+                label Retain
+                .checkbox
+                  label
+                    input#publishRetain(type='checkbox')
+              .col-md-2
+                a#publishButton.btn.btn-primary.btn-raised.btn-material-blue(onclick="websocketclient.publish($('#publishTopic').val(),$('#publishPayload').val(),parseInt($('#publishQoSInput').val(),10),$('#publishRetain').is(':checked'))") Publish
+              .col-md-12
+                label Message
+                textarea#publishPayload.form-control.resize-vertical
+        .panel
+          .panel-heading
+            h2 Messages
+          .panel-body
+            .row
+              .col-md-12
+                .row
+                  ul#messEdit.disc
+      .col-md-4
+        .panel
+          .panel-heading
+            h2 Subscribtions
+          .panel-body
+            a#addSubButton.btn.btn-primary.btn-raised.btn-material-blue(style='width: 100%;', href='#data') Add New Topic Subscription
+            //- a#addSubButton.small.button.addSubButton(href='#data') Add New Topic Subscription
+            ul#innerEdit.disc
+
+            div(style='display:none')
+              #data(style='display: none;')
+                form.custom
+                  .row.col-md-12
+                    .col.md-4
+                      label Color
+                      .minicolors.minicolors-theme-default.minicolors-position-bottom.minicolors-position-left
+                        input#colorChooser.color.minicolors-input(type='hidden', value='', size='7')
+                        span.minicolors-swatch
+                          span.minicolors-swatch-color
+                        .minicolors-panel.minicolors-slider-hue
+                          .minicolors-slider
+                            .minicolors-picker(style='top: 0px;')
+                          .minicolors-opacity-slider
+                            .minicolors-picker
+                          .minicolors-grid(style='background-color: rgb(255, 0, 0);')
+                            .minicolors-grid-inner
+                            .minicolors-picker(style='top: 150px; left: 0px;')
+                              div
+                    .col-md-5
+                      label(for='QoSInput') QoS
+                      select#QoSInput.small.hidden-field(data-id='1447611272138-3AQWn')
+                        option 2
+                        option 1
+                        option 0
+                      .custom.dropdown.small(data-id='1447611272138-3AQWn')
+                        a.current(href='#') 2
+                        a.selector(href='#')
+                        ul
+                          li.selected 2
+                          li 1
+                          li 0
+                    .col-md-3
+                      a#subscribeButton.small.button(onclick="if(websocketclient.subscribe($('#subscribeTopic').val(),parseInt($('#QoSInput').val()),$('#colorChooser').val().substring(1))){$.fancybox.close();}") Subscribe
+                  .row.col.md-12
+                    .col-md-12
+                      label Topic
+                      input#subscribeTopic(type='text', value='testtopic/#')

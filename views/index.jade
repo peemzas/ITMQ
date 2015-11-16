@@ -1,34 +1,25 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  div
-    p Topic
-    input#topic(type='text', name='topic')
-    br
-    br
-    button#subscribe(type='submit') subscribe
-    br
-    p#subscribed
-  div
-    p Topic
-    input#sub(type='text', name='sub')
-    br
-    p Publish
-    input#pub(type='text', name='pub')
-    br
-    br
-    button#publish(type='submit') publish
-    br
-    p Publish : #{pub}
-    br
-  div     
-    button#on(type='submit' , value='On' , name='bswitch') On
-    br
-    button#off(type='submit' , value='Off' , name='bswitch') Off
-    br
-    input#led(type='checkbox', checked='checked')
-  div
-    p Message
-    p#data
+  .container.container-main
+    .col-xs-12
+      .row.jumbotron.shadow-z-2
+        h1 Welcome to MQTT Server
+        p
+          | เว็บไซต์ให้บริการ MQTT Broker เพื่อให้บริการการทำ Internet of Things
+        p
+          a.btn.btn-primary.btn-raised.btn-material-blue
+            | Read more >>
+      .row
+        .col-xs-12.col-md-4.shadow-z-1.grid-content-main
+          h2 What is IOT?
+          .btn.btn-primary.btn-raised.btn-material-blue
+            | Details >>
+        .col-xs-12.col-md-4.shadow-z-1.grid-content-main
+          h2 Pricing & Plan
+          .btn.btn-primary.btn-raised.btn-material-blue
+            | Details >>
+        .col-xs-12.col-md-4.shadow-z-1.grid-content-main
+          h2 Others
+          .btn.btn-primary.btn-raised.btn-material-blue
+            | Details >>
