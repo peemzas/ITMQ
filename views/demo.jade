@@ -60,85 +60,48 @@ block content
         //-         textarea#LWMInput.form-control.resize-vertical
     .row
       .col-md-8
-        .panel
+        .panel.shadow-z-2
           .panel-heading
-            h2 Publish
+            h2 Publish to (Host: node.it.kmitl.ac.th Port: 1883)
           .panel-body
             form
-              .col-md-6
+              //- .col-md-6
+              .col-md-10
                 label Topic
-                input#publishTopic.form-control(type='text', value='testtopic/1')
+                input#publishTopic.form-control(type='text', value='itbroker/1')
               .col-md-2
                 label(for='publishQoSInput') QoS
                 select#publishQoSInput.form-control.hidden-field(data-id='1447611272137-1ZWOc')
                   option 0
                   option 1
                   option 2
-              .col-md-2
-                label Retain
-                .checkbox
-                  label
-                    input#publishRetain(type='checkbox')
-              .col-md-2
-                a#publishButton.btn.btn-primary.btn-raised.btn-material-blue(onclick="websocketclient.publish($('#publishTopic').val(),$('#publishPayload').val(),parseInt($('#publishQoSInput').val(),10),$('#publishRetain').is(':checked'))") Publish
+              //- .col-md-2
+              //-   label Retain
+              //-   .checkbox
+              //-     label
+              //-       input#publishRetain(type='checkbox')
               .col-md-12
                 label Message
                 textarea#publishPayload.form-control.resize-vertical
-        .panel
+              .col-md-12.text-center(style='padding-top: 20px')
+                a#publishButton.btn.btn-primary.btn-raised.btn-material-blue Publish
+                  //- (onclick="websocketclient.publish($('#publishTopic').val(),$('#publishPayload').val(),parseInt($('#publishQoSInput').val(),10),$('#publishRetain').is(':checked'))") 
+        .panel.shadow-z-2
           .panel-heading
             h2 Messages
           .panel-body
             .row
-              .col-md-12
-                .row
-                  ul
-                    label#messEdit.disc
+              ul#messEdit.col-md-12
       .col-md-4
-        .panel
+        .panel.shadow-z-2
           .panel-heading
             h2 Subscribtions
           .panel-body
-            label Topic
-            input#subscribeTopic.form-control(type='text')
-            a#addSubButton.btn.btn-primary.btn-raised.btn-material-blue(style='width: 100%;') Add New Topic Subscription
-            //- a#addSubButton.small.button.addSubButton(href='#data') Add New Topic Subscription
-            ul#innerEdit.disc
-
-            div(style='display:none')
-              #data(style='display: none;')
-                form.custom
-                  .row.col-md-12
-                    .col.md-4
-                      label Color
-                      .minicolors.minicolors-theme-default.minicolors-position-bottom.minicolors-position-left
-                        input#colorChooser.color.minicolors-input(type='hidden', value='', size='7')
-                        span.minicolors-swatch
-                          span.minicolors-swatch-color
-                        .minicolors-panel.minicolors-slider-hue
-                          .minicolors-slider
-                            .minicolors-picker(style='top: 0px;')
-                          .minicolors-opacity-slider
-                            .minicolors-picker
-                          .minicolors-grid(style='background-color: rgb(255, 0, 0);')
-                            .minicolors-grid-inner
-                            .minicolors-picker(style='top: 150px; left: 0px;')
-                              div
-                    .col-md-5
-                      label(for='QoSInput') QoS
-                      select#QoSInput.small.hidden-field(data-id='1447611272138-3AQWn')
-                        option 2
-                        option 1
-                        option 0
-                      .custom.dropdown.small(data-id='1447611272138-3AQWn')
-                        a.current(href='#') 2
-                        a.selector(href='#')
-                        ul
-                          li.selected 2
-                          li 1
-                          li 0
-                    .col-md-3
-                      a#subscribeButton.small.button(onclick="if(websocketclient.subscribe($('#subscribeTopic').val(),parseInt($('#QoSInput').val()),$('#colorChooser').val().substring(1))){$.fancybox.close();}") Subscribe
-                  .row.col.md-12
-                    .col-md-12
-                      label Topic
-                      input#subscribeTopic(type='text', value='testtopic/#')
+            .col-md-12
+              label Topic
+              input#subscribeTopic.form-control(type='text', value='itbroker/1')
+            .col-md-12.text-center(style='padding: 20px 0')
+              a#addSubButton.btn.btn-primary.btn-raised.btn-material-blue Add New Topic Subscription
+              //- a#addSubButton.small.button.addSubButton(href='#data') Add New Topic Subscription
+            .col-md-12
+              ul#subTopicEdit.col-md-12

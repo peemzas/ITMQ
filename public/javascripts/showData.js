@@ -11,6 +11,15 @@ $(document).ready(function(){
             	// $('#lblResponse').html(ret.msg);
             	console.log(data);
             	$("#subscribed").append("Subscribe: " + data.topic +"<br>");
+                
+                $("#subTopicEdit").prepend('<div class="panel">'+
+                                    '<div class="panel-body">'+
+                                        '<label class="disc">'+
+                                            'Subscribe to ' + '<br>'+ 
+                                            'Topic : ' + data.topic + '<br>'+ 
+                                        '</label>'+
+                                    '</div>'+
+                                '</div>');
         	}
         });
 	});
@@ -72,15 +81,36 @@ $(document).ready(function(){
         if (msg.payload == "Off") {
         	if ($('#led').is(':checked')) {
           		$('#led').prop('checked',false).change();
-          		$("#messEdit").append("Topic: " + msg.topic + '   ' + 'Message: ' + msg.payload + "<br>");
+          		$("#messEdit").prepend('<div class="panel">'+
+                                    '<div class="panel-body">'+
+                                        '<label class="disc">'+
+                                            'from topic : ' + msg.topic + '<br>'+
+                                            'Message : ' + msg.payload + '<br>'+
+                                        '</label>'+
+                                    '</div>'+
+                                '</div>');
         	}
      	}else if (msg.payload == "On") {
         		if (!$('#led').is(':checked')) {
           			$('#led').prop('checked',true).change();
-          			$("#messEdit").append("Topic: " + msg.topic + '   ' + 'Message: ' + msg.payload + "<br>");
+          			$("#messEdit").prepend('<div class="panel">'+
+                                    '<div class="panel-body">'+
+                                        '<label class="disc">'+
+                                            'from topic : ' + msg.topic + '<br>'+
+                                            'Message : ' + msg.payload + '<br>'+
+                                        '</label>'+
+                                    '</div>'+
+                                '</div>');
         		}
       	}else{
-      		$("#messEdit").append("Topic: " + msg.topic + '   ' + 'Message: ' + msg.payload + "<br>");
+      		$("#messEdit").prepend('<div class="panel">'+
+                                    '<div class="panel-body">'+
+                                        '<label class="disc">'+
+                                            'from topic : ' + msg.topic + '<br>'+ 
+                                            'Message : ' + msg.payload + '<br>'+
+                                        '</label>'+
+                                    '</div>'+
+                                '</div>');
       	}
       });
     });
