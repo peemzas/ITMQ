@@ -4,60 +4,60 @@ block content
   .container.container-main
     .row
       .col-xs-12
-        .panel
-          .panel-heading
-            h2 Connection
-          .panel-body
-            form
-              .col-md-5
-                label Host
-                input#urlInput.form-control(type='text', placeholder='URL', value='node.it.kmitl.ac.th')
-              .col-md-1
-                label Port
-                input#portInput.form-control(type='text', placeholder='URL', value='8883')
-              .col-md-4
-                label ClientID
-                input#clientIdInput.form-control(type='text')
-              .col-md-2
-                a#connectButton.btn.btn-primary.btn-raised.btn-material-blue(onclick='websocketclient.connect();') Connect
-              //- .col-md-2
-              //-   a#disconnectButton.btn.btn-primary.btn-raised.btn-material-blue(onclick='websocketclient.disconnect();') Disconnect
-              .col-md-4
-                label Username
-                input#userInput.form-control(type='text')
-              .col-md-3
-                label Password
-                input#pwInput.form-control(type='password')
-              .col-md-2
-                label Keep Alive
-                input#keepAliveInput.form-control(type='text', value='60')
-              .col-md-1
-                label SSL
-                .checkbox
-                  label
-                    input#sslInput(type='checkbox')
-              .col-md-2
-                label Clean Session
-                .checkbox
-                  label
-                    input#cleanSessionInput(type='checkbox', checked='checked', disabled='')
-              .col-md-8
-                label Last-Will Topic
-                input#lwTopicInput.form-control(type='text')
-              .col-md-2
-                label Last-Will QoS
-                select#lwQosInput.form-control.hidden-field(data-id='1447572063439-ftoeF')
-                  option 0
-                  option 1
-                  option 2
-              .col-md-2
-                label Last-Will Retain
-                .checkbox
-                  label
-                    input#LWRInput(type='checkbox')
-              .col-md-12
-                label Last-Will Messsage
-                textarea#LWMInput.form-control.resize-vertical
+        //- .panel
+        //-   .panel-heading
+        //-     h2 Connection
+        //-   .panel-body
+        //-     form
+        //-       .col-md-5
+        //-         label Host
+        //-         input#urlInput.form-control(type='text', placeholder='URL', value='node.it.kmitl.ac.th')
+        //-       .col-md-1
+        //-         label Port
+        //-         input#portInput.form-control(type='text', placeholder='URL', value='8883')
+        //-       .col-md-4
+        //-         label ClientID
+        //-         input#clientIdInput.form-control(type='text')
+        //-       .col-md-2
+        //-         a#connectButton.btn.btn-primary.btn-raised.btn-material-blue(onclick='websocketclient.connect();') Connect
+        //-       //- .col-md-2
+        //-       //-   a#disconnectButton.btn.btn-primary.btn-raised.btn-material-blue(onclick='websocketclient.disconnect();') Disconnect
+        //-       .col-md-4
+        //-         label Username
+        //-         input#userInput.form-control(type='text')
+        //-       .col-md-3
+        //-         label Password
+        //-         input#pwInput.form-control(type='password')
+        //-       .col-md-2
+        //-         label Keep Alive
+        //-         input#keepAliveInput.form-control(type='text', value='60')
+        //-       .col-md-1
+        //-         label SSL
+        //-         .checkbox
+        //-           label
+        //-             input#sslInput(type='checkbox')
+        //-       .col-md-2
+        //-         label Clean Session
+        //-         .checkbox
+        //-           label
+        //-             input#cleanSessionInput(type='checkbox', checked='checked', disabled='')
+        //-       .col-md-8
+        //-         label Last-Will Topic
+        //-         input#lwTopicInput.form-control(type='text')
+        //-       .col-md-2
+        //-         label Last-Will QoS
+        //-         select#lwQosInput.form-control.hidden-field(data-id='1447572063439-ftoeF')
+        //-           option 0
+        //-           option 1
+        //-           option 2
+        //-       .col-md-2
+        //-         label Last-Will Retain
+        //-         .checkbox
+        //-           label
+        //-             input#LWRInput(type='checkbox')
+        //-       .col-md-12
+        //-         label Last-Will Messsage
+        //-         textarea#LWMInput.form-control.resize-vertical
     .row
       .col-md-8
         .panel
@@ -91,13 +91,16 @@ block content
             .row
               .col-md-12
                 .row
-                  ul#messEdit.disc
+                  ul
+                    label#messEdit.disc
       .col-md-4
         .panel
           .panel-heading
             h2 Subscribtions
           .panel-body
-            a#addSubButton.btn.btn-primary.btn-raised.btn-material-blue(style='width: 100%;', href='#data') Add New Topic Subscription
+            label Topic
+            input#subscribeTopic.form-control(type='text')
+            a#addSubButton.btn.btn-primary.btn-raised.btn-material-blue(style='width: 100%;') Add New Topic Subscription
             //- a#addSubButton.small.button.addSubButton(href='#data') Add New Topic Subscription
             ul#innerEdit.disc
 
