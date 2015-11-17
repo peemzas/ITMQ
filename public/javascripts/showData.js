@@ -1,9 +1,9 @@
 $(document).ready(function(){
-	$("#subscribe").on("click",function(){
+	$("#addSubButton").on("click",function(){
     	$.ajax({
 			type: 'POST',
 			data: {
-				topic: $("#topic").val()
+				topic: $("#subscribeTopic").val()
 			},
             url: 'http://localhost:3000/sub',
             success: function (data) {
@@ -15,12 +15,12 @@ $(document).ready(function(){
         });
 	});
 
-	$("#publish").on("click",function(){
+	$("#publishButton").on("click",function(){
     	$.ajax({
 			type: 'POST',
 			data: {
-				topic: $("#sub").val(),
-				message: $("#pub").val()
+				topic: $("#publishTopic").val(),
+				message: $("#publishPayload").val()
 			},
             url: 'http://localhost:3000/pub',
             success: function (data) {
@@ -72,15 +72,15 @@ $(document).ready(function(){
         if (msg.payload == "Off") {
         	if ($('#led').is(':checked')) {
           		$('#led').prop('checked',false).change();
-          		$("#data").append("Topic: " + msg.topic + '   ' + 'Message: ' + msg.payload + "<br>");
+          		$("#messEdit").append("Topic: " + msg.topic + '   ' + 'Message: ' + msg.payload + "<br>");
         	}
      	}else if (msg.payload == "On") {
         		if (!$('#led').is(':checked')) {
           			$('#led').prop('checked',true).change();
-          			$("#data").append("Topic: " + msg.topic + '   ' + 'Message: ' + msg.payload + "<br>");
+          			$("#messEdit").append("Topic: " + msg.topic + '   ' + 'Message: ' + msg.payload + "<br>");
         		}
       	}else{
-      		$("#data").append("Topic: " + msg.topic + '   ' + 'Message: ' + msg.payload + "<br>");
+      		$("#messEdit").append("Topic: " + msg.topic + '   ' + 'Message: ' + msg.payload + "<br>");
       	}
       });
     });
