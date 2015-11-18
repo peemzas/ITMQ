@@ -19,9 +19,9 @@ router.get('/demo', function(req, res){
   res.render('demo');
 });
 
-router.get('/test', function(req, res){
-  res.render('test');
-});
+// router.get('/test', function(req, res){
+//   res.render('test');
+// });
 
 io.sockets.on('connection', function (socket) {
     // socket connection indicates what mqtt topic to subscribe to in data.topic

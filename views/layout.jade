@@ -23,13 +23,17 @@ html
             span.icon-bar
           a.navbar-brand(href='/') MQTT IT@KMITL
         .navbar-collapse.collapse.navbar-responsive-collapse
-          //- ul.nav.navbar-nav.navbar-left
-          //-   a(href='javascript:void(0)')
-          //-     img.logo(src='http://localhost:3000/images/logo1.png', alt='My_Logo').logo-navbar
-          //-   li.active
-          //-     a(href='javascript:void(0)') Active
-          //-   li
-          //-     a(href='javascript:void(0)') Link
+          ul.nav.navbar-nav.navbar-left
+            //- a(href='javascript:void(0)')
+            //-   img.logo(src='http://localhost:3000/images/logo1.png', alt='My_Logo').logo-navbar
+            li
+              a(href='/') Home
+            li
+              a(href='javascript:void(0)') About
+            li
+              a(href='javascript:void(0)') Plan & Pricing
+            li
+              a(href='javascript:void(0)') Contact
           //-   li.dropdown
           //-     a.dropdown-toggle(href='bootstrap-elements.html', data-target='#', data-toggle='dropdown')
           //-       | Dropdown 
@@ -52,12 +56,10 @@ html
           ul.nav.navbar-nav.navbar-right
             li
               a(href='/demo') WebSocket Demo
-            li
-              a(href='/test') Test
-            li
-              a(href='javascript:void(0)') Pricing
-            li
-              a(href='javascript:void(0)') Contact
+            //- li
+            //-   a(href='/test') Test
+            //- li
+            //-   a(href='javascript:void(0)') Contact
             //- li.btn.btn-primary.btn-raised.btn-material-blue-A200.btn-navbar
             //-   | Register
             li.btn.btn-primary.btn-raised.btn-material-green.btn-navbar
