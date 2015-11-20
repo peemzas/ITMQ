@@ -3,6 +3,8 @@ var mqtt    = require('mqtt');
 var options = {
 	host: 'node.it.kmitl.ac.th',
 	port: '1883',
+    username: 'demo',
+    password: 'demo',
     keepalive: 10,
     protocolId: 'MQTT',
     protocolVersion: 4,

@@ -4,6 +4,9 @@ html
     title MQTT Broker
 
     //Material Design
+    script(src='../bower_components/jquery/dist/jquery.js')
+    script(src='/javascripts/paho/mqttws31.js')
+
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css')
     link(rel='stylesheet', href='../bower_components/bootstrap-material-design/dist/css/roboto.min.css')
     link(rel='stylesheet', href='../bower_components/bootstrap-material-design/dist/css/material-fullpalette.min.css')
@@ -55,15 +58,15 @@ html
           //-   input.form-control.col-lg-8(type='text', placeholder='Search')
           ul.nav.navbar-nav.navbar-right
             li
-              a(href='/demo') WebSocket Demo
+              a#webdemo(href='/demo') WebSocket Demo
             //- li
             //-   a(href='/test') Test
             //- li
             //-   a(href='javascript:void(0)') Contact
             //- li.btn.btn-primary.btn-raised.btn-material-blue-A200.btn-navbar
             //-   | Register
-            li.btn.btn-primary.btn-raised.btn-material-green.btn-navbar
-              | Log in
+            li
+              a.btn-raised.btn-material-green.btn-navbar(href='/login') Log in
             //- li
             //-   a(href='javascript:void(0)') Link
             //- li.dropdown
@@ -84,11 +87,11 @@ html
     block content
 
     //Java Scripts
-    script(src='../bower_components/jquery/dist/jquery.js')
     script(src='../bower_components/bootstrap-material-design/dist/js/material.min.js')
     script(src='../bower_components/bootstrap-material-design/dist/js/ripples.min.js')
     script(src='/javascripts/script.js')
-    script(src='/javascripts/showData.js')
+    //- script(src='/javascripts/showDemo.js')
+    script(src='/javascripts/manageUsers.js')
     script(src='/javascripts/socket.io/socket.io.js')
-    script(type='text/javascript').
+    script(type='text/javascript')
       $.material.init();

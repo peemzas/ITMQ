@@ -67,14 +67,15 @@ block content
             form
               //- .col-md-6
               .col-md-10
-                label Topic
-                input#publishTopic.form-control(type='text', value='itbroker/1')
+                label Topic   (Example: demo/...)
+                input#publishTopic.form-control(type='text', value='demo/topic')
               .col-md-2
                 label(for='publishQoSInput') QoS
-                select#publishQoSInput.form-control.hidden-field(data-id='1447611272137-1ZWOc')
-                  option 0
-                  option 1
-                  option 2
+                select#publishQoSInput.form-control.hidden-field()
+                  option(value=0) 0
+                  option(value=1) 1
+                  option(value=2) 2
+                br
               //- .col-md-2
               //-   label Retain
               //-   .checkbox
@@ -98,10 +99,95 @@ block content
             h2 Subscribtions
           .panel-body
             .col-md-12
-              label Topic
-              input#subscribeTopic.form-control(type='text', value='itbroker/1')
+              label Topic  (Example: demo/...)
+              input#subscribeTopic.form-control(type='text', value='demo/topic')
+              br
+             .col-md-4
+              label QoS  
+              select#subscribeQoSInput.form-control.hidden-field()
+                  option(value=0) 0
+                  option(value=1) 1
+                  option(value=2) 2
             .col-md-12.text-center(style='padding: 20px 0')
               a#addSubButton.btn.btn-primary.btn-raised.btn-material-blue Add New Topic Subscription
               //- a#addSubButton.small.button.addSubButton(href='#data') Add New Topic Subscription
             .col-md-12
               ul#subTopicEdit.col-md-12
+  script(type='text/javascript').
+    $(document).ready(function () {
+       client = new Paho.MQTT.Client("node.it.kmitl.ac.th", 8883, "web_" + parseInt(Math.random() * 1000, 10));
+
+       client.onConnectionLost = onConnectionLost;
+       client.onMessageArrived = onMessageArrived;
+       var options = {
+          userName: 'demo',
+          password: 'demo',
+          useSSL: false,
+          onSuccess: onConnect,
+          onFailure: doFail
+       }
+
+       client.connect(options);
+
+       function onConnect(){
+          console.log("onConnected");
+          $('#publishButton').on('click', function(){
+            var publishPayload = $('#publishPayload').val();
+            var publishTopic = $('#publishTopic').val();
+            var publishQoSInput = parseInt($("#publishQoSInput :selected").val());
+
+            message = new Paho.MQTT.Message(publishPayload);
+            message.destinationName = publishTopic;
+            message.qos = publishQoSInput;
+            client.send(message);
+            console.log(publishQoSInput);
+          });
+
+          $('#addSubButton').on('click', function(){
+            var subscribeTopic = $('#subscribeTopic').val();
+            var subscribeQoSInput = parseInt($("#subscribeQoSInput :selected").val());
+
+            client.subscribe(subscribeTopic,{qos: subscribeQoSInput});
+
+            $("#subTopicEdit").prepend('<div class="panel">'+
+                                    '<div class="panel-body">'+
+                                        '<label class="disc">'+
+                                            'Subscribe to ' + '<br>'+ 
+                                            'Topic : ' + $('#subscribeTopic').val() + '<br>'+ 
+                                        '</label>'+
+                                    '</div>'+
+                                '</div>');
+            console.log(subscribeQoSInput);
+          });
+       }
+
+       function doFail(e){
+          console.log(e);
+        }
+
+        // called when the client loses its connection
+        function onConnectionLost(responseObject) {
+          if (responseObject.errorCode !== 0) {
+            console.log("onConnectionLost:"+responseObject.errorMessage);
+            alert("Connection Lost, Please Refresh");
+            location.reload();
+          }
+        }
+
+        // called when a message arrives
+        function onMessageArrived(message) {
+          $("#messEdit").prepend('<div class="panel">'+
+                                    '<div class="panel-body">'+
+                                        '<label class="disc">'+
+                                            'from topic : ' + message.destinationName + '<br>'+
+                                            'Message : ' + message.payloadString + '<br>'+
+                                            'QoS : ' + message.qos + '<br>'+
+                                        '</label>'+
+                                    '</div>'+
+                                '</div>');
+          console.log("onMessageArrived:"+message.destinationName);
+          console.log("onMessageArrived:"+message.payloadString);
+          console.log("onMessageArrived:"+message.qos);
+        }
+
+    });

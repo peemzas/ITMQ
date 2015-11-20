@@ -5,7 +5,7 @@ $(document).ready(function(){
 			data: {
 				topic: $("#subscribeTopic").val()
 			},
-            url: 'http://localhost:3000/sub',
+            url: 'http://localhost:3000/demo/sub',
             success: function (data) {
             	// var ret = jQuery.parseJSON(data);
             	// $('#lblResponse').html(ret.msg);
@@ -31,7 +31,7 @@ $(document).ready(function(){
 				topic: $("#publishTopic").val(),
 				message: $("#publishPayload").val()
 			},
-            url: 'http://localhost:3000/pub',
+            url: 'http://localhost:3000/demo/pub',
             success: function (data) {
             	// var ret = jQuery.parseJSON(data);
             	// $('#lblResponse').html(ret.msg);
@@ -47,7 +47,7 @@ $(document).ready(function(){
 			data: {
 				bswitch: $("#on").val()
 			},
-            url: 'http://localhost:3000/switch',
+            url: 'http://localhost:3000/demo/switch',
             success: function (data) {
             	// var ret = jQuery.parseJSON(data);
             	// $('#lblResponse').html(ret.msg);
@@ -63,7 +63,7 @@ $(document).ready(function(){
 			data: {
 				bswitch: $("#off").val()
 			},
-            url: 'http://localhost:3000/switch',
+            url: 'http://localhost:3000/demo/switch',
             success: function (data) {
             	// var ret = jQuery.parseJSON(data);
             	// $('#lblResponse').html(ret.msg);
@@ -75,45 +75,45 @@ $(document).ready(function(){
 
 	var socket = io.connect('http://localhost:5000');
 
-	socket.on('connect', function () {
-      socket.on('mqtt', function (msg) {
-        console.log(msg.topic+' '+msg.payload);
-        if (msg.payload == "Off") {
-        	if ($('#led').is(':checked')) {
-          		$('#led').prop('checked',false).change();
-          		$("#messEdit").prepend('<div class="panel">'+
-                                    '<div class="panel-body">'+
-                                        '<label class="disc">'+
-                                            'from topic : ' + msg.topic + '<br>'+
-                                            'Message : ' + msg.payload + '<br>'+
-                                        '</label>'+
-                                    '</div>'+
-                                '</div>');
-        	}
-     	}else if (msg.payload == "On") {
-        		if (!$('#led').is(':checked')) {
-          			$('#led').prop('checked',true).change();
-          			$("#messEdit").prepend('<div class="panel">'+
-                                    '<div class="panel-body">'+
-                                        '<label class="disc">'+
-                                            'from topic : ' + msg.topic + '<br>'+
-                                            'Message : ' + msg.payload + '<br>'+
-                                        '</label>'+
-                                    '</div>'+
-                                '</div>');
-        		}
-      	}else{
-      		$("#messEdit").prepend('<div class="panel">'+
-                                    '<div class="panel-body">'+
-                                        '<label class="disc">'+
-                                            'from topic : ' + msg.topic + '<br>'+ 
-                                            'Message : ' + msg.payload + '<br>'+
-                                        '</label>'+
-                                    '</div>'+
-                                '</div>');
-      	}
-      });
-    });
+	// socket.on('connect', function () {
+ //      socket.on('mqtt', function (msg) {
+ //        console.log(msg.topic+' '+msg.payload);
+ //        if (msg.payload == "Off") {
+ //        	if ($('#led').is(':checked')) {
+ //          		$('#led').prop('checked',false).change();
+ //          		$("#messEdit").prepend('<div class="panel">'+
+ //                                    '<div class="panel-body">'+
+ //                                        '<label class="disc">'+
+ //                                            'from topic : ' + msg.topic + '<br>'+
+ //                                            'Message : ' + msg.payload + '<br>'+
+ //                                        '</label>'+
+ //                                    '</div>'+
+ //                                '</div>');
+ //        	}
+ //     	}else if (msg.payload == "On") {
+ //        		if (!$('#led').is(':checked')) {
+ //          			$('#led').prop('checked',true).change();
+ //          			$("#messEdit").prepend('<div class="panel">'+
+ //                                    '<div class="panel-body">'+
+ //                                        '<label class="disc">'+
+ //                                            'from topic : ' + msg.topic + '<br>'+
+ //                                            'Message : ' + msg.payload + '<br>'+
+ //                                        '</label>'+
+ //                                    '</div>'+
+ //                                '</div>');
+ //        		}
+ //      	}else{
+ //      		$("#messEdit").prepend('<div class="panel">'+
+ //                                    '<div class="panel-body">'+
+ //                                        '<label class="disc">'+
+ //                                            'from topic : ' + msg.topic + '<br>'+ 
+ //                                            'Message : ' + msg.payload + '<br>'+
+ //                                        '</label>'+
+ //                                    '</div>'+
+ //                                '</div>');
+ //      	}
+ //      });
+ //    });
 
     // socket.emit('subscribe',{topic:$("#topic").val()});
 });

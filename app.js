@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -8,9 +9,10 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://mqttserver:qwerty@proton.it.kmitl.ac.th:27017/mqttserver');
 
 var routes = require('./routes/index');
+var demo = require('./routes/demo');
+var login = require('./routes/login');
 var users = require('./routes/users');
 // var addData = require('./routes/addData');
-// var sub = require('./routes/sub');
 var showData = require('./routes/showData');
 // var connect = require('./connectMosca');
 
@@ -27,11 +29,19 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(session({
+  secret: 'mqttitbroker',
+  resave: false,
+  saveUninitialized: false
+}));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 app.use('/', routes);
-// app.use('/', sub);
+app.use('/demo', demo);
+app.use('/login', login);
 app.use('/users', users);
 // app.use('/addData',addData);
 app.use('/showData', showData);

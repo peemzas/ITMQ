@@ -8,4 +8,9 @@ $(document).ready(function () {
       $this.addClass('active');
     }
   });
+
+  // $('#webdemo').on("click", function(){
+  // 	alert("hello");
+  // });
+
 });
