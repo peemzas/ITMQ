@@ -5,7 +5,7 @@ $(document).ready(function(){
 		}else if($('#passforregis').val() == $('#confirmpassforregis').val()){
 			$.ajax({
 				type: 'POST',
-				url: '/login/regis',
+				url: '/loginPage/regis',
 				data:{
 					email: $('#userforregis').val(),
 					password: $('#passforregis').val()
@@ -25,7 +25,7 @@ $(document).ready(function(){
 		}else{
 			$.ajax({
 				type: 'POST',
-				url: '/login/login',
+				url: '/loginPage/login',
 				data:{
 					email: $('#userforlogin').val(),
 					password: $('#passforlogin').val()
