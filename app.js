@@ -41,7 +41,7 @@ app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 app.use('/', routes);
 app.use('/demo', demo);
-app.use('/login', login);
+app.use('/loginPage', login);
 app.use('/users', users);
 // app.use('/addData',addData);
 app.use('/showData', showData);
