@@ -12,31 +12,41 @@ html
     link(rel='stylesheet', href='../bower_components/bootstrap-material-design/dist/css/material-fullpalette.min.css')
     link(rel='stylesheet', href='../bower_components/bootstrap-material-design/dist/css/ripples.min.css')
     link(rel='stylesheet', href='//fezvrasta.github.io/snackbarjs/dist/snackbar.min.css')
+    
+    // fullPage.js
+    link(rel='stylesheet', href='/fullpage/jquery.fullPage.css')
+
+
+    // My CSS style
+    link(rel='stylesheet', href='/stylesheets/fonts.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/style_sass.css')
+
 
     //Mobile Support
     meta(name='viewport', content='width=device-width, initial-scale=1')
   body
-    .navbar.navbar-material-light-blue-800.navbar-fixed-top.shadow-z-2.navbar-my
+    .navbar.navbar-green.navbar-fixed-top
       .container
         .navbar-header
           button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-responsive-collapse')
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='/') MQTT IT@KMITL
+          a.navbar-brand(href='/')
+            img(src='images/MQTT-Logo.png', style='height:100%')
         .navbar-collapse.collapse.navbar-responsive-collapse
-          ul.nav.navbar-nav.navbar-left
+          ul#navigator.nav.navbar-nav.navbar-left
             //- a(href='javascript:void(0)')
             //-   img.logo(src='http://localhost:3000/images/logo1.png', alt='My_Logo').logo-navbar
-            li
-              a(href='/') Home
-            li
-              a(href='javascript:void(0)') About
-            li
-              a(href='javascript:void(0)') Plan & Pricing
-            li
-              a(href='javascript:void(0)') Contact
+            li(data-menuanchor="homePage" class="active")
+              a(href='/#homePage') Home
+            li(data-menuanchor="aboutPage" )
+              a(href='/#aboutPage') About
+            li(data-menuanchor="planPage" )
+              a(href='/#planPage') Plan
+            li(data-menuanchor="contactPage" )
+              a(href='/#contactPage') Contact
           //-   li.dropdown
           //-     a.dropdown-toggle(href='bootstrap-elements.html', data-target='#', data-toggle='dropdown')
           //-       | Dropdown 
@@ -66,10 +76,14 @@ html
             //- li.btn.btn-primary.btn-raised.btn-material-blue-A200.btn-navbar
             //-   | Register
             li
+<<<<<<< 24b7c2a6d8aba73a170cfcbadd07a11fa773cae8
               if !session || !session.email
                   a.btn-raised.btn-material-green.btn-navbar(href='/loginPage') Log in
               else
                   a.btn-raised.btn-material-green.btn-navbar(href='/users') #{session.email}
+=======
+              a.btn-green(href='/login') Log in
+>>>>>>> update css patch
             //- li
             //-   a(href='javascript:void(0)') Link
             //- li.dropdown
@@ -96,5 +110,23 @@ html
     //- script(src='/javascripts/showDemo.js')
     script(src='/javascripts/manageUsers.js')
     script(src='/javascripts/socket.io/socket.io.js')
+    script(src='/fullpage/vendors/jquery.easings.min.js')
+    script(type='text/javascript', src='/fullpage/vendors/jquery.slimscroll.min.js')
+    script(type='text/javascript', src='/fullpage/jquery.fullPage.js')
     script(type='text/javascript').
       $.material.init();
+      $(document).ready(function() {
+        $('#fullpage').fullpage({
+          menu: '#navigator',
+          lockAnchors: false,
+          anchors:['homePage', 'aboutPage','planPage','contactPage'],
+          navigation: false,
+          navigationPosition: 'right',
+          navigationTooltips: ['firstSlide', 'secondSlide'],
+          showActiveTooltip: false,
+          slidesNavigation: true,
+          slidesNavPosition: 'bottom',
+          resize : false,
+          responsiveHeight: 300
+        });
+      });

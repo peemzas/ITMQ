@@ -1,13 +1,10 @@
 body {
 	background-color: white;
+	height: 100%;
 }
 
 .navbar-my {
 	padding: 0 40px;
-}
-
-.container-main {
-	padding-top: 80px; 
 }
 
 .grid-head-main {

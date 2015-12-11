@@ -1,0 +1,178 @@
+* {
+  box-sizing: border-box; }
+
+.navbar.navbar-green {
+  background: #008584;
+  color: #ffffff; }
+
+.btn-green {
+  background: #006666;
+  color: #ffffff; }
+  .btn-green:hover {
+    background: #17bfa4; }
+
+.btn-grey {
+  background: #cccccc !important;
+  color: #4d4d4d;
+  text-transform: none;
+  font-size: 24px; }
+
+.padding-nav {
+  padding-top: 80px; }
+
+.container-main {
+  width: 1170px; }
+
+.container-home {
+  height: 100%; }
+
+.container-table {
+  margin: auto;
+  display: table;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+
+.table-cell {
+  display: table-cell;
+  vertical-align: middle; }
+
+.container-about {
+  padding-top: 30px; }
+
+.container-iot {
+  background: #17bfa4; }
+
+.container-plan {
+  height: 550px; }
+
+.footer-main {
+  background: #cccccc;
+  height: 420px; }
+
+.content-main {
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 48px;
+  color: #ffffff;
+  margin-top: 170px; }
+
+.content-about {
+  font-family: "ThaiSansNeue";
+  font-size: 24px;
+  color: #4d4d4d; }
+
+.content-plan {
+  font-family: "ThaiSansNeue";
+  font-size: 24px;
+  color: #4d4d4d; }
+
+.content-main-small {
+  font-size: 36px;
+  margin-top: 60px; }
+
+.content-box {
+  height: 100%; }
+
+.panel-about {
+  background: #f5f5f5;
+  height: 470px;
+  padding-top: 40px;
+  padding-left: 35px;
+  padding-right: 35px; }
+
+.panel-plan {
+  background: #f5f5f5;
+  margin-top: 80px;
+  height: 450px;
+  padding-left: 35px;
+  padding-right: 35px; }
+
+.pic-size {
+  height: 100px;
+  width: 100px; }
+
+.medal-size {
+  width: 95px; }
+
+.heading {
+  font-size: 40px; }
+
+.heading-plan {
+  font-size: 72px;
+  padding-bottom: 10px; }
+
+.p-about {
+  padding-top: 10px; }
+
+.p-medal {
+  padding-top: 10px;
+  margin-bottom: 0;
+  font-size: 40px; }
+
+.p-medalcontent {
+  font-size: 28px;
+  margin-bottom: 0; }
+
+.p-logo-footer {
+  margin-top: -60px;
+  font-family: "ThaiSansNeue";
+  font-size: 50px;
+  color: #008584; }
+
+.p-logo-quote {
+  margin-top: -20px;
+  font-family: "ThaiSansNeue";
+  font-size: 36px;
+  color: #008584; }
+
+.footer-content {
+  font-family: "ThaiSansNeue";
+  font-size: 18px;
+  color: #323232; }
+
+.footer-heading {
+  font-size: 40px;
+  margin-bottom: 0px; }
+
+.green-txt {
+  color: #008584; }
+
+.footer-it {
+  font-size: 16px;
+  margin-bottom: 0px; }
+
+.fp-auto-height.fp-section,
+.fp-auto-height .fp-slide,
+.fp-auto-height .fp-tableCell {
+  height: auto !important; }
+
+.page {
+  position: relative;
+  width: 100%;
+  min-height: 100%; }
+
+#fullpage {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 100%; }
+  #fullpage .section.page1 {
+    background: #008584;
+    display: table; }
+  #fullpage .section.page2 {
+    background: #e9e9e9; }
+  #fullpage .section.page3 {
+    background: #e9e9e9; }
+  #fullpage .section.page4 {
+    background: #cccccc; }
+    @media screen and (min-width: 768px) {
+      #fullpage .section.page4 {
+        background: black; } }
+
+.clear {
+  clear: both; }
+
+/*# sourceMappingURL=style_sass.css.map */

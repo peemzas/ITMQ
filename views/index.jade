@@ -1,25 +1,189 @@
 extends layout
 
 block content
-  .container.container-main
-    .col-xs-12
-      .row.jumbotron.shadow-z-2
-        h1 Welcome to MQTT Server
-        p
-          | เว็บไซต์ให้บริการ MQTT Broker เพื่อให้บริการการทำ Internet of Things
-        p
-          a.btn.btn-primary.btn-raised.btn-material-blue
-            | Read more >>
-      .row
-        .col-xs-12.col-md-4.shadow-z-1.grid-content-main
-          h2 What is IOT?
-          .btn.btn-primary.btn-raised.btn-material-blue
-            | Details >>
-        .col-xs-12.col-md-4.shadow-z-1.grid-content-main
-          h2 Pricing & Plan
-          .btn.btn-primary.btn-raised.btn-material-blue
-            | Details >>
-        .col-xs-12.col-md-4.shadow-z-1.grid-content-main
-          h2 Others
-          .btn.btn-primary.btn-raised.btn-material-blue
-            | Details >>
+  //- .container.container-main
+  //-   .col-xs-12
+  //-     .row.jumbotron.shadow-z-2
+  //-       h1 Welcome to MQTT Server
+  //-       p
+  //-         | เว็บไซต์ให้บริการ MQTT Broker เพื่อให้บริการการทำ Internet of Things
+  //-       p
+  //-         a.btn.btn-primary.btn-raised.btn-material-blue
+  //-           | Read more >>
+  //-     .row
+  //-       .col-xs-12.col-md-4.shadow-z-1.grid-content-main
+  //-         h2 What is IOT?
+  //-         .btn.btn-primary.btn-raised.btn-material-blue
+  //-           | Details >>
+  //-       .col-xs-12.col-md-4.shadow-z-1.grid-content-main
+  //-         h2 Pricing & Plan
+  //-         .btn.btn-primary.btn-raised.btn-material-blue
+  //-           | Details >>
+  //-       .col-xs-12.col-md-4.shadow-z-1.grid-content-main
+  //-         h2 Others
+  //-         .btn.btn-primary.btn-raised.btn-material-blue
+  //-           | Details >>
+  #fullpage
+    .section.page.page1.active(data-anchor='homePage')
+      .container.container-main.container-home.container-table
+        .table-cell
+          .row
+            .col-sm-6.text-center
+              img(src='images/MQTT-LogoBig.png', style='width:100%')
+            .col-sm-6
+              p.content-main
+                | ITMQ BROKER FOR IoT
+              p.content-main.content-main-small
+                | " Let your devices connected "
+        .clear
+    .section.page.page2
+      #about-anchor(data-anchor='aboutPage',style="position:absolute;top: -50px;")
+      .container-iot
+        .container
+          .col-xs-12.text-center
+            img(src='images/iot.jpg',style='width:80%')
+      .container.container-main.container-about
+        .content-about
+          .col-md-4
+            .panel.panel-about
+              .row.text-center
+                img(src='images/internet.png').pic-size
+              .row
+                p.p-about.heading.text-center
+                  | Internet of Things
+                p
+                  | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เทคโนโลยี Internet of Things (IoT) เป็นเทคโนโลยีที่จะทำให้เครื่องมือ สิ่งของ หรืออุปกรณ์ต่างๆสามารถติดต่อกันได้ โดยผ่านระบบเครือข่ายหรืออินเตอร์เน็ต เพื่อให้อุปกรณ์เชื่อมต่อแลกเปลี่ยนข้อมูล ติดต่อสื่อสาร สั่งการจากระยะทางไกล หรือเพื่อเพิ่มขีดจำกัดความสามารถในการใช้งานให้กับอุปกรณ์นั้นได้
+          .col-md-4
+            .panel.panel-about
+              .row.text-center
+                img(src='images/cloud.png').pic-size
+              .row
+                p.p-about.heading.text-center
+                  | MQTT Protocol
+                p
+                  | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MQTT  เป็นโปรโตคอลที่ใช้หลักการ Machine-to-Machine (M2M) โดยจะใช้หลักการ Publish, Subscribe (Pub/Sub) ในการรับส่งข้อมูล มีหลักการคือมีอุปกรณ์เชื่อมต่อกับตัวกลาง เรียกว่า MQTT Broker
+          .col-md-4
+            .panel.panel-about
+              .row.text-center
+                img(src='images/websocket.png').pic-size
+              .row
+                p.p-about.heading.text-center
+                  | WebSockets คืออะไร?
+                p
+                  | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WebSockets เป็นเทคโนโลยีใช้ในการติดต่อสื่อสารระหว่าง Web server กับ Client แบบ Real time โดย WebSockets จะสร้างการเชื่อต่อโดยตรงระหว่าง Server กับ Client ไว้ ทำให้สามารถรับส่งข้อมูลได้โดยตรง
+              .row.text-center
+                a.btn.btn-raised.btn-grey(href='/demo')
+                  | ทดสอบ WebSocket >>
+    .section.page.page3(data-anchor='planPage')
+      .container.container-main.container-plan
+        .content-plan
+          .panel.panel-plan
+            .row
+              p.heading-plan.text-center
+                | Plan & Pricing
+            .row
+              .col-xs-12
+                .col-md-3.text-center
+                  img(src='images/bronze.png').medal-size
+                  p.p-medal
+                    | Bronze Package
+                  p.p-medalcontent
+                    | 10 connections
+                  p.p-medalcontent
+                    | Free
+                .col-md-3.text-center
+                  img(src='images/silver.png').medal-size
+                  p.p-medal
+                    | Silver Package
+                  p.p-medalcontent
+                    | 100 connections
+                  p.p-medalcontent
+                    | 59 THB / Month
+                .col-md-3.text-center
+                  img(src='images/gold.png').medal-size
+                  p.p-medal
+                    | Gold Package
+                  p.p-medalcontent
+                    | 1000 connections
+                  p.p-medalcontent
+                    | 499 THB / Month
+                .col-md-3.text-center
+                  img(src='images/diamond.png').medal-size
+                  p.p-medal
+                    | Diamond Package
+                  p.p-medalcontent
+                    | Unlimited connections
+                  p.p-medalcontent
+                    | 999 THB / Month
+    .section.page4.fp-auto-height(data-anchor='contactPage')
+      .footer.footer-main
+        .container.container-main
+          .row
+            .col-md-6.text-center
+              img(src='images/MQTT-Logo-Green.png')
+              p.p-logo-footer
+                | ITMQ BROKER FOR IoT
+              p.p-logo-quote
+                | " Let your device connected "
+            .footer-content
+              .col-md-6
+                .row
+                  span.footer-heading
+                    | About 
+                  span.footer-heading.green-txt
+                    | us
+                p
+                  | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เว็บแอพพลิเคชั่นนี้เป็นการให้บริการ MQTT Broker สำหรับนักพัฒนาและบุคคลทั่วไปเพื่อพัฒนาให้อุปกรณ์ต่างๆเชื่อมต่อรับส่งข้อมูลกันบนเทคโนโลยี Internet of Things
+                p(style='margin-bottom: 0')
+                  | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เว็บแอพพลิเคชั่นนี้เป็นส่วนหนึ่งของวิชา Project คณะเทคโนโลยีสารสนเทศ สจล. และทางผู้จัดทำได้พัฒนาเว็บแอพพลิเคชั่นนี้ขึ้น เนื่องจากเล็งเห็นถึงการพัฒนาของเทคโนโลยีดังกล่าวในประเทศไทย และเป็นการเพิ่มทางเลือกให้กับผู้พัฒนาทั้งภายในประเทศและภายนอกประเทศมากขึ้น
+                .row
+                  span.footer-heading
+                    | Contact 
+                  span.footer-heading.green-txt
+                    | us
+                .row(style='padding-left: 20px; padding-bottom: 20px')
+                  .col-md-6
+                    .row
+                      | พิเชฐ เลิศกิตติธร
+                    .row
+                      .col-md-2
+                        img(src='images/google.png', style='width:100%')
+                      .col-md-10
+                        | peemzas@gmail.com
+                    .row
+                      .col-md-2
+                        img(src='images/facebook.png', style='width:100%')
+                      .col-md-10
+                        | facebook.com/PeeMzZ
+                    .row
+                      .col-md-2
+                        img(src='images/twitter.png', style='width:100%')
+                      .col-md-10
+                        | @PeeMz_Kael
+                  .col-md-6
+                    .row
+                      | วรัตม์ จีระเรืองรัตนา
+                    .row
+                      .col-md-2
+                        img(src='images/google.png', style='width:100%')
+                      .col-md-10
+                        | bestzwarat@gmail.com
+                    .row
+                      .col-md-2
+                        img(src='images/facebook.png', style='width:100%')
+                      .col-md-10
+                        | facebook.com/bestzwarat
+                    .row
+                      .col-md-2
+                        img(src='images/twitter.png', style='width:100%')
+                      .col-md-10
+                        | @bestzwarat
+                .row
+                  .col-xs-12
+                    .col-md-2.text-center
+                      img(src='/images/kmitl.png', style='width:60%')
+                    .col-md-10
+                      p.footer-it
+                        | คณะเทคโนโลยีสารสนเทศ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง
+                      p.footer-it
+                        | Faculty of Informaation Technology, King Mongkut's Institute of Technology Lad krabang
