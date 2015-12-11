@@ -19,7 +19,7 @@ var Col = mongoose.model('user', { email: String ,
 router.get('/', function(req, res){
   sess=req.session;
   if(sess.email){
-  	res.render('user');
+  	res.render('user', {session: sess});
   	console.log(sess.email);
   }else{
   	res.render('login');
@@ -32,6 +32,8 @@ router.get('/logout', function(req, res){
 			console.log(err);
 		}else{
 			res.render('index');
+			console.log(sess);
+			console.log("destroy session successful");
 		}
 	})
 });

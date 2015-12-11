@@ -62,12 +62,12 @@ block content
       .col-md-8
         .panel.shadow-z-2
           .panel-heading
-            h2 Publish to (Host: node.it.kmitl.ac.th Port: 1883)
+            h2 Publish to (Host: node.it.kmitl.ac.th Port: 1884)
           .panel-body
             form
               //- .col-md-6
               .col-md-10
-                label Topic   (Example: demo/...)
+                label Topic
                 input#publishTopic.form-control(type='text', value='demo/topic')
               .col-md-2
                 label(for='publishQoSInput') QoS
@@ -99,7 +99,7 @@ block content
             h2 Subscribtions
           .panel-body
             .col-md-12
-              label Topic  (Example: demo/...)
+              label Topic
               input#subscribeTopic.form-control(type='text', value='demo/topic')
               br
              .col-md-4
@@ -114,14 +114,26 @@ block content
             .col-md-12
               ul#subTopicEdit.col-md-12
   script(type='text/javascript').
-    $(document).ready(function () {
-       client = new Paho.MQTT.Client("node.it.kmitl.ac.th", 8883, "web_" + parseInt(Math.random() * 1000, 10));
 
+    var subscribed = []; // Use for check subscribed and to unsubscribe
+
+    function unSub(element){
+          var unSubTopic = element.next().find(".topic").text();
+          if (confirm("Do you want to unsubscribe?") == true) {
+              element.parent().parent().remove();
+              client.unsubscribe(unSubTopic);
+              subscribed.splice(subscribed.indexOf(unSubTopic), 1);
+              console.log(unSubTopic);
+          }
+          
+    }
+
+    $(document).ready(function () {
+       client = new Paho.MQTT.Client("node.it.kmitl.ac.th", 8884, "web_" + parseInt(Math.random() * 1000, 10));
        client.onConnectionLost = onConnectionLost;
        client.onMessageArrived = onMessageArrived;
        var options = {
-          userName: 'demo',
-          password: 'demo',
+          timeout: 5,
           useSSL: false,
           onSuccess: onConnect,
           onFailure: doFail
@@ -130,6 +142,7 @@ block content
        client.connect(options);
 
        function onConnect(){
+          alert("Connect Successful");
           console.log("onConnected");
           $('#publishButton').on('click', function(){
             var publishPayload = $('#publishPayload').val();
@@ -146,23 +159,37 @@ block content
           $('#addSubButton').on('click', function(){
             var subscribeTopic = $('#subscribeTopic').val();
             var subscribeQoSInput = parseInt($("#subscribeQoSInput :selected").val());
+            if($.inArray(subscribeTopic,subscribed) == -1){
+              subscribed.push(subscribeTopic);
+              client.subscribe(subscribeTopic,{qos: subscribeQoSInput});
 
-            client.subscribe(subscribeTopic,{qos: subscribeQoSInput});
-
-            $("#subTopicEdit").prepend('<div class="panel">'+
+              $("#subTopicEdit").prepend('<div class="panel">'+
                                     '<div class="panel-body">'+
+                                      '<button type="button" class="close" data-dismiss="panel" onclick="unSub($(this))" aria-label="Close">'+
+                                      '<span aria-hidden="true">&times;</span></button>'+
                                         '<label class="disc">'+
                                             'Subscribe to ' + '<br>'+ 
-                                            'Topic : ' + $('#subscribeTopic').val() + '<br>'+ 
+                                            'Topic : <span class="topic">' + subscribeTopic + '</span><br>'+ 
                                         '</label>'+
                                     '</div>'+
                                 '</div>');
+            }else{
+              alert("You already subscribe this topic.");
+            }
+            
             console.log(subscribeQoSInput);
+
+            var childPanel = $("#subTopicEdit .panel");
+            for(var i=0;i<childPanel.length;i++){  
+              $(childPanel[i]).attr("id","sub-"+i);
+            }
           });
+
        }
 
        function doFail(e){
           console.log(e);
+          alert("Cannot Connect, Please Refresh");
         }
 
         // called when the client loses its connection

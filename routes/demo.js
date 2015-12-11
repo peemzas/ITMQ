@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mqtt    = require('mqtt');
+var session = require('express-session');
 
 var io = require('socket.io').listen(5000);
 
@@ -11,7 +12,7 @@ var Col = mongoose.model('pubsubDB', { type: String ,topic: String ,message: Str
 
 /* GET demo page. */
 router.get('/', function(req, res){
-  res.render('demo');
+  res.render('demo', {session: req.session});
 });
 
 //Don't know what is it ????
