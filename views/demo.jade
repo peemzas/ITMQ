@@ -74,7 +74,6 @@ block content
                 select#publishQoSInput.form-control.hidden-field()
                   option(value=0) 0
                   option(value=1) 1
-                  option(value=2) 2
                 br
               //- .col-md-2
               //-   label Retain
@@ -107,7 +106,6 @@ block content
               select#subscribeQoSInput.form-control.hidden-field()
                   option(value=0) 0
                   option(value=1) 1
-                  option(value=2) 2
             .col-md-12.text-center(style='padding: 20px 0')
               a#addSubButton.btn.btn-primary.btn-raised.btn-material-blue Add New Topic Subscription
               //- a#addSubButton.small.button.addSubButton(href='#data') Add New Topic Subscription
@@ -129,7 +127,7 @@ block content
     }
 
     $(document).ready(function () {
-       client = new Paho.MQTT.Client("node.it.kmitl.ac.th", 8884, "web_" + parseInt(Math.random() * 1000, 10));
+       client = new Paho.MQTT.Client("localhost", 8884, "web_" + parseInt(Math.random() * 1000, 10));
        client.onConnectionLost = onConnectionLost;
        client.onMessageArrived = onMessageArrived;
        var options = {

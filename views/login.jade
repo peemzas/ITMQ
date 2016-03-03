@@ -39,6 +39,25 @@ block content
                 label.field-label(for="confirmpassforregis") Confirm Password
                 input.field-input(type='password', id="confirmpassforregis")
                 br
+              .col-md-12(style='padding: 0; margin-top: 10px;')
+                label.col-md-2.control-label(style='padding: 0;') Packages
+                .col-md-10(style='padding: 0;')
+                  .radio.radio-primary
+                    label
+                      input#package(type='radio', name='package', value='option1', checked='')
+                      |             Bronze
+                  .radio.radio-primary
+                    label
+                      input#package(type='radio', name='package', value='option2')
+                      |             Silver
+                  .radio.radio-primary
+                    label
+                      input#package(type='radio', name='package', value='option2')
+                      |             Gold
+                  .radio.radio-primary
+                    label
+                      input#package(type='radio', name='package', value='option2')
+                      |             Diamond
               .col-md-6(style="padding: 0; margin-top: 10px;")
                 a#signupButton.btn.btn-primary.btn-raised(style=" background-color: #008584;") Sign up
               .col-md-6(style="padding: 0; margin-top: 10px; text-align: right")
@@ -153,7 +172,7 @@ block content
     }
 
     .card-back{
-      height: 400px;
+      height: 520px;
       transform: rotateY( 180deg );
     }
 

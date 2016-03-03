@@ -31,7 +31,7 @@ router.get('/logout', function(req, res){
 		if(err){
 			console.log(err);
 		}else{
-			res.render('index');
+			res.redirect('/loginPage');
 			console.log(sess);
 			console.log("destroy session successful");
 		}
@@ -46,9 +46,9 @@ router.post('/login', function(req, res){
   	if(col==1){
   		sess = req.session;
   		sess.email = email;
-  		res.send("Loin successful : " + sess.email);
+  		res.send(["Loin successful : " + sess.email , true]);
   	}else{
-  		res.send('Login fail');
+  		res.send(['Login fail', false]);
   	}
   });
 
