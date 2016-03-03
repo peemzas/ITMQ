@@ -31,8 +31,12 @@ $(document).ready(function(){
 					password: $('#passforlogin').val()
 				},
 				success: function(data){
-					alert(data);
-					location.reload();
+					if(data[1]){
+						alert(data[0]);
+						window.location.replace('/user');
+					}else{
+						alert(data[0]);
+					}
 				}
 			});
 		}

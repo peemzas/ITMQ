@@ -4,7 +4,12 @@ var session = require('express-session');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('user', {session: req.session});
+  if(req.session.email){
+  	res.render('user', {session: req.session});
+  }else{
+  	res.redirect('/loginPage');
+  }
+  console.log(req.session);
 });
 
 module.exports = router;
