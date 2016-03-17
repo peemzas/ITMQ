@@ -1,21 +1,33 @@
 $(document).ready(function(){
 	$('#signupButton').on('click', function(){
 		if($('#userforregis').val() == '' || $('#passforregis').val() == '' || $('#confirmpassforregis').val() == ''){
-			alert("Please fill your username or password")
+			alert("Please fill your username or password");
+			//console.log($("input[name='package']:checked").val());
 		}else if($('#passforregis').val() == $('#confirmpassforregis').val()){
-			$.ajax({
-				type: 'POST',
-				url: '/loginPage/regis',
-				data:{
-					email: $('#userforregis').val(),
-					password: $('#passforregis').val()
-				},
-				success: function(data){
-					alert(data);
-				}
-			});
+			if(isEmail($('#userforregis').val()) == false){
+				//console.log(isEmail($('#userforregis').val()));
+				alert('Incorrect Email Type. (Example@example.com)');
+			}else{
+				$.ajax({
+					type: 'POST',
+					url: '/loginPage/regis',
+					data:{
+						email: $('#userforregis').val(),
+						password: $('#passforregis').val(),
+						package: $("input[name='package']:checked").val()
+					},
+					success: function(data){
+						if(data[1]){
+							alert(data[0]);
+							window.location.reload();
+						}else{
+							alert(data[0]);
+						}
+					}
+				});
+			}
 		}else{
-			alert("password not same");
+			alert('Password not same.');
 		}
 	});
 
@@ -42,3 +54,8 @@ $(document).ready(function(){
 		}
 	});
 });
+
+function isEmail(email) {
+  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  return regex.test(email);
+}

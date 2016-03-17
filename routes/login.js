@@ -58,10 +58,11 @@ router.post('/login', function(req, res){
 router.post('/regis', function(req, res){
   var email = req.body.email;
   var pass = req.body.password;
+  var limit = req.body.package;
 
   Col.count({'email': email},function (err,col){
   	if(col>0){
-  		res.send('This email exits');
+  		res.send(['This email exits' , false]);
   	}else{
   		var username_bk = shortid.generate();
   		var password_bk = shortid.generate();
@@ -72,14 +73,16 @@ router.post('/regis', function(req, res){
 								   devices: [{device_id: null ,
 								   			  subscribe:[],
 								   			  status: null}],
-								   limit_connection: 10
+								   limit_connection: limit
 								});
 
 	  	register.save(function (err){
 		  	if (err) {
-		  		console.log('register fail');
+          console.log(['Register fail' , false]);
+		  		res.send(['Register fail' , false]);
 		  	}
-			console.log('reigister success');
+			console.log('Reigister success');
+      res.send(['Register successful.' , true]);
 	  	});
   	}
   });
