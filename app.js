@@ -5,16 +5,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://mqttserver:qwerty@proton.it.kmitl.ac.th:27017/mqttserver');
+// var mongoose = require('mongoose');
+// mongoose.connect('mongodb://mqttserver:qwerty@proton.it.kmitl.ac.th:27017/mqttserver');
 
-var routes = require('./routes/index');
-var demo = require('./routes/demo');
-var login = require('./routes/login');
-var user = require('./routes/user');
-// var addData = require('./routes/addData');
-var showData = require('./routes/showData');
-// var connect = require('./connectMosca');
+var db = require('./routes/connectMongo');
+var routes = require('./controller/index');
+var demo = require('./controller/demo');
+var login = require('./controller/login');
+var user = require('./controller/user');
+// var showData = require('./routes/showData');
 
 var app = express();
 
@@ -53,8 +52,7 @@ app.use('/', routes);
 app.use('/demo', demo);
 app.use('/loginPage', login);
 app.use('/user', user);
-// app.use('/addData',addData);
-app.use('/showData', showData);
+// app.use('/showData', showData);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

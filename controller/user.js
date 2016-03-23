@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var session = require('express-session');
-var mongoose = require('mongoose');
-
-var userDB = mongoose.model('user');
+var userDB = require('../model/User');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
