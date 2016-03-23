@@ -62,13 +62,20 @@ block content
       .col-md-8
         .panel.shadow-z-2
           .panel-heading
-            h2 Publish to (Host: node.it.kmitl.ac.th Port: 1884)
+            if session.email
+              h2 Publish to (Host: neutron.it.kmitl.ac.th Port: 1883)
+            else
+              h2 Publish to (Host: neutron.it.kmitl.ac.th Port: 1884)
           .panel-body
             form
               //- .col-md-6
               .col-md-10
-                label Topic
-                input#publishTopic.form-control(type='text', value='demo/topic')
+                if session.email
+                  label Topic (Example : UsernameBroker/topic)
+                  input#publishTopic.form-control(type='text', value='#{usernameBroker}/topic')
+                else
+                  label Topic
+                  input#publishTopic.form-control(type='text', value='TestTopic')
               .col-md-2
                 label(for='publishQoSInput') QoS
                 select#publishQoSInput.form-control.hidden-field()
@@ -98,8 +105,12 @@ block content
             h2 Subscribtions
           .panel-body
             .col-md-12
-              label Topic
-              input#subscribeTopic.form-control(type='text', value='demo/topic')
+              if session.email
+                label Topic (Example : UsernameBroker/topic)
+                input#subscribeTopic.form-control(type='text', value='#{usernameBroker}/topic')
+              else
+                label Topic
+                input#subscribeTopic.form-control(type='text', value='TestTopic')
               br
              .col-md-4
               label QoS  
@@ -112,34 +123,79 @@ block content
             .col-md-12
               ul#subTopicEdit.col-md-12
   script(type='text/javascript').
-
+    console.log('#{session.email}');
     var subscribed = []; // Use for check subscribed and to unsubscribe
+    var subscribeTopic;
+    var subscribeQoSInput;
 
     function unSub(element){
-          var unSubTopic = element.next().find(".topic").text();
-          if (confirm("Do you want to unsubscribe?") == true) {
-              element.parent().parent().remove();
-              client.unsubscribe(unSubTopic);
-              subscribed.splice(subscribed.indexOf(unSubTopic), 1);
-              console.log(unSubTopic);
-          }
-          
+      var unSubTopic = element.next().find(".topic").text();
+      if (confirm("Do you want to unsubscribe?") == true) {
+          element.parent().parent().remove();
+          client.unsubscribe(unSubTopic);
+          subscribed.splice(subscribed.indexOf(unSubTopic), 1);
+          console.log(unSubTopic);
+      }
     }
 
-    $(document).ready(function () {
-       client = new Paho.MQTT.Client("localhost", 8884, "web_" + parseInt(Math.random() * 1000, 10));
-       client.onConnectionLost = onConnectionLost;
-       client.onMessageArrived = onMessageArrived;
-       var options = {
-          timeout: 5,
-          useSSL: false,
-          onSuccess: onConnect,
-          onFailure: doFail
-       }
+    function subscribeSubccess(){
+      if($.inArray(subscribeTopic,subscribed) == -1){
+        subscribed.push(subscribeTopic);
+        $("#subTopicEdit").prepend('<div class="panel">'+
+                              '<div class="panel-body">'+
+                                '<button type="button" class="close" data-dismiss="panel" onclick="unSub($(this))" aria-label="Close">'+
+                                '<span aria-hidden="true">&times;</span></button>'+
+                                  '<label class="disc">'+
+                                      'Subscribe to ' + '<br>'+ 
+                                      'Topic : <span class="topic">' + subscribeTopic + '</span><br>'+ 
+                                  '</label>'+
+                              '</div>'+
+                          '</div>');
+      }else{
+        alert("You already subscribe this topic.");
+      }
+    }
 
-       client.connect(options);
+    function subscribeFail(){
+      alert("Subscribe Fail.");
+    }
 
-       function onConnect(){
+    /////////////////////////////////////////////////////
+    
+    $(document).ready(function () {        
+        if('#{session.email}'){
+          client = new Paho.MQTT.Client("localhost", 8883, "#{session.email}" + "-web_" + parseInt(Math.random() * 1000, 10));
+          client.onConnectionLost = onConnectionLost;
+          client.onMessageArrived = onMessageArrived;
+
+          var options = {
+            userName: "#{usernameBroker}",
+            password: "#{passwordBroker}",
+            timeout: 5,
+            useSSL: false,
+            onSuccess: onConnect,
+            onFailure: doFail
+          }
+
+          client.connect(options);
+          console.log("Authen");
+        }else{
+          client = new Paho.MQTT.Client("localhost", 8884, "web_" + parseInt(Math.random() * 1000, 10));
+          client.onConnectionLost = onConnectionLost;
+          client.onMessageArrived = onMessageArrived;
+
+          var options = {
+            timeout: 5,
+            useSSL: false,
+            onSuccess: onConnect,
+            onFailure: doFail
+          }
+
+          client.connect(options);
+          console.log("Public");
+        }
+
+        function onConnect(){
           alert("Connect Successful");
           console.log("onConnected");
           $('#publishButton').on('click', function(){
@@ -155,25 +211,13 @@ block content
           });
 
           $('#addSubButton').on('click', function(){
-            var subscribeTopic = $('#subscribeTopic').val();
-            var subscribeQoSInput = parseInt($("#subscribeQoSInput :selected").val());
-            if($.inArray(subscribeTopic,subscribed) == -1){
-              subscribed.push(subscribeTopic);
-              client.subscribe(subscribeTopic,{qos: subscribeQoSInput});
-
-              $("#subTopicEdit").prepend('<div class="panel">'+
-                                    '<div class="panel-body">'+
-                                      '<button type="button" class="close" data-dismiss="panel" onclick="unSub($(this))" aria-label="Close">'+
-                                      '<span aria-hidden="true">&times;</span></button>'+
-                                        '<label class="disc">'+
-                                            'Subscribe to ' + '<br>'+ 
-                                            'Topic : <span class="topic">' + subscribeTopic + '</span><br>'+ 
-                                        '</label>'+
-                                    '</div>'+
-                                '</div>');
-            }else{
-              alert("You already subscribe this topic.");
-            }
+            subscribeTopic = $('#subscribeTopic').val();
+            subscribeQoSInput = parseInt($("#subscribeQoSInput :selected").val());
+            client.subscribe(subscribeTopic, 
+                                {qos: subscribeQoSInput,
+                                 onSuccess: subscribeSubccess,
+                                 onFailure: subscribeFail});
+            
             
             console.log(subscribeQoSInput);
 
@@ -183,7 +227,7 @@ block content
             }
           });
 
-       }
+        }
 
        function doFail(e){
           console.log(e);

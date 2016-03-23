@@ -1,20 +1,20 @@
 var express = require('express');
 var session = require('express-session');
 var router = express.Router();
-var mongoose = require('mongoose');
 var shortid = require('shortid');
+var Col = require('../model/User');
 
 var sess;
 
-var Col = mongoose.model('user', { email: String ,
-								   password: String ,
-								   username_broker: String ,
-								   password_broker: String ,
-								   devices: [{device_id: String ,
-								   			  subscribe:[String],
-								   			  status: String}],
-								   limit_connection: Number
-								});
+// var Col = mongoose.model('user', { email: String ,
+// 								   password: String ,
+// 								   username_broker: String ,
+// 								   password_broker: String ,
+// 								   devices: [{device_id: String ,
+// 								   			  subscribe:[String],
+// 								   			  status: String}],
+// 								   limit_connection: Number
+// 								});
 
 router.get('/', function(req, res){
   sess=req.session;
