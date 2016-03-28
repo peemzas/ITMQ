@@ -12,7 +12,6 @@ userPage.get('/', function(req, res, next) {
   		var usernameBroker = userData[0].username_broker;
   		var passwordBroker = userData[0].password_broker;
       
-      client.connectMosca(usernameBroker,passwordBroker);
   		res.render('user', {session: req.session, usernameBroker: usernameBroker, passwordBroker: passwordBroker});
   	});
   }else{
