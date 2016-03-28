@@ -63,19 +63,15 @@ block content
         .panel.shadow-z-2
           .panel-heading
             if session.email
-              h2 Publish to (Host: neutron.it.kmitl.ac.th Port: 1883)
+              h2 Publish to (Host: neutron.it.kmitl.ac.th Port: 8883)
             else
-              h2 Publish to (Host: neutron.it.kmitl.ac.th Port: 1884)
+              h2 Publish to (Host: neutron.it.kmitl.ac.th Port: 1883)
           .panel-body
             form
               //- .col-md-6
               .col-md-10
-                if session.email
-                  label Topic (Example : UsernameBroker/topic)
-                  input#publishTopic.form-control(type='text', value='#{usernameBroker}/topic')
-                else
-                  label Topic
-                  input#publishTopic.form-control(type='text', value='TestTopic')
+                label Topic
+                input#publishTopic.form-control(type='text', value='TestTopic')
               .col-md-2
                 label(for='publishQoSInput') QoS
                 select#publishQoSInput.form-control.hidden-field()
@@ -105,12 +101,8 @@ block content
             h2 Subscribtions
           .panel-body
             .col-md-12
-              if session.email
-                label Topic (Example : UsernameBroker/topic)
-                input#subscribeTopic.form-control(type='text', value='#{usernameBroker}/topic')
-              else
-                label Topic
-                input#subscribeTopic.form-control(type='text', value='TestTopic')
+              label Topic
+              input#subscribeTopic.form-control(type='text', value='TestTopic')
               br
              .col-md-4
               label QoS  
@@ -163,8 +155,10 @@ block content
     /////////////////////////////////////////////////////
     
     $(document).ready(function () {        
+        console.log(window.location.protocol);
+
         if('#{session.email}'){
-          client = new Paho.MQTT.Client("localhost", 8883, "#{session.email}" + "-web_" + parseInt(Math.random() * 1000, 10));
+          client = new Paho.MQTT.Client("localhost", Number(8884), "/ws", "web_" + parseInt(Math.random() * 1000, 10));
           client.onConnectionLost = onConnectionLost;
           client.onMessageArrived = onMessageArrived;
 
@@ -172,7 +166,8 @@ block content
             userName: "#{usernameBroker}",
             password: "#{passwordBroker}",
             timeout: 5,
-            useSSL: false,
+            useSSL: true ,
+            mqttVersion: 3,
             onSuccess: onConnect,
             onFailure: doFail
           }
@@ -180,13 +175,14 @@ block content
           client.connect(options);
           console.log("Authen");
         }else{
-          client = new Paho.MQTT.Client("localhost", 8884, "web_" + parseInt(Math.random() * 1000, 10));
+          client = new Paho.MQTT.Client("localhost", 1884, "web_" + parseInt(Math.random() * 1000, 10));
           client.onConnectionLost = onConnectionLost;
           client.onMessageArrived = onMessageArrived;
 
           var options = {
             timeout: 5,
             useSSL: false,
+            mqttVersion: 3,
             onSuccess: onConnect,
             onFailure: doFail
           }
@@ -200,7 +196,7 @@ block content
           console.log("onConnected");
           $('#publishButton').on('click', function(){
             var publishPayload = $('#publishPayload').val();
-            var publishTopic = $('#publishTopic').val();
+            var publishTopic = "#{session.email}/" + $('#publishTopic').val();
             var publishQoSInput = parseInt($("#publishQoSInput :selected").val());
 
             message = new Paho.MQTT.Message(publishPayload);
@@ -213,7 +209,7 @@ block content
           $('#addSubButton').on('click', function(){
             subscribeTopic = $('#subscribeTopic').val();
             subscribeQoSInput = parseInt($("#subscribeQoSInput :selected").val());
-            client.subscribe(subscribeTopic, 
+            client.subscribe("#{session.email}/" + subscribeTopic, 
                                 {qos: subscribeQoSInput,
                                  onSuccess: subscribeSubccess,
                                  onFailure: subscribeFail});
@@ -230,8 +226,20 @@ block content
         }
 
        function doFail(e){
+          if(e.errorMessage == "AMQJS0007E Socket error:undefined."){
+            if(confirm("Cannot Connect, Plaese click OK to get Certificate.")){
+              var win = window.open("https://localhost:3331");
+              if(win){
+                win.focus();
+              }else{
+                alert('Please allow popups for this site and Refresh.');
+              }
+              console.log(e.errorMessage);
+            }
+          }else{
+            alert("Cannot Connect, Please Refresh");
+          }
           console.log(e);
-          alert("Cannot Connect, Please Refresh");
         }
 
         // called when the client loses its connection
@@ -248,7 +256,7 @@ block content
           $("#messEdit").prepend('<div class="panel">'+
                                     '<div class="panel-body">'+
                                         '<label class="disc">'+
-                                            'from topic : ' + message.destinationName + '<br>'+
+                                            'from topic : ' + message.destinationName.split('/').slice(1, this.length).join('/') + '<br>'+
                                             'Message : ' + message.payloadString + '<br>'+
                                             'QoS : ' + message.qos + '<br>'+
                                         '</label>'+

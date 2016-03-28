@@ -1,22 +1,13 @@
 var express = require('express');
 var session = require('express-session');
-var router = express.Router();
+var loginPage = express.Router();
 var shortid = require('shortid');
 var Col = require('../model/User');
+var client = require('../routes/connectMosca');
 
 var sess;
 
-// var Col = mongoose.model('user', { email: String ,
-// 								   password: String ,
-// 								   username_broker: String ,
-// 								   password_broker: String ,
-// 								   devices: [{device_id: String ,
-// 								   			  subscribe:[String],
-// 								   			  status: String}],
-// 								   limit_connection: Number
-// 								});
-
-router.get('/', function(req, res){
+loginPage.get('/', function(req, res){
   sess=req.session;
   if(sess.email){
   	res.render('user', {session: sess});
@@ -26,11 +17,12 @@ router.get('/', function(req, res){
   }
 });
 
-router.get('/logout', function(req, res){
+loginPage.get('/logout', function(req, res){
 	req.session.destroy(function (err){
 		if(err){
 			console.log(err);
 		}else{
+      client.close_connection();
 			res.redirect('/loginPage');
 			console.log(sess);
 			console.log("destroy session successful");
@@ -38,7 +30,7 @@ router.get('/logout', function(req, res){
 	})
 });
 
-router.post('/login', function(req, res){
+loginPage.post('/login', function(req, res){
   var email = req.body.email;
   var pass = req.body.password;
 
@@ -46,7 +38,7 @@ router.post('/login', function(req, res){
   	if(col==1){
   		sess = req.session;
   		sess.email = email;
-  		res.send(["Loin successful : " + sess.email , true]);
+  		res.send(["Login successful : " + sess.email , true]);
   	}else{
   		res.send(['Login fail', false]);
   	}
@@ -55,7 +47,7 @@ router.post('/login', function(req, res){
 });
 
 
-router.post('/regis', function(req, res){
+loginPage.post('/regis', function(req, res){
   var email = req.body.email;
   var pass = req.body.password;
   var limit = req.body.package;
@@ -95,4 +87,4 @@ router.post('/regis', function(req, res){
   
 });
 
-module.exports = router;
+module.exports = loginPage;

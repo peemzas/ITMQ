@@ -1,5 +1,5 @@
 var express = require('express');
-var demo = express.Router();
+var demoPage = express.Router();
 var mqtt    = require('mqtt');
 var session = require('express-session');
 var userDB = require('../model/User');
@@ -8,8 +8,8 @@ var userDB = require('../model/User');
 // var Col = mongoose.model('pubsubDB', { type: String ,topic: String ,message: String });
 // var userDB = mongoose.model('user');
 
-/* GET demo page. */
-demo.get('/', function(req, res){
+/* GET demoPage page. */
+demoPage.get('/', function(req, res){
 		if(req.session.email){
 			userDB.find({'email': req.session.email}, function(err,userData){
 				var usernameBroker = userData[0].username_broker;
@@ -47,7 +47,7 @@ demo.get('/', function(req, res){
 //                             'payload':String(payload)});
 // });
 
-// demo.post('/pub', function(req, res){
+// demoPage.post('/pub', function(req, res){
 //    var pub = req.body.message;
 //    var sub = req.body.topic;
 //    console.log(sub);
@@ -78,7 +78,7 @@ demo.get('/', function(req, res){
 //    //                  topic: 'Topic: '+sub , message: 'Message: '+pub});
 // });
 
-// demo.post('/sub', function(req, res){
+// demoPage.post('/sub', function(req, res){
 //    var topic = req.body.topic;
 
 //    console.log(topic);
@@ -100,7 +100,7 @@ demo.get('/', function(req, res){
 // });
 
 
-// demo.post('/switch', function(req, res){
+// demoPage.post('/switch', function(req, res){
 //    var bswitch = req.body.bswitch;
 //    // res.render('index', { title:'Express'});
 
@@ -128,4 +128,4 @@ demo.get('/', function(req, res){
 // });
 
 
-module.exports = demo;
+module.exports = demoPage;
