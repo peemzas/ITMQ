@@ -18,12 +18,26 @@ block content
       .panel-body
         .row
           .col-md-6
-            button.btn.btn-flat.btn-link.btn-link-style(type="button", style='color: #008584;', data-toggle="modal", data-target="#myModal") Add Device
-        .row#allDevices
+            button.btn.btn-flat.btn-link.btn-link-style(type="button", style='color: #008584;', data-toggle="modal", data-target="#myModal") Add Things
+        .row#allDevices_panel
+          each device_val in allDevices
+            .col-md-4
+              .panel.panel-default
+                .panel-heading
+                  .row
+                    .col-md-6
+                      h3= device_val.device_name
+                    .col-md-6(style = "text-align: right; display: block")
+                      label Status :
+                      label= device_val.status
+                .panel-body
+                  p= device_val.device_description
+
+
           .col-md-4
             .panel.panel-default
               .panel-heading
-                h3 Hello.
+                label Hello.
               .panel-body
                 | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra
                 | varius quam sit amet vulputate. Quisque mauris augue, molestie tincidunt

@@ -10,7 +10,8 @@ var client;
 
 loginPage.get('/', function(req, res){
   if(req.session.email){
-  	res.render('user', {session: req.session});
+    res.redirect('/user');
+  	// res.render('user', {session: req.session});
   	console.log(req.session.email);
   }else{
   	res.render('login');
@@ -73,9 +74,6 @@ loginPage.post('/regis', function(req, res){
 								   password: pass ,
 								   username_broker: username_bk ,
 								   password_broker: password_bk ,
-								   devices: [{device_id: null ,
-								   			  subscribe:[],
-								   			  status: null}],
 								   limit_connection: limit
 								});
 
