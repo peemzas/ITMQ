@@ -2,50 +2,55 @@ var express = require('express');
 var session = require('express-session');
 var loginPage = express.Router();
 var shortid = require('shortid');
-var Col = require('../model/User');
+var userDB = require('../model/User');
 var Client = require('../routes/connectMosca');
 
-var sess;
+// var sess;
+var client;
 
 loginPage.get('/', function(req, res){
-  sess=req.session;
-  if(sess.email){
-  	res.render('user', {session: sess});
-  	console.log(sess.email);
+  if(req.session.email){
+  	res.render('user', {session: req.session});
+  	console.log(req.session.email);
   }else{
   	res.render('login');
   }
+  console.log("/loginPage Session : \n");
+  console.log(req.session);
 });
 
 loginPage.get('/logout', function(req, res){
-	req.session.destroy(function (err){
-		if(err){
-			console.log(err);
-		}else{
-      if(sess.client != undefined){
-        Client.close_connection(sess.client);
-      }
-			res.redirect('/loginPage');
-			console.log(sess);
-			console.log("destroy session successful");
-		}
-	})
+  console.log("/loginPage/logout Session : \n");
+  console.log(req.session);
+  console.log(client);
+  if(!req.session.client_status && req.session.client_status != undefined){
+    Client.close_connection(client);
+    req.session.destroy();
+    res.redirect('/loginPage');
+  }else{
+    res.redirect('/loginPage');
+  }
+	console.log("destroy session successful");
 });
 
 loginPage.post('/login', function(req, res){
   var email = req.body.email;
   var pass = req.body.password;
 
-  Col.find({'email': email ,'password': pass}, function(err,userData){
+  userDB.find({'email': email ,'password': pass}, function(err,userData){
     if(userData.length != 0){
-      sess = req.session;
-      sess.email = email;
-      res.send(["Login successful : " + sess.email , true]);
+      // sess = req.session;
       var usernameBroker = userData[0].username_broker;
       var passwordBroker = userData[0].password_broker;
-        
-      var client = Client.connectMosca(usernameBroker,passwordBroker);
-      sess.client = client;
+      client = Client.connectMosca(usernameBroker,passwordBroker);
+      module.exports.client_user = client;
+
+      req.session.email = email;
+      req.session.client_status = client.disconnecting;
+      res.send(["Login successful : " + req.session.email , true]);
+    
+      console.log("/loginPage/login Session : \n")
+      console.log(req.session);
     }else{
       res.send(['Login fail', false]);
     }
@@ -58,13 +63,13 @@ loginPage.post('/regis', function(req, res){
   var pass = req.body.password;
   var limit = req.body.package;
 
-  Col.count({'email': email},function (err,col){
+  userDB.count({'email': email},function (err,col){
   	if(col>0){
   		res.send(['This email exits' , false]);
   	}else{
   		var username_bk = shortid.generate();
   		var password_bk = shortid.generate();
-  		var register = new Col ({ email: email ,
+  		var register = new userDB ({ email: email ,
 								   password: pass ,
 								   username_broker: username_bk ,
 								   password_broker: password_bk ,
@@ -78,9 +83,10 @@ loginPage.post('/regis', function(req, res){
 		  	if (err) {
           console.log(['Register fail' , false]);
 		  		res.send(['Register fail' , false]);
-		  	}
-			console.log('Reigister success');
-      res.send(['Register successful.' , true]);
+		  	}else{
+          console.log('Reigister success');
+          res.send(['Register successful.' , true]);
+        }
 	  	});
   	}
   });

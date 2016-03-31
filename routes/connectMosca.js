@@ -1,5 +1,5 @@
 var mqtt    = require('mqtt');
-var SECURE_CERT = __dirname + '/../secure/tls-cert.pem';
+// var SECURE_CERT = __dirname + '/../secure/tls-cert.pem';
 
 module.exports.connectMosca = function(username,password){
     var options = {
@@ -11,11 +11,10 @@ module.exports.connectMosca = function(username,password){
         protocolId: 'MQTT',
         protocolVersion: 4,
         clean: true,
-        rejectUnauthorized: false,
-        certPath: SECURE_CERT
+        rejectUnauthorized: false
     };
 
-    var client  = mqtt.createSecureClient(options);
+    var client  = mqtt.connect(options);
     
     client.on('error', function (err) {
         console.log(err);
