@@ -30,6 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 app.use(require('node-sass-middleware')({
@@ -42,7 +43,7 @@ app.use(require('node-sass-middleware')({
 app.use(session({
   secret: 'mqttitbroker',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: true
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
