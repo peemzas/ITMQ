@@ -10,12 +10,12 @@ $(document).ready(function(){
 				},
 				success: function(data){
 					if(data[1]){
-						$('#allDevices').append('<div class="col-md-4">'+
+						$('#allDevices_panel').append('<div class="col-md-4">'+
 				            								'<div class="panel panel-default">'+
 				                							'<div class="panel-heading">'+
-				                    						'<h3 class="">Hello.</h3>'+
+				                    						'<h3 class="">'+data[2]+'.</h3>'+
 				                							'</div>'+
-				                							'<div class="panel-body">Test</div>'+
+				                							'<div class="panel-body">'+data[3]+'</div>'+
 				            								'</div>'+
 				        									'</div>');
 						alert("Add device success.")

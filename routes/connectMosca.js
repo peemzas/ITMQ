@@ -21,8 +21,9 @@ module.exports.connectMosca = function(username,password){
         client.end();
     });
 
-    client.on('connect', function () {
+    client.on('connect', function (connack) {
         console.log("connect successful");
+        console.log(connack);
     });
 
     return client;

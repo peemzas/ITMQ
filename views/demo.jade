@@ -124,7 +124,7 @@ block content
       var unSubTopic = element.next().find(".topic").text();
       if (confirm("Do you want to unsubscribe?") == true) {
           element.parent().parent().remove();
-          client.unsubscribe(unSubTopic);
+          client.unsubscribe("#{usernameBroker}/"+unSubTopic);
           subscribed.splice(subscribed.indexOf(unSubTopic), 1);
           console.log(unSubTopic);
       }
@@ -158,7 +158,7 @@ block content
         console.log(window.location.protocol);
 
         if('#{session.email}'){
-          client = new Paho.MQTT.Client("localhost", 8884, "web_" + parseInt(Math.random() * 1000, 10));
+          client = new Paho.MQTT.Client("localhost", 8884, "/ws", "web_" + parseInt(Math.random() * 1000, 10));
           client.onConnectionLost = onConnectionLost;
           client.onMessageArrived = onMessageArrived;
 
@@ -175,7 +175,7 @@ block content
           client.connect(options);
           console.log("Authen");
         }else{
-          client = new Paho.MQTT.Client("localhost", 1884, "web_" + parseInt(Math.random() * 1000, 10));
+          client = new Paho.MQTT.Client("localhost", 1884, "/ws", "web_" + parseInt(Math.random() * 1000, 10));
           client.onConnectionLost = onConnectionLost;
           client.onMessageArrived = onMessageArrived;
 
@@ -197,7 +197,7 @@ block content
           $('#publishButton').on('click', function(){
             var publishPayload = $('#publishPayload').val();
             if("#{session.email}"){
-              var publishTopic = "#{session.email}/" + $('#publishTopic').val();
+              var publishTopic = "#{usernameBroker}/" + $('#publishTopic').val();
             }else{
               var publishTopic = $('#publishTopic').val();
             }
@@ -214,7 +214,7 @@ block content
             subscribeTopic = $('#subscribeTopic').val();
             subscribeQoSInput = parseInt($("#subscribeQoSInput :selected").val());
             if("#{session.email}"){
-              client.subscribe("#{session.email}/" + subscribeTopic, 
+              client.subscribe("#{usernameBroker}/" + subscribeTopic, 
                                 {qos: subscribeQoSInput,
                                  onSuccess: subscribeSubccess,
                                  onFailure: subscribeFail});
@@ -238,17 +238,7 @@ block content
         }
 
        function doFail(e){
-          if(e.errorMessage == "AMQJS0007E Socket error:undefined."){
-            if(confirm("Cannot Connect, Plaese click OK to get Certificate.")){
-              var win = window.open("https://localhost:3331");
-              if(win){
-                win.focus();
-              }else{
-                alert('Please allow popups for this site and Refresh.');
-              }
-              console.log(e.errorMessage);
-            }
-          }else{
+          if(e){
             alert("Cannot Connect, Please Refresh");
           }
           console.log(e);
