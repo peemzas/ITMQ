@@ -1,8 +1,9 @@
 var mqtt    = require('mqtt');
 // var SECURE_CERT = __dirname + '/../secure/tls-cert.pem';
 
-module.exports.connectMosca = function(username,password){
+module.exports.connectMosca = function(username,password,clientId){
     var options = {
+        clientId: clientId,
         host: 'localhost',
         port: '8883',
         username: username,

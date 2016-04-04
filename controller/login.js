@@ -24,13 +24,15 @@ loginPage.get('/logout', function(req, res){
   console.log("/loginPage/logout Session : \n");
   console.log(req.session);
   console.log(client);
-  if(!req.session.client_status && req.session.client_status != undefined){
-    Client.close_connection(client);
-    req.session.destroy();
-    res.redirect('/loginPage');
-  }else{
-    res.redirect('/loginPage');
-  }
+  // if(!req.session.client_status && req.session.client_status != undefined){
+  //   Client.close_connection(client);
+  //   req.session.destroy();
+  //   res.redirect('/loginPage');
+  // }else{
+  //   res.redirect('/loginPage');
+  // }
+  req.session.destroy();
+  res.redirect('/loginPage');
 	console.log("destroy session successful");
 });
 
@@ -43,11 +45,11 @@ loginPage.post('/login', function(req, res){
       // sess = req.session;
       var usernameBroker = userData[0].username_broker;
       var passwordBroker = userData[0].password_broker;
-      client = Client.connectMosca(usernameBroker,passwordBroker);
-      module.exports.client_user = client;
+      // client = Client.connectMosca(usernameBroker,passwordBroker,email+'-WebClientId');
+      // module.exports.client_user = client;
 
       req.session.email = email;
-      req.session.client_status = client.disconnecting;
+      // req.session.client_status = client.disconnecting;
       res.send(["Login successful : " + req.session.email , true]);
     
       console.log("/loginPage/login Session : \n")

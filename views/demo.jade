@@ -158,7 +158,7 @@ block content
         console.log(window.location.protocol);
 
         if('#{session.email}'){
-          client = new Paho.MQTT.Client("localhost", 8884, "/ws", "web_" + parseInt(Math.random() * 1000, 10));
+          client = new Paho.MQTT.Client("localhost", 8884, "/ws", "web_" + '#{session.email}', 10);
           client.onConnectionLost = onConnectionLost;
           client.onMessageArrived = onMessageArrived;
 
