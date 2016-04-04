@@ -45,7 +45,7 @@ html
             li(data-menuanchor="aboutPage" )
               a(href='/#aboutPage') About
             li(data-menuanchor="planPage" )
-              a(href='/#planPage') Plan
+              a(href='/#planPage') Pricing
             li(data-menuanchor="contactPage" )
               a(href='/#contactPage') Contact
           //-   li.dropdown
@@ -70,6 +70,8 @@ html
           ul.nav.navbar-nav.navbar-right
             li
               a#webdemo(href='/demo') WebSocket Demo
+            li
+              a.btn-raised.btn-material-green.btn-navbar.btn-nav SIGN UP
             //- li
             //-   a(href='/test') Test
             //- li
@@ -77,11 +79,10 @@ html
             //- li.btn.btn-primary.btn-raised.btn-material-blue-A200.btn-navbar
             //-   | Register
             li
-
               if !session || !session.email
-                  a.btn-raised.btn-material-green.btn-navbar(href='/loginPage') Log in
+                  a.btn-raised.btn-material-green.btn-navbar.btn-nav(href='/loginPage') LOG IN
               else
-                  a.btn-raised.btn-material-green.btn-navbar(href='/user') #{session.email}
+                  a.btn-raised.btn-material-green.btn-navbar.btn-nav(href='/user') #{session.email}
             //- a.btn-green(href='/login') Log in
             //- li
             //-   a(href='javascript:void(0)') Link
