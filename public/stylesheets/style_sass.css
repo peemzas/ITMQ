@@ -5,6 +5,9 @@
   background: #008584;
   color: #ffffff; }
 
+.en-font {
+  font-family: sans-serif; }
+
 .th-font {
   font-family: "ThaiSansNeue"; }
 
@@ -35,6 +38,7 @@
   display: block; }
   .btn-homegreen:hover {
     background: #009688;
+    color: #ffffff;
     cursor: pointer;
     text-decoration: none; }
 
@@ -61,7 +65,7 @@
     background: #009688 !important; }
 
 .padding-nav {
-  padding-top: 80px; }
+  padding-top: 30px; }
 
 .container-main {
   width: 1170px; }
@@ -220,6 +224,11 @@
 .footer-it {
   font-size: 16px;
   margin-bottom: 0px; }
+
+.itmq-head {
+  height: 120px;
+  text-align: center;
+  background: #008584; }
 
 .fp-auto-height.fp-section,
 .fp-auto-height .fp-slide,

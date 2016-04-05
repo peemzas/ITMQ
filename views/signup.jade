@@ -4,27 +4,35 @@ block content
   .container.container-main.container-home.en-font.padding-nav
     //- .row
     //-   .col-sm-6(style="text-align: center; float:none; margin: 0 auto;")
-    //-     h2.dark-green Log In
+    //-     h2.dark-green Sign up
     .row
       .col-sm-6(style="float: none; margin: 0 auto;")
         .panel
           .panel-heading(style="background-color: #ffffff;")
-            h2(style="color: #008584; text-align: center;") Log in
+            h2(style="color: #008584; text-align: center;") Sign up
           .panel-body
             form
               .col-sm-12.field
-                label.field-label(for="userforlogin") Username
-                input.field-input(type='text', id="userforlogin")
+                label.field-label(for="userforregis") Username
+                input.field-input(type='text', id="userforregis")
                 br
               .col-sm-12.field
-                label.field-label(for="passforlogin") Password
-                input.field-input(type='password', id="passforlogin")
+                label.field-label(for="userforregis") Email
+                input.field-input(type='text', id="emailforregis")
+                br
+              .col-sm-12.field
+                label.field-label(for="passforregis") Password
+                input.field-input(type='password', id="passforregis")
+                br
+              .col-sm-12.field
+                label.field-label(for="confirmpassforregis") Confirm Password
+                input.field-input(type='password', id="confirmpassforregis")
                 br
               .col-sm-6(style="margin-top: 40px; color: #aaaaaa; padding-left: 0;")
-                | Forgot your password?
-                a(href='/') Remember
+                | Already have an account?
+                a(href='/loginPage') Log in
               .col-sm-6(style="padding: 0;")
-                a#loginButton.btn-homegreen Log In
+                a#signupButton.btn-homegreen Sign Up
   style.
     body{
       background-color: #E9E9E9;
@@ -99,48 +107,6 @@ block content
         transform: scaleX(1);
     }
 
-<<<<<<< HEAD
-    .card-box{
-      width: 600px;
-      height: 320px;
-      position: relative;
-      perspective: 800px;
-      margin: 0 auto;
-    }    
-
-    .card{
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      transform-style: preserve-3d;
-      transition: transform 1s;
-      padding: 0;
-    }
-
-    .card-front,.card-back{
-      margin: 0;
-      display: block;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-    }
-
-    .card-front{
-      z-index: 2;
-    }
-
-    .card-back{
-      height: 520px;
-      transform: rotateY( 180deg );
-    }
-
-    .card.flipped{
-      transform: rotateY( 180deg );
-    }
-
-=======
->>>>>>> best
   script(type='text/javascript').
     $(document).ready(function () {
       $('.field-input').focus(function () {

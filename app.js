@@ -13,6 +13,7 @@ var routes = require('./controller/index');
 var demo = require('./controller/demo');
 var login = require('./controller/login');
 var user = require('./controller/user');
+var signup = require('./routes/signup')
 // var showData = require('./routes/showData');
 
 var app = express();
@@ -51,6 +52,7 @@ app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 app.use('/', routes);
 app.use('/demo', demo);
+app.use('/signup', signup);
 app.use('/loginPage', login);
 app.use('/user', user);
 // app.use('/showData', showData);
