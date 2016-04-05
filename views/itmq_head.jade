@@ -1,0 +1,41 @@
+doctype html
+html
+  head
+    title Sign up
+
+    //Material Design
+    script(src='../bower_components/jquery/dist/jquery.js')
+    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
+    script(src='/javascripts/paho/mqttws31.js')
+
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css')
+    link(rel='stylesheet', href='../bower_components/bootstrap-material-design/dist/css/roboto.min.css')
+    link(rel='stylesheet', href='../bower_components/bootstrap-material-design/dist/css/material-fullpalette.min.css')
+    link(rel='stylesheet', href='../bower_components/bootstrap-material-design/dist/css/ripples.min.css')
+    link(rel='stylesheet', href='//fezvrasta.github.io/snackbarjs/dist/snackbar.min.css')
+
+    // My CSS style
+    link(rel='stylesheet', href='/stylesheets/fonts.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/style_sass.css')
+
+
+    //Mobile Support
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+  body
+    .itmq-head
+      a(href='/') 
+        img(src='/images/MQTT-Logo.png', style='height: 100%')
+
+    block content
+
+    //Java Scripts
+    script(src='../bower_components/bootstrap-material-design/dist/js/material.min.js')
+    script(src='../bower_components/bootstrap-material-design/dist/js/ripples.min.js')
+    script(src='/javascripts/script.js')
+    //- script(src='/javascripts/showDemo.js')
+    script(src='/javascripts/manageUsers.js')
+    script(src='/javascripts/controlUsers.js')
+    script(src='/javascripts/socket.io/socket.io.js')
+    script(type='text/javascript').
+      $.material.init();

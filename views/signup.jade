@@ -4,28 +4,35 @@ block content
   .container.container-main.container-home.en-font.padding-nav
     //- .row
     //-   .col-sm-6(style="text-align: center; float:none; margin: 0 auto;")
-    //-     h2.dark-green Log In
+    //-     h2.dark-green Sign up
     .row
       .col-sm-6(style="float: none; margin: 0 auto;")
         .panel
           .panel-heading(style="background-color: #ffffff;")
-            h2(style="color: #008584; text-align: center;") Log in
+            h2(style="color: #008584; text-align: center;") Sign up
           .panel-body
             form
               .col-sm-12.field
-                label.field-label(for="userforlogin") Username
-                input.field-input(type='text', id="userforlogin")
+                label.field-label(for="userforregis") Username
+                input.field-input(type='text', id="userforregis")
                 br
               .col-sm-12.field
-                label.field-label(for="passforlogin") Password
-                input.field-input(type='password', id="passforlogin")
+                label.field-label(for="userforregis") Email
+                input.field-input(type='text', id="emailforregis")
+                br
+              .col-sm-12.field
+                label.field-label(for="passforregis") Password
+                input.field-input(type='password', id="passforregis")
+                br
+              .col-sm-12.field
+                label.field-label(for="confirmpassforregis") Confirm Password
+                input.field-input(type='password', id="confirmpassforregis")
                 br
               .col-sm-6(style="margin-top: 40px; color: #aaaaaa; padding-left: 0;")
-                | Forgot your password?
-                a(href='/') Remember
+                | Already have an account?
+                a(href='/loginPage') Log in
               .col-sm-6(style="padding: 0;")
-                a#loginButton.btn-homegreen Log In
-
+                a#signupButton.btn-homegreen Sign Up
   style.
     body{
       background-color: #E9E9E9;

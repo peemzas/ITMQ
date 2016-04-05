@@ -10,6 +10,7 @@ mongoose.connect('mongodb://mqttserver:qwerty@proton.it.kmitl.ac.th:27017/mqttse
 
 var routes = require('./routes/index');
 var demo = require('./routes/demo');
+var signup = require('./routes/signup')
 var login = require('./routes/login');
 var users = require('./routes/users');
 // var addData = require('./routes/addData');
@@ -51,6 +52,7 @@ app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 app.use('/', routes);
 app.use('/demo', demo);
+app.use('/signup', signup);
 app.use('/loginPage', login);
 app.use('/users', users);
 // app.use('/addData',addData);

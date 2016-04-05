@@ -29,62 +29,75 @@ block content
         .table-cell
           .row
             .col-sm-6.text-center
-              img(src='images/MQTT-LogoBig.png', style='width:100%')
+              img(src='/images/MQTT-LogoBig.png', style='width:100%')
             .col-sm-6
               p.content-main
                 | ITMQ BROKER FOR IoT
               p.content-main.content-main-small
                 | " Let your devices connected "
+              .col-sm-6
+                .btn-homegreen Start Now
+              .col-sm-6
+                a.btn-homewhite(href='/demo') See Demo
         .clear
     .section.page.page2
       #about-anchor(data-anchor='aboutPage',style="position:absolute;top: -50px;")
       .container-iot
         .container
           .col-xs-12.text-center
-            img(src='images/iot.jpg',style='width:80%')
+            img(src='/images/iot.jpg',style='width:65%')
       .container.container-main.container-about
-        .content-about
-          .col-md-4
-            .panel.panel-about
-              .row.text-center
-                img(src='images/internet.png').pic-size
-              .row
-                p.p-about.heading.text-center
-                  | Internet of Things
-                p
-                  | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เทคโนโลยี Internet of Things (IoT) เป็นเทคโนโลยีที่จะทำให้เครื่องมือ สิ่งของ หรืออุปกรณ์ต่างๆสามารถติดต่อกันได้ โดยผ่านระบบเครือข่ายหรืออินเตอร์เน็ต เพื่อให้อุปกรณ์เชื่อมต่อแลกเปลี่ยนข้อมูล ติดต่อสื่อสาร สั่งการจากระยะทางไกล หรือเพื่อเพิ่มขีดจำกัดความสามารถในการใช้งานให้กับอุปกรณ์นั้นได้
-          .col-md-4
-            .panel.panel-about
-              .row.text-center
-                img(src='images/cloud.png').pic-size
-              .row
-                p.p-about.heading.text-center
-                  | MQTT Protocol
-                p
-                  | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MQTT  เป็นโปรโตคอลที่ใช้หลักการ Machine-to-Machine (M2M) โดยจะใช้หลักการ Publish, Subscribe (Pub/Sub) ในการรับส่งข้อมูล มีหลักการคือมีอุปกรณ์เชื่อมต่อกับตัวกลาง เรียกว่า MQTT Broker
-          .col-md-4
-            .panel.panel-about
-              .row.text-center
-                img(src='images/websocket.png').pic-size
-              .row
-                p.p-about.heading.text-center
-                  | WebSockets คืออะไร?
-                p
-                  | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WebSockets เป็นเทคโนโลยีใช้ในการติดต่อสื่อสารระหว่าง Web server กับ Client แบบ Real time โดย WebSockets จะสร้างการเชื่อต่อโดยตรงระหว่าง Server กับ Client ไว้ ทำให้สามารถรับส่งข้อมูลได้โดยตรง
-              .row.text-center
-                a.btn.btn-raised.btn-grey(href='/demo')
-                  | ทดสอบ WebSocket >>
+        .col-sm-12
+          //- .row
+          //-   p.th-font(style="font-size: 36px; text-align: center") About Internet of Things
+          .row.content-about
+            .col-md-4
+              .panel.panel-about(type="button", data-toggle="modal", data-target="#iotModal")
+                .cover
+                  p.readmore READ MORE
+                .row.text-center
+                  img(src='/images/internet.png').pic-size
+                .row
+                  p.p-about.heading.text-center
+                    | Internet of Things
+                  //- p
+                  //-   | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เทคโนโลยี Internet of Things (IoT) เป็นเทคโนโลยีที่จะทำให้เครื่องมือ สิ่งของ หรืออุปกรณ์ต่างๆสามารถติดต่อกันได้ โดยผ่านระบบเครือข่ายหรืออินเตอร์เน็ต เพื่อให้อุปกรณ์เชื่อมต่อแลกเปลี่ยนข้อมูล ติดต่อสื่อสาร สั่งการจากระยะทางไกล หรือเพื่อเพิ่มขีดจำกัดความสามารถในการใช้งานให้กับอุปกรณ์นั้นได้
+            .col-md-4
+              .panel.panel-about(type="button", data-toggle="modal", data-target="#mqttModal")
+                .cover
+                  p.readmore READ MORE
+                .row.text-center
+                  img(src='/images/cloud.png').pic-size
+                .row
+                  p.p-about.heading.text-center
+                    | MQTT Protocol
+                  //- p
+                  //-   | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MQTT  เป็นโปรโตคอลที่ใช้หลักการ Machine-to-Machine (M2M) โดยจะใช้หลักการ Publish, Subscribe (Pub/Sub) ในการรับส่งข้อมูล มีหลักการคือมีอุปกรณ์เชื่อมต่อกับตัวกลาง เรียกว่า MQTT Broker
+            .col-md-4
+              .panel.panel-about(type="button", data-toggle="modal", data-target="#webSocModal")
+                .cover
+                  p.readmore READ MORE
+                .row.text-center
+                  img(src='/images/websocket.png').pic-size
+                .row
+                  p.p-about.heading.text-center
+                    | WebSockets
+                  //- p
+                  //-   | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WebSockets เป็นเทคโนโลยีใช้ในการติดต่อสื่อสารระหว่าง Web server กับ Client แบบ Real time โดย WebSockets จะสร้างการเชื่อต่อโดยตรงระหว่าง Server กับ Client ไว้ ทำให้สามารถรับส่งข้อมูลได้โดยตรง
+                //- .row.text-center
+                //-   a.btn.btn-raised.btn-grey(href='/demo')
+                    | ทดสอบ WebSocket >>
     .section.page.page3(data-anchor='planPage')
       .container.container-main.container-plan
         .content-plan
           .panel.panel-plan
             .row
               p.heading-plan.text-center
-                | Plan & Pricing
+                | Pricing & Plan
             .row
               .col-xs-12
                 .col-md-3.text-center
-                  img(src='images/bronze.png').medal-size
+                  img(src='/images/bronze.png').medal-size
                   p.p-medal
                     | Bronze Package
                   p.p-medalcontent
@@ -92,7 +105,7 @@ block content
                   p.p-medalcontent
                     | Free
                 .col-md-3.text-center
-                  img(src='images/silver.png').medal-size
+                  img(src='/images/silver.png').medal-size
                   p.p-medal
                     | Silver Package
                   p.p-medalcontent
@@ -100,7 +113,7 @@ block content
                   p.p-medalcontent
                     | 59 THB / Month
                 .col-md-3.text-center
-                  img(src='images/gold.png').medal-size
+                  img(src='/images/gold.png').medal-size
                   p.p-medal
                     | Gold Package
                   p.p-medalcontent
@@ -108,7 +121,7 @@ block content
                   p.p-medalcontent
                     | 499 THB / Month
                 .col-md-3.text-center
-                  img(src='images/diamond.png').medal-size
+                  img(src='/images/diamond.png').medal-size
                   p.p-medal
                     | Diamond Package
                   p.p-medalcontent
@@ -120,7 +133,7 @@ block content
         .container.container-main
           .row
             .col-md-6.text-center
-              img(src='images/MQTT-Logo-Green.png')
+              img(src='/images/MQTT-Logo-Green.png')
               p.p-logo-footer
                 | ITMQ BROKER FOR IoT
               p.p-logo-quote
@@ -147,17 +160,17 @@ block content
                       | พิเชฐ เลิศกิตติธร
                     .row
                       .col-md-2
-                        img(src='images/google.png', style='width:100%')
+                        img(src='/images/google.png', style='width:100%')
                       .col-md-10
                         | peemzas@gmail.com
                     .row
                       .col-md-2
-                        img(src='images/facebook.png', style='width:100%')
+                        img(src='/images/facebook.png', style='width:100%')
                       .col-md-10
                         | facebook.com/PeeMzZ
                     .row
                       .col-md-2
-                        img(src='images/twitter.png', style='width:100%')
+                        img(src='/images/twitter.png', style='width:100%')
                       .col-md-10
                         | @PeeMz_Kael
                   .col-md-6
@@ -165,17 +178,17 @@ block content
                       | วรัตม์ จีระเรืองรัตนา
                     .row
                       .col-md-2
-                        img(src='images/google.png', style='width:100%')
+                        img(src='/images/google.png', style='width:100%')
                       .col-md-10
                         | bestzwarat@gmail.com
                     .row
                       .col-md-2
-                        img(src='images/facebook.png', style='width:100%')
+                        img(src='/images/facebook.png', style='width:100%')
                       .col-md-10
                         | facebook.com/bestzwarat
                     .row
                       .col-md-2
-                        img(src='images/twitter.png', style='width:100%')
+                        img(src='/images/twitter.png', style='width:100%')
                       .col-md-10
                         | @bestzwarat
                 .row
@@ -187,3 +200,39 @@ block content
                         | คณะเทคโนโลยีสารสนเทศ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง
                       p.footer-it
                         | Faculty of Informaation Technology, King Mongkut's Institute of Technology Lad krabang
+
+  #iotModal.modal.fade.about-modal(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4.modal-title.th-font(style="font-size: 36px; text-align: center") Internet of Things
+          .modal-body(style='padding: 20px 20px 20px 20px')
+            p
+              | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เทคโนโลยี Internet of Things (IoT) เป็นเทคโนโลยีที่จะทำให้เครื่องมือ สิ่งของ หรืออุปกรณ์ต่างๆสามารถติดต่อกันได้โดยผ่านระบบเครือข่ายหรืออินเตอร์เน็ต เพื่อให้อุปกรณ์เชื่อมต่อแลกเปลี่ยนข้อมูล ติดต่อสื่อสาร สั่งการจากระยะทางไกล หรือเพื่อเพิ่มขีดจำกัดความสามารถในการใช้งานให้กับอุปกรณ์นั้นได้
+          .modal-footer
+            button.btn.btn-default.th-font(type='button', style="font-size: 20px", data-dismiss='modal') Close
+
+  #mqttModal.modal.fade.about-modal(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4.modal-title.th-font(style="font-size: 36px; text-align: center") MQTT Protocol
+          .modal-body(style='padding: 20px 20px 20px 20px')
+            p
+              | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MQTT  เป็นโปรโตคอลที่ใช้หลักการ Machine-to-Machine (M2M) โดยจะใช้หลักการ Publish, Subscribe (Pub/Sub) ในการรับส่งข้อมูล ด้วยการทำให้อุปกรณ์ทำการเชื่อมต่อกับตัวกลางที่เรียกว่า MQTT Broker
+          .modal-footer
+            button.btn.btn-default.th-font(type='button', style="font-size: 20px", data-dismiss='modal') Close
+
+  #webSocModal.modal.fade.about-modal(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4.modal-title.th-font(style="font-size: 36px; text-align: center") WebSockets คืออะไร?
+          .modal-body(style='padding: 20px 20px 20px 20px')
+            p
+              | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WebSockets เป็นเทคโนโลยีใช้ในการติดต่อสื่อสารระหว่าง Web Server กับ Client แบบ Real time โดย WebSockets จะสร้างการเชื่อมต่อโดยตรงระหว่าง Server กับ Client ทำให้สามารถรับส่งข้อมูลได้โดยตรงและรวดเร็ว
+          .modal-footer
+            button.btn.btn-default.th-font(type='button', style="font-size: 20px", data-dismiss='modal') Close

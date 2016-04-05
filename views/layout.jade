@@ -5,6 +5,7 @@ html
 
     //Material Design
     script(src='../bower_components/jquery/dist/jquery.js')
+    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
     script(src='/javascripts/paho/mqttws31.js')
 
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css')
@@ -34,7 +35,7 @@ html
             span.icon-bar
             span.icon-bar
           a.navbar-brand(href='/')
-            img(src='images/MQTT-Logo.png', style='height:100%')
+            img(src='/images/MQTT-Logo.png', style='height:100%')
         .navbar-collapse.collapse.navbar-responsive-collapse
           ul#navigator.nav.navbar-nav.navbar-left
             //- a(href='javascript:void(0)')
@@ -44,7 +45,7 @@ html
             li(data-menuanchor="aboutPage" )
               a(href='/#aboutPage') About
             li(data-menuanchor="planPage" )
-              a(href='/#planPage') Plan
+              a(href='/#planPage') Pricing
             li(data-menuanchor="contactPage" )
               a(href='/#contactPage') Contact
           //-   li.dropdown
@@ -69,6 +70,8 @@ html
           ul.nav.navbar-nav.navbar-right
             li
               a#webdemo(href='/demo') WebSocket Demo
+            li
+              a.btn-raised.btn-material-green.btn-navbar.btn-nav(href='/signup') SIGN UP
             //- li
             //-   a(href='/test') Test
             //- li
@@ -76,14 +79,11 @@ html
             //- li.btn.btn-primary.btn-raised.btn-material-blue-A200.btn-navbar
             //-   | Register
             li
-<<<<<<< 24b7c2a6d8aba73a170cfcbadd07a11fa773cae8
               if !session || !session.email
-                  a.btn-raised.btn-material-green.btn-navbar(href='/loginPage') Log in
+                  a.btn-raised.btn-material-green.btn-navbar.btn-nav(href='/loginPage') LOG IN
               else
-                  a.btn-raised.btn-material-green.btn-navbar(href='/users') #{session.email}
-=======
-              a.btn-green(href='/login') Log in
->>>>>>> update css patch
+                  a.btn-raised.btn-material-green.btn-navbar.btn-nav(href='/user') #{session.email}
+            //- a.btn-green(href='/login') Log in
             //- li
             //-   a(href='javascript:void(0)') Link
             //- li.dropdown
@@ -109,6 +109,7 @@ html
     script(src='/javascripts/script.js')
     //- script(src='/javascripts/showDemo.js')
     script(src='/javascripts/manageUsers.js')
+    script(src='/javascripts/controlUsers.js')
     script(src='/javascripts/socket.io/socket.io.js')
     script(src='/fullpage/vendors/jquery.easings.min.js')
     script(type='text/javascript', src='/fullpage/vendors/jquery.slimscroll.min.js')
