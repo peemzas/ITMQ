@@ -1,7 +1,14 @@
 extends layout
 
+block link
+  -var selected = 'demo';
+  if !session.email
+    -var login = false;
+  else
+    -var login = true;
+
 block content
-  .container.container-main.padding-nav
+  .container.container-main.padding-nav(style="padding-top: 100px;")
     .row
       .col-xs-12
         //- .panel

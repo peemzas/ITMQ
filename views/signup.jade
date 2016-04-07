@@ -8,31 +8,47 @@ block content
     .row
       .col-sm-6(style="float: none; margin: 0 auto;")
         .panel
-          .panel-heading(style="background-color: #ffffff;")
-            h2(style="color: #008584; text-align: center;") Sign up
+          //- .panel-heading(style="background-color: #ffffff;")
+          //-   h2(style="color: #008584; text-align: center;") Sign up
           .panel-body
+            h2(style="color: #008584; text-align: center;") Sign Up
             form
-              .col-sm-12.field
-                label.field-label(for="userforregis") Username
+              //- .col-md-12.field
+              //-   label.field-label(for="userforregis") Username
+              //-   input.field-input(type='text', id="userforregis")
+              //-   br
+              //- .col-md-12.field
+              //-   label.field-label(for="emailforregis") Email
+              //-   input.field-input(type='text', id="emailforregis")
+              //-   br
+              .col-md-12.field
+                label.field-label(for="userforregis") Email
                 input.field-input(type='text', id="userforregis")
                 br
-              .col-sm-12.field
-                label.field-label(for="userforregis") Email
-                input.field-input(type='text', id="emailforregis")
-                br
-              .col-sm-12.field
+              .col-md-12.field
                 label.field-label(for="passforregis") Password
                 input.field-input(type='password', id="passforregis")
                 br
-              .col-sm-12.field
+              .col-md-12.field
                 label.field-label(for="confirmpassforregis") Confirm Password
                 input.field-input(type='password', id="confirmpassforregis")
                 br
-              .col-sm-6(style="margin-top: 40px; color: #aaaaaa; padding-left: 0;")
+              .col-md-12(style="padding-top: 10px; color: #aaaaaa;")
+                .checkbox
+                  label
+                    input(type='checkbox')
+                    |  I have read and agree to the 
+                    a(href='') Terms of Service
+                    |  & 
+                    a(href='') Privacy Policy
+              .col-md-12(style="padding: 0;")
+                a#signupButton.btn-homegreen(style="margin-top: 20px;") Sign Up
+              .col-md-12(style="margin-top: 20px; color: #aaaaaa; text-align: center;")
                 | Already have an account?
-                a(href='/loginPage') Log in
-              .col-sm-6(style="padding: 0;")
-                a#signupButton.btn-homegreen Sign Up
+                a(href='/loginPage', style="margin-left: 5px;") Log in here
+              .col-md-12(style="margin-top: 20px; text-align: center;")
+                a(href='/') Go Back to Home
+
   style.
     body{
       background-color: #E9E9E9;
