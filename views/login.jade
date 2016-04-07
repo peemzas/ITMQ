@@ -8,23 +8,27 @@ block content
     .row
       .col-sm-6(style="float: none; margin: 0 auto;")
         .panel
-          .panel-heading(style="background-color: #ffffff;")
-            h2(style="color: #008584; text-align: center;") Log in
+          //- .panel-heading(style="background-color: #ffffff;")
+          //-   h2(style="color: #008584; text-align: center;") Log in
           .panel-body
+            h2(style="color: #008584; text-align: center;") Log In
             form
-              .col-sm-12.field
+              .col-md-12.field
                 label.field-label(for="userforlogin") Username
                 input.field-input(type='text', id="userforlogin")
                 br
-              .col-sm-12.field
+              .col-md-12.field
                 label.field-label(for="passforlogin") Password
                 input.field-input(type='password', id="passforlogin")
                 br
-              .col-sm-6(style="margin-top: 40px; color: #aaaaaa; padding-left: 0;")
-                | Forgot your password?
-                a(href='/') Remember
-              .col-sm-6(style="padding: 0;")
-                a#loginButton.btn-homegreen Log In
+              .col-md-12(style="padding: 0;")
+                a#loginButton.btn-homegreen(type='submit', style="margin-top: 40px;") Log In
+            .col-md-12(style="margin-top: 20px; color: #aaaaaa; text-align: center;")
+              | Forgot your password?
+              a(href='/', style="margin-left: 5px;") Remember
+            .col-md-12(style="margin-top: 20px; text-align: center;")
+              a(href='/') Go Back to Home
+
   style.
     body{
       background-color: #E9E9E9;
@@ -118,4 +122,10 @@ block content
         }
         $parent.removeClass('is-focused');
       });
+
+      $('#passforlogin').keypress(function(e){
+        if(e.keyCode==13)
+        $('#loginButton').click();
+      });
     });
+});

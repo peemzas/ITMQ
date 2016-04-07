@@ -36,9 +36,12 @@ block content
               p.content-main.content-main-small
                 | " Let your devices connected "
               .col-sm-6
-                .btn-homegreen Start Now
+                if !session || !session.email
+                  a.btn-homegreen(href='/signup', style="margin-left: 100px;") Start Now
+                else
+                  a.btn-homegreen(href='/user', style="margin-left: 100px;") Start Now
               .col-sm-6
-                a.btn-homewhite(href='/demo') See Demo
+                a.btn-homewhite(href='/demo', style="margin-right: 100px;") See Demo
         .clear
     .section.page.page2
       #about-anchor(data-anchor='aboutPage',style="position:absolute;top: -50px;")

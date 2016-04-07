@@ -1,7 +1,12 @@
-extends layout
+extends user_head
 
 block content
-  .container.container-main.container-home.padding-nav
+  .container.container-main.container-home(style="padding-top: 100px;")
+    //- .panel.panel-default.panel-user
+    //-   .panel-heading.panel-user
+    //-     .row
+    //-       .col-md-6
+    //-         h2(style="color: #008584; margin-top: 10px;") User Info
     .panel.panel-default
       .panel-heading
         .row
@@ -56,7 +61,7 @@ block content
             button#saveDevice.btn.btn-primary(type='button') Save changes
 
   script.
-    var socket = io('http://localhost:5000');
+    var socket = io('http://10.50.8.27:5000');
     socket.on("connect", function(socket){
       console.log("Socket connected");
     })

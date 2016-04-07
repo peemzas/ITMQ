@@ -13,7 +13,8 @@ var routes = require('./controller/index');
 var demo = require('./controller/demo');
 var login = require('./controller/login');
 var user = require('./controller/user');
-var signup = require('./routes/signup')
+var signup = require('./routes/signup');
+var newuser = require('./routes/newuser');
 // var showData = require('./routes/showData');
 
 var app = express();
@@ -55,6 +56,7 @@ app.use('/demo', demo);
 app.use('/signup', signup);
 app.use('/loginPage', login);
 app.use('/user', user);
+app.use('/newuser', newuser);
 // app.use('/showData', showData);
 
 // catch 404 and forward to error handler
