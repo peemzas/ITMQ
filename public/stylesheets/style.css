@@ -35,3 +35,9 @@ body {
 .resize-vertical {
 	resize: vertical;
 }
+
+.btn-projectName{
+	background: transparent;
+    border: 0px;
+    text-align: left;
+}

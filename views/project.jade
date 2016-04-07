@@ -1,0 +1,70 @@
+extends layout
+
+block content
+  .container.container-main.container-home.padding-nav
+    .panel.panel-default
+      .panel-heading
+        .row
+          .col-md-6
+            h2(style="color: #008584; margin-top: 10px;") #{session.email}
+          .col-md-6(style='text-align: right;')
+            a.btn.btn-flat.btn-link.btn-link-style(href='/loginPage/logout', style='color: #008584;') Logout
+
+      //- Add devices panel Don't touch olo
+      .panel-body.device-panel
+        .row
+          .col-md-6
+            button.btn.btn-flat.btn-link.btn-link-style(type="button", style='color: #008584;', data-toggle="modal", data-target="#saveDeviceModal") Add Things
+        .row#allDevices_panel
+          if allDevices.length > 0
+            each device_val in allDevices
+              if device_val.project_id == projectId
+                .col-md-4(id="#{device_val.device_id}")
+                  .panel.panel-default
+                    .panel-heading
+                      .row
+                        .col-md-8
+                          h3.deviceName= device_val.device_name
+                        .col-md-4(style = "text-align: right; display: block")
+                          button.btn.btn-raised.btn-xs#editDevice(style="margin: 10px 10px 10px 10px", onclick='editDevice($(this))', data-deviceId= "#{device_val.device_id}", data-deviceName = "#{device_val.device_name}" , data-deviceDescription = "#{device_val.device_description}") Edit
+                          button.close(type='button', aria-hidden='true',onclick='deleteDevice($(this))', data-deviceId= "#{device_val.device_id}" ) ×
+                    .panel-body
+                      label Status :
+                          label(data-deviceId="#{device_val.device_id}")= device_val.status
+                      br
+                      label ClientId : 
+                        = device_val.device_id
+                      br
+                      label.deviceDescription= device_val.device_description
+
+  #saveDeviceModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4.modal-title Add Devices
+          .modal-body(style='padding: 20px 20px 20px 20px')
+            .form-group
+              label.control-label Device Name
+              input#deviceName.form-control(type='text', name='deviceName')
+            .form-group
+              label.control-label Device Description
+              input#deviceDescription.form-control(type='text', name='deviceDescription')
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Close
+            button#saveDevice.btn.btn-primary(type='button', data-projectId="#{projectId}") Ok
+
+  script.
+    var socket = io('http://localhost:5000');
+    socket.on("connect", function(socket){
+      console.log("Socket connected");
+    })
+
+    socket.on("deviceStatus", function(message){
+      console.log(message);
+      var clientId = message["clientId"];
+      var status = message["deviceStatus"][clientId];
+      $('label[data-deviceId="'+clientId+'"]').text(status);
+      console.log("Client event msg from Server : " + status);
+      //- socket.emit("deviceStatus", "From Client : " + message);
+    })
