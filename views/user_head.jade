@@ -23,7 +23,7 @@ html
 
     //Mobile Support
     meta(name='viewport', content='width=device-width, initial-scale=1')
-  body
+  body(style="background: #e9e9e9")
     .navbar.navbar-green.navbar-fixed-top
       .container
         .navbar-header
@@ -41,6 +41,8 @@ html
               a.dropdown-toggle(href='http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html', data-target='#', data-toggle='dropdown') #{session.email}
                 b.caret
               ul.dropdown-menu
+                li
+                  a(href='/user') Dashboard
                 li
                   a(href='/demo') WebSocket
                 li
