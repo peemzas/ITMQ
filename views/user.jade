@@ -1,12 +1,36 @@
 extends user_head
 
 block content
-  .container.container-main.container-home(style="padding-top: 100px;")
+  .container.container-main.container-home.container-user(style="padding-top: 100px;")
     //- .panel.panel-default.panel-user
     //-   .panel-heading.panel-user
     //-     .row
     //-       .col-md-6
     //-         h2(style="color: #008584; margin-top: 10px;") User Info
+    .row
+      .col-md-4
+        .panel.panel-default
+          .panel-body(style="color: #4d4d4d; height: 100%;")
+            .row
+              .col-md-12
+                h4(style="color: #008584") User info
+            .row
+              .col-md-7
+                label.field-label Username for Broker : 
+              .col-md-5
+                label.field-label #{usernameBroker}
+            .row
+              .col-md-7
+                label.field-label Password for Broker : 
+              .col-md-5
+                label.field-label #{passwordBroker}
+              
+      .col-md-8
+        .panel.panel-default
+          .panel-body
+            .row
+              .col-md-12
+                h4(style="color: #008584; height: 100%") Dashboard
     .panel.panel-default
       .panel-heading
         .row
