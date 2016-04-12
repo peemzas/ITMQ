@@ -6,7 +6,7 @@ block content
       .panel-heading
         .row
           .col-md-6
-            h2(style="color: #008584; margin-top: 10px;") #{session.email}
+            h2(style="color: #008584; margin-top: 10px;") #{projectName}
           .col-md-6(style='text-align: right;')
             a.btn.btn-flat.btn-link.btn-link-style(href='/loginPage/logout', style='color: #008584;') Logout
 
@@ -23,8 +23,10 @@ block content
                   .panel.panel-default
                     .panel-heading
                       .row
-                        .col-md-8
-                          h3.deviceName= device_val.device_name
+                        form.col-md-8(method="post", action="/user/device")
+                          input(type="hidden",name="deviceId",value="#{device_val.device_id}")
+                          button.btn-deviceName(type='submit')
+                            h3.deviceName= device_val.device_name
                         .col-md-4(style = "text-align: right; display: block")
                           button.btn.btn-raised.btn-xs#editDevice(style="margin: 10px 10px 10px 10px", onclick='editDevice($(this))', data-deviceId= "#{device_val.device_id}", data-deviceName = "#{device_val.device_name}" , data-deviceDescription = "#{device_val.device_description}") Edit
                           button.close(type='button', aria-hidden='true',onclick='deleteDevice($(this))', data-deviceId= "#{device_val.device_id}" ) ×
@@ -50,14 +52,23 @@ block content
             .form-group
               label.control-label Device Description
               input#deviceDescription.form-control(type='text', name='deviceDescription')
+            .form-group
+              label.control-label Device Type
+              .radio.radio-primary
+                label
+                  input.deviceType(type='radio', value='publisher', name='deviceType')
+                  |  Publisher
+                label
+                  input.deviceType(type='radio', value='subscriber', name='deviceType')
+                  |  Subscriber
           .modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal') Close
             button#saveDevice.btn.btn-primary(type='button', data-projectId="#{projectId}") Ok
 
   script.
-    var socket = io('http://localhost:5000');
-    socket.on("connect", function(socket){
-      console.log("Socket connected");
+    var socket = io('http://neutron.it.kmitl.ac.th:5000');
+    socket.on("send id", function(data){
+      console.log("Socket connected : " + data);
     })
 
     socket.on("deviceStatus", function(message){

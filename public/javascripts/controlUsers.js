@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	$('#saveDevice').on('click', function(){
 		var projectId = $('#saveDevice').attr('data-projectId');
+		var deviceType = $('.deviceType:checked').val();
+
 		if($('#deviceName').val() == '' || $('#deviceDescription').val() == ''){
 			alert('Please fill your device name or device description.')
 		}else{
@@ -10,7 +12,8 @@ $(document).ready(function(){
 				data:{
 					projectId: projectId,
 					deviceName: $('#deviceName').val(),
-					deviceDescription: $('#deviceDescription').val()
+					deviceDescription: $('#deviceDescription').val(),
+					deviceType: deviceType
 				},
 				success: function(data){
 					console.log(data);
@@ -19,9 +22,12 @@ $(document).ready(function(){
 				            								'<div class="panel panel-default">'+
 				                							'<div class="panel-heading">'+
 				                								'<div class="row">'+
-				                									'<div class="col-md-8">'+
-				                    								'<h3 class="deviceName">'+data.deviceName+'.</h3>'+
-				                    							'</div>'+
+				                									'<form class="col-md-8" method="post" action="/user/device">'+
+				                										'<input type="hidden" name="deviceId" value="'+data.deviceId+'"/>'+
+					                									'<button type="submit" class="btn-deviceName">'+
+					                    								'<h3 class="deviceName">'+data.deviceName+'</h3>'+
+					                    							'</button>'+
+					                    						'</form>'+
 				                    							'<div class="col-md-4" style="text-align: right; display: block">'+
 				                    								'<button class="btn btn-raised btn-xs" id="editDevice" type="button" style="margin: 10px 10px 10px 10px"'+
 				                    								' data-deviceId="'+data.deviceId+'"'+
@@ -212,7 +218,7 @@ function editDevice(device){
 	var deviceId = device.attr('data-deviceId');
 	var deviceName = device.attr('data-deviceName');
 	var deviceDescription = device.attr('data-deviceDescription');
-	var editDeivceName = $("#"+deviceId).find(".deviceName");
+	var editDeivceName = $("#"+deviceId).find(".btn-deviceName");
 	var editDeivceDescription = $("#"+deviceId).find('.deviceDescription');
 	var editDeivceButton = $("#"+deviceId).find("#editDevice");
 	
@@ -244,7 +250,9 @@ function saveEditDevice(device){
 			if(data.editStatus){
 				device.attr('data-deviceName', data.editDeivceName);
 				device.attr('data-deviceDescription', data.editDeivceDescription);
-				editDeivceName.replaceWith('<h3 class="deviceName">'+data.editDeivceName+'</h3>');
+				editDeivceName.replaceWith('<button class="btn-deviceName" type="submit">'+ 
+																			'<h3 class="deviceName">'+data.editDeivceName+'</h3>'+
+																		'</button>');
 				editDeivceDescription.replaceWith('<label class="deviceDescription">'+data.editDeivceDescription+'</label>');
 				editDeivceButton.text('Edit');
 				editDeivceButton.attr('onclick','editDevice($(this))');

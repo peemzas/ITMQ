@@ -1,0 +1,66 @@
+extends layout
+
+block content
+  .container.container-main.container-home.padding-nav
+    .panel.panel-default
+      .panel-heading
+        .row
+          .col-md-6
+            h2(style="color: #008584; margin-top: 10px;") #{deviceName}
+          .col-md-6(style='text-align: right;')
+            a.btn.btn-flat.btn-link.btn-link-style(href='/loginPage/logout', style='color: #008584;') Logout
+
+      .panel-body#chartdiv(style='width: 100%; height: 500px')
+
+      .panel-body
+        table.table.table-striped.table-hover
+          thead
+            tr
+              th Topic
+              th Payload
+              th Time
+          tbody#tbody
+            if allMessage.length > 0
+              each device_message in allMessage
+                tr
+                  td= device_message.topic
+                  td= device_message.payload
+                  td= device_message.date
+
+  script(src='/javascripts/amcharts/amcharts.js')
+  script(src='/javascripts/amcharts/serial.js')
+  script(src='/javascripts/amcharts/themes/dark.js')
+  script(src='/javascripts/deviceChart.js')
+  script.
+    var allMessage = !{JSON.stringify(allMessage)}
+    var deviceId = "#{deviceId}";
+    var deviceType = "#{deviceType}";
+    var socket = io('http://neutron.it.kmitl.ac.th:5000');
+    socket.on("send id", function(data){
+      console.log("Socket connected : " + data);
+    })
+
+    console.log(deviceId);
+    console.log(deviceType);
+
+    if(deviceType == 'publisher'){
+      socket.on(deviceId, function(message){
+        $('#tbody').append('<tr>'+
+                              '<td>'+message.topic+'</td>'+
+                              '<td>'+message.payload+'</td>'+
+                              '<td>'+message.date+'</td>'+
+                            '</tr>');
+        socket.emit(message.topic, message);
+        console.log(message.topic);
+      })
+    }else if(deviceType == 'subscriber'){
+        socket.on(deviceId, function(message){
+          $('#tbody').append('<tr>'+
+                              '<td>'+message.topic+'</td>'+
+                              '<td>'+message.payload+'</td>'+
+                              '<td>'+message.date+'</td>'+
+                            '</tr>');
+        })
+    }
+    
+    
