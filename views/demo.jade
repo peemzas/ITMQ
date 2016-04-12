@@ -158,7 +158,7 @@ block content
         console.log(window.location.protocol);
 
         if('#{session.email}'){
-          client = new Paho.MQTT.Client("localhost", 8884, "/ws", "web_" + '#{session.email}', 10);
+          client = new Paho.MQTT.Client("neutron.it.kmitl.ac.th", 8884, "/ws", "web_" + '#{session.email}', 10);
           client.onConnectionLost = onConnectionLost;
           client.onMessageArrived = onMessageArrived;
 
@@ -175,7 +175,7 @@ block content
           client.connect(options);
           console.log("Authen");
         }else{
-          client = new Paho.MQTT.Client("localhost", 1884, "/ws", "web_" + parseInt(Math.random() * 1000, 10));
+          client = new Paho.MQTT.Client("neutron.it.kmitl.ac.th", 1884, "/ws", "web_" + parseInt(Math.random() * 1000, 10));
           client.onConnectionLost = onConnectionLost;
           client.onMessageArrived = onMessageArrived;
 
@@ -255,7 +255,8 @@ block content
 
         // called when a message arrives
         function onMessageArrived(message) {
-          $("#messEdit").prepend('<div class="panel">'+
+          if('#{session.email}'){
+            $("#messEdit").prepend('<div class="panel">'+
                                     '<div class="panel-body">'+
                                         '<label class="disc">'+
                                             'from topic : ' + message.destinationName.split('/').slice(1, this.length).join('/') + '<br>'+
@@ -264,9 +265,24 @@ block content
                                         '</label>'+
                                     '</div>'+
                                 '</div>');
-          console.log("onMessageArrived:"+message.destinationName);
-          console.log("onMessageArrived:"+message.payloadString);
-          console.log("onMessageArrived:"+message.qos);
+            console.log("onMessageArrived:"+message.destinationName);
+            console.log("onMessageArrived:"+message.payloadString);
+            console.log("onMessageArrived:"+message.qos);
+          }else{
+            $("#messEdit").prepend('<div class="panel">'+
+                                    '<div class="panel-body">'+
+                                        '<label class="disc">'+
+                                            'from topic : ' + message.destinationName + '<br>'+
+                                            'Message : ' + message.payloadString + '<br>'+
+                                            'QoS : ' + message.qos + '<br>'+
+                                        '</label>'+
+                                    '</div>'+
+                                '</div>');
+            console.log("onMessageArrived:"+message.destinationName);
+            console.log("onMessageArrived:"+message.payloadString);
+            console.log("onMessageArrived:"+message.qos);
+          }
+          
         }
 
     });
