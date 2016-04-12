@@ -3,6 +3,7 @@ var userPage = express.Router();
 var session = require('express-session');
 var randtoken = require('rand-token');
 var userDB = require('../model/User');
+var messageDB = require('../model/Message');
 // var Client = require('./login.js');
 
 /* GET users listing. */
@@ -33,11 +34,50 @@ userPage.post('/project', function(req,res,next){
     userDB.find({'email': user, 'devices.project_id': projectId}, function(err,userData){
       if(userData.length > 0) {
         var allDevices = userData[0].devices;
-        console.log(userData[0].devices);
       }else{
         var allDevices = [];
       }
-      res.render('project', {session: req.session, allDevices: allDevices, projectId: projectId});
+
+      userDB.find({'email': user, 'projects.project_id': projectId}, function(err, projectData){
+        for (var i = 0; i < projectData[0].projects.length; i++) {
+          if(projectData[0].projects[i].project_id == projectId){
+            var projectName = projectData[0].projects[i].project_name;
+          }
+        }
+
+        res.render('project', {session: req.session, allDevices: allDevices, projectId: projectId, projectName: projectName});
+
+      })
+
+    })
+  }else{
+    res.redirect('/loginPage');
+  }
+})
+
+userPage.post('/device', function(req,res,next){
+  var user = req.session.email;
+  var deviceId = req.body.deviceId;
+  var subscribe;
+  if(user){
+    userDB.find({'email': user ,'devices.device_id': deviceId}, function(err, userData){
+      for (var i = 0; i < userData[0].devices.length; i++) {
+        if(userData[0].devices[i].device_id == deviceId){
+          var deviceName = userData[0].devices[i].device_name;
+          var deviceType = userData[0].devices[i].device_type;
+          subscribe = userData[0].devices[i].subscribe;
+        }
+        console.log(userData[0].devices[i].subscribe);
+      }
+
+      console.log(subscribe[0]);
+      if(deviceType == 'publisher'){
+        messageDB.find({'email': user, device_id: deviceId}, function(err,messageData){
+          var allMessage = messageData;
+          res.render('device', {session: req.session, deviceType:deviceType, deviceName: deviceName, deviceId: deviceId, allMessage: allMessage});
+          console.log(messageData);
+        })
+      }
     })
   }else{
     res.redirect('/loginPage');
@@ -108,6 +148,7 @@ userPage.post('/addDevice', function(req,res,next){
   var deviceName = req.body.deviceName;
   var deviceId = randtoken.generate(16);
   var deviceDescription = req.body.deviceDescription;
+  var deviceType = req.body.deviceType;
 
   userDB.find({'email': user}, function(err,userData){
     console.log(userData);
@@ -120,6 +161,7 @@ userPage.post('/addDevice', function(req,res,next){
                       device_id: deviceId,
                       device_name: deviceName, 
                       device_description:deviceDescription,
+                      device_type: deviceType,
                       status: 'disconnect'}},
                       limit_connection: total_limit}, 
                       function(err){
