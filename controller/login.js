@@ -81,7 +81,7 @@ loginPage.post('/regis', function(req, res){
 
 	  	register.save(function (err){
 		  	if (err) {
-          console.log(['Register fail' , false]);
+          console.log('Register fail');
 		  		res.send(['Register fail' , false]);
 		  	}else{
           console.log('Reigister success');
