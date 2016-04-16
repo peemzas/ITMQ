@@ -5,6 +5,7 @@ var session = require('express-session');
 indexPage.get('/', function(req, res, next) {
   // res.render('index', { title: 'Express' });
   res.render('index', {session: req.session});
+  console.log(req.session);
 });
 
 module.exports = indexPage;

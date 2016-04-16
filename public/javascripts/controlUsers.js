@@ -40,7 +40,7 @@ $(document).ready(function(){
 				                							'</div>'+
 				                							'<div class="panel-body">'+
 				                								'<label>Status :'+
-				                    								'<label data-device='+data.deviceId+'>'+data.status+"</label>"+
+				                    								'<label data-deviceId='+data.deviceId+'>'+data.status+"</label>"+
 				                    						"</label>"+
 				                    						'<br>'+
 				                								'<label>ClientId : '+data.deviceId+'</label>'+
@@ -204,7 +204,8 @@ function deleteDevice(device){
 			success: function(data){
 				if(data.deleteStatus){
 					$('#'+deviceId).remove();
-					alert(data.alert)
+					alert(data.alert);
+					socket.emit("closeConnect", deviceId);
 				}else{
 					alert(data.alert)
 				}

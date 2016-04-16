@@ -64,7 +64,7 @@ loginPage.post('/login', function(req, res){
 loginPage.post('/regis', function(req, res){
   var email = req.body.email;
   var pass = req.body.password;
-  var limit = req.body.package;
+  // var limit = req.body.package;
 
   userDB.count({'email': email},function (err,col){
   	if(col>0){
@@ -76,7 +76,7 @@ loginPage.post('/regis', function(req, res){
 								   password: pass ,
 								   username_broker: username_bk ,
 								   password_broker: password_bk ,
-								   limit_connection: limit
+								   limit_connection: 10
 								});
 
 	  	register.save(function (err){

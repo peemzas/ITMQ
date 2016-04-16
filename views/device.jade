@@ -1,4 +1,4 @@
-extends layout
+extends user_head
 
 block content
   .container.container-main.container-home.padding-nav
@@ -16,51 +16,254 @@ block content
         table.table.table-striped.table-hover
           thead
             tr
+              th Type
               th Topic
               th Payload
               th Time
           tbody#tbody
-            if allMessage.length > 0
-              each device_message in allMessage
+            if deviceType == 'both'
+              each device_message in allMessage['publish']
                 tr
+                  td Publish
                   td= device_message.topic
                   td= device_message.payload
                   td= device_message.date
+              each device_message in allMessage['subscribe']
+                tr
+                  td Subscribe
+                  td= device_message.topic
+                  td= device_message.payload
+                  td= device_message.date
+            else if deviceType == 'publisher'
+              if allMessage.length > 0
+                each device_message in allMessage
+                  tr
+                    td Publish
+                    td= device_message.topic
+                    td= device_message.payload
+                    td= device_message.date
+            else
+              if allMessage.length > 0
+                each device_message in allMessage
+                  tr
+                    td Subscribe
+                    td= device_message.topic
+                    td= device_message.payload
+                    td= device_message.date
 
   script(src='/javascripts/amcharts/amcharts.js')
   script(src='/javascripts/amcharts/serial.js')
   script(src='/javascripts/amcharts/themes/dark.js')
   script(src='/javascripts/deviceChart.js')
   script.
-    var allMessage = !{JSON.stringify(allMessage)}
+    function getSubscribe(deviceId){
+      var subTopic = $.ajax({
+        type:"POST",
+        url: "/user/getSubscribe",
+        async: false,
+        data:{
+          deviceId: deviceId
+        }
+      })
+      return subTopic.responseJSON.subscribe;
+      console.log(subTopic.responseJSON.subscribe);
+    }
+
+    var allMessage = !{JSON.stringify(allMessage)};
     var deviceId = "#{deviceId}";
     var deviceType = "#{deviceType}";
+    var deviceStatus = "#{deviceStatus}";
+    var subTopic;
     var socket = io('http://neutron.it.kmitl.ac.th:5000');
+    var sk = io('http://neutron.it.kmitl.ac.th:5000');
+    console.log(allMessage['subscribe']);
+    console.log(deviceType);
+    function connectSocket(subTopic){
+      sk.close();
+      sk = io('http://neutron.it.kmitl.ac.th:5000');
+      if(subTopic.length > 0){
+        for(var i=0; i < subTopic.length; i++){
+          sk.on(subTopic[i], function(message){
+            $('#tbody').append('<tr>'+
+                                '<td>Subscribe</td>'+
+                                '<td>'+message.topic+'</td>'+
+                                '<td>'+message.payload+'</td>'+
+                                '<td>'+message.date+'</td>'+
+                              '</tr>');
+            console.log(message);
+            console.log(subTopic);
+          })
+        }
+      }
+    }
+
     socket.on("send id", function(data){
       console.log("Socket connected : " + data);
     })
 
-    console.log(deviceId);
-    console.log(deviceType);
 
     if(deviceType == 'publisher'){
       socket.on(deviceId, function(message){
         $('#tbody').append('<tr>'+
+                              '<td>Publish</td>'+
                               '<td>'+message.topic+'</td>'+
                               '<td>'+message.payload+'</td>'+
                               '<td>'+message.date+'</td>'+
                             '</tr>');
-        socket.emit(message.topic, message);
+        
         console.log(message.topic);
       })
     }else if(deviceType == 'subscriber'){
-        socket.on(deviceId, function(message){
-          $('#tbody').append('<tr>'+
+      console.log(deviceStatus);
+      if(deviceStatus == 'connect'){
+        // connect before this page
+          subTopic = getSubscribe(deviceId);
+
+          socket.on('subtopic', function(data){
+            subTopic = getSubscribe(deviceId);
+            connectSocket(subTopic)
+            console.log(subTopic);
+          })
+
+          socket.on('unsubtopic', function(data){
+            subTopic = getSubscribe(deviceId);
+            connectSocket(subTopic)
+            console.log(subTopic);
+          })
+
+          connectSocket(subTopic)
+
+        socket.on("deviceStatus", function(data){
+          if(data.deviceStatus[deviceId] == 'connect'){
+            subTopic = getSubscribe(deviceId);
+
+            socket.on('subtopic', function(data){
+              subTopic = getSubscribe(deviceId);
+              connectSocket(subTopic)
+              console.log(subTopic);
+            })
+
+            socket.on('unsubtopic', function(data){
+              subTopic = getSubscribe(deviceId);
+              connectSocket(subTopic)
+              console.log(subTopic);
+            })
+
+            connectSocket(subTopic);
+
+            console.log(data.deviceStatus[deviceId]);
+          }else{
+            sk.close();
+            console.log(data.deviceStatus[deviceId]);
+          }
+        })
+        // connect after this page
+      }else{
+        socket.on("deviceStatus", function(data){
+          if(data.deviceStatus[deviceId] == 'connect'){
+            subTopic = getSubscribe(deviceId);
+
+            socket.on('subtopic', function(data){
+              subTopic = getSubscribe(deviceId);
+              connectSocket(subTopic)
+              console.log(subTopic);
+            })
+
+            socket.on('unsubtopic', function(data){
+              subTopic = getSubscribe(deviceId);
+              connectSocket(subTopic)
+              console.log(subTopic);
+            })
+
+            connectSocket(subTopic)
+            console.log(data.deviceStatus[deviceId]);
+          }else{
+            sk.close();
+            console.log(data.deviceStatus[deviceId]);
+          }
+        })
+      }
+    }else{
+      // Type Both
+      socket.on(deviceId, function(message){
+        $('#tbody').append('<tr>'+
+                              '<td>Publish</td>'+
                               '<td>'+message.topic+'</td>'+
                               '<td>'+message.payload+'</td>'+
                               '<td>'+message.date+'</td>'+
                             '</tr>');
+        
+        console.log(message.topic);
+      })
+
+      console.log(deviceStatus);
+      if(deviceStatus == 'connect'){
+        // connect before this page
+          subTopic = getSubscribe(deviceId);
+
+          socket.on('subtopic', function(data){
+            subTopic = getSubscribe(deviceId);
+            connectSocket(subTopic)
+            console.log(subTopic);
+          })
+
+          socket.on('unsubtopic', function(data){
+            subTopic = getSubscribe(deviceId);
+            connectSocket(subTopic)
+            console.log(subTopic);
+          })
+
+          connectSocket(subTopic)
+
+        socket.on("deviceStatus", function(data){
+          if(data.deviceStatus[deviceId] == 'connect'){
+            subTopic = getSubscribe(deviceId);
+
+            socket.on('subtopic', function(data){
+              subTopic = getSubscribe(deviceId);
+              connectSocket(subTopic)
+              console.log(subTopic);
+            })
+
+            socket.on('unsubtopic', function(data){
+              subTopic = getSubscribe(deviceId);
+              connectSocket(subTopic)
+              console.log(subTopic);
+            })
+
+            connectSocket(subTopic);
+
+            console.log(data.deviceStatus[deviceId]);
+          }else{
+            sk.close();
+            console.log(data.deviceStatus[deviceId]);
+          }
         })
+        // connect after this page
+      }else{
+        socket.on("deviceStatus", function(data){
+          if(data.deviceStatus[deviceId] == 'connect'){
+            subTopic = getSubscribe(deviceId);
+
+            socket.on('subtopic', function(data){
+              subTopic = getSubscribe(deviceId);
+              connectSocket(subTopic)
+              console.log(subTopic);
+            })
+
+            socket.on('unsubtopic', function(data){
+              subTopic = getSubscribe(deviceId);
+              connectSocket(subTopic)
+              console.log(subTopic);
+            })
+
+            connectSocket(subTopic)
+            console.log(data.deviceStatus[deviceId]);
+          }else{
+            sk.close();
+            console.log(data.deviceStatus[deviceId]);
+          }
+        })
+      }
     }
-    
     
