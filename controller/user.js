@@ -30,7 +30,14 @@ userPage.get('/', function(req, res, next) {
 userPage.post('/project', function(req,res,next){
   var user = req.session.email;
   var projectId = req.body.projectId;
+  var usernameBroker;
+  var passwordBroker;
   if(user){
+    userDB.find({'email': user}, function(err,userData){
+      usernameBroker = userData[0].username_broker;
+      passwordBroker = userData[0].password_broker;
+    })
+
     userDB.find({'email': user, 'devices.project_id': projectId}, function(err,userData){
       if(userData.length > 0) {
         var allDevices = userData[0].devices;
@@ -42,10 +49,12 @@ userPage.post('/project', function(req,res,next){
         for (var i = 0; i < projectData[0].projects.length; i++) {
           if(projectData[0].projects[i].project_id == projectId){
             var projectName = projectData[0].projects[i].project_name;
+            var projectDescription = projectData[0].projects[i].project_description;
           }
         }
 
-        res.render('project', {session: req.session, allDevices: allDevices, projectId: projectId, projectName: projectName});
+        res.render('project', {session: req.session, usernameBroker: usernameBroker,
+                  passwordBroker: passwordBroker, allDevices: allDevices, projectId: projectId, projectName: projectName, projectDescription: projectDescription});
 
       })
 

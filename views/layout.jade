@@ -14,7 +14,10 @@ html
     link(rel='stylesheet', href='../bower_components/bootstrap-material-design/dist/css/material-fullpalette.min.css')
     link(rel='stylesheet', href='../bower_components/bootstrap-material-design/dist/css/ripples.min.css')
     link(rel='stylesheet', href='//fezvrasta.github.io/snackbarjs/dist/snackbar.min.css')
-    
+
+    // icon
+    link(rel='stylesheet', href='../node_modules/bootstrap-material-design-icons/css/material-icons.css')
+
     // fullPage.js
     link(rel='stylesheet', href='/fullpage/jquery.fullPage.css')
 
@@ -49,10 +52,10 @@ html
             ul#navigator.nav.navbar-nav.navbar-left
               li(data-menuanchor="homePage" class="active")
                 a(href='/#homePage') Home
+              li(data-menuanchor="iotPage" )
+                a(href='/#iotPage') What's IoT
               li(data-menuanchor="aboutPage" )
                 a(href='/#aboutPage') About
-              li(data-menuanchor="planPage" )
-                a(href='/#planPage') Pricing
               li(data-menuanchor="contactPage" )
                 a(href='/#contactPage') Contact
             ul.nav.navbar-nav.navbar-right
@@ -72,17 +75,17 @@ html
           .navbar-collapse.collapse.navbar-responsive-collapse
             ul.nav.navbar-nav.navbar-right
               li.dropdown
-                a.dropdown-toggle 
-              li.dropdown
                 a.dropdown-toggle(href='http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html', data-target='#', data-toggle='dropdown') #{session.email}
                   b.caret
                 ul.dropdown-menu
                   li
-                    a(href='/user') Dashboard
+                    a(href='/user') Project
                   li
                     a(href='/demo') WebSocket
                   li
-                    a(href='javascript:void(0)') Unknown
+                    a(href='javascript:void(0)') Doc
+                  li
+                    a(href='javascript:void(0)') Settings
                   li
                     a(href='/loginPage/logout') Log Out
 
@@ -105,7 +108,7 @@ html
         $('#fullpage').fullpage({
           menu: '#navigator',
           lockAnchors: false,
-          anchors:['homePage', 'aboutPage','planPage','contactPage'],
+          anchors:['homePage', 'iotPage','aboutPage','contactPage'],
           navigation: false,
           navigationPosition: 'right',
           navigationTooltips: ['firstSlide', 'secondSlide'],
