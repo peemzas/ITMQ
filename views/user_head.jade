@@ -7,6 +7,7 @@ html
     script(src='../bower_components/jquery/dist/jquery.js')
     script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
     script(src='/javascripts/paho/mqttws31.js')
+    script(src='/javascripts/socket.io/socket.io.js')
 
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css')
     link(rel='stylesheet', href='../bower_components/bootstrap-material-design/dist/css/roboto.min.css')
@@ -15,11 +16,13 @@ html
     link(rel="stylesheet", href='//cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.css')
     link(rel='stylesheet', href='//fezvrasta.github.io/snackbarjs/dist/snackbar.min.css')
 
+    // icon
+    link(rel='stylesheet', href='/bootstrap-material-design-icons/css/material-icons.css')
+
     // My CSS style
     link(rel='stylesheet', href='/stylesheets/fonts.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/style_sass.css')
-
 
     //Mobile Support
     meta(name='viewport', content='width=device-width, initial-scale=1')
@@ -36,17 +39,17 @@ html
         .navbar-collapse.collapse.navbar-responsive-collapse
           ul.nav.navbar-nav.navbar-right
             li.dropdown
-              a.dropdown-toggle 
-            li.dropdown
               a.dropdown-toggle(href='http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html', data-target='#', data-toggle='dropdown') #{session.email}
                 b.caret
               ul.dropdown-menu
                 li
-                  a(href='/user') Dashboard
+                  a(href='/user') Project
                 li
                   a(href='/demo') WebSocket
                 li
                   a(href='javascript:void(0)') Doc
+                li
+                  a(href='javascript:void(0)') Settings
                 li
                   a(href='/loginPage/logout') Log Out
                 //- li.divider
@@ -65,6 +68,5 @@ html
     //- script(src='/javascripts/showDemo.js')
     script(src='/javascripts/manageUsers.js')
     script(src='/javascripts/controlUsers.js')
-    script(src='/javascripts/socket.io/socket.io.js')
     script(type='text/javascript').
       $.material.init();

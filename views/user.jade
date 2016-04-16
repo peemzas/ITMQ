@@ -1,70 +1,119 @@
-extends user_head
+extends user_info
 
-block content
-  .container.container-main.container-home.container-user(style="padding-top: 100px;")
-    //- .panel.panel-default.panel-user
-    //-   .panel-heading.panel-user
-    //-     .row
-    //-       .col-md-6
-    //-         h2(style="color: #008584; margin-top: 10px;") User Info
-    .row
-      .col-md-4
-        .panel.panel-default
-          .panel-body(style="color: #4d4d4d; height: 100%;")
-            .row
-              .col-md-12
-                h4(style="color: #008584") User info
-            .row
-              .col-md-7
-                label.field-label Username for Broker : 
-              .col-md-5
-                label.field-label #{usernameBroker}
-            .row
-              .col-md-7
-                label.field-label Password for Broker : 
-              .col-md-5
-                label.field-label #{passwordBroker}
-              
-      .col-md-8
-        .panel.panel-default
-          .panel-body
-            .row
-              .col-md-12
-                h4(style="color: #008584; height: 100%") Dashboard
-    .panel.panel-default
-      .panel-heading
-        .row
-          .col-md-6
-            h2(style="color: #008584; margin-top: 10px;") #{session.email}
-          .col-md-6(style='text-align: right;')
-            a.btn.btn-flat.btn-link.btn-link-style(href='/loginPage/logout', style='color: #008584;') Logout
-      .panel-body
-        .row
-          .col-md-6
-            label.field-label Username for Broker : #{usernameBroker}
-          .col-md-6 
-            label.field-label Password for Broker : #{passwordBroker}
+block panel
+  //- .container.container-main.container-home.container-user.en-font(style="padding-top: 100px;")
+  //-   //- .panel.panel-default.panel-user
+  //-   //-   .panel-heading.panel-user
+  //-   //-     .row
+  //-   //-       .col-md-6
+  //-   //-         h2(style="color: #008584; margin-top: 10px;") User Info
+  //-   .row
+  //-     .col-md-4
+  //-       .panel.panel-default
+  //-         .panel-body(style="color: #4d4d4d; height: 100%;")
+  //-           .row
+  //-             .col-md-12
+  //-               h3(style="color: #008584") User info
+  //-           .row
+  //-             .col-md-7
+  //-               label.field-label Username for Broker : 
+  //-             .col-md-5
+  //-               label.field-label #{usernameBroker}
+  //-           .row
+  //-             .col-md-7
+  //-               label.field-label Password for Broker : 
+  //-             .col-md-5
+  //-               label.field-label #{passwordBroker}
+  //-           .row
+  //-             .col-md-7
+  //-               label.field-label Plan :
+  //-             .col-md-5
+  //-               label.field-label Free
+  //-           .row
+  //-             .col-md-7
+  //-               label.field-label Thing : 
+  //-             .col-md-5
+  //-               label.field-label 0 / 10
+  //-           .row
+  //-             .col-md-12
+  //-               label.field-label Message :
+  //-           .row(style="padding-left: 20px")
+  //-             .col-md-3
+  //-               label.field-label Max :
+  //-             .col-md-9
+  //-               label.field-label 500,000
+  //-           .row(style="padding-left: 20px")
+  //-             .col-md-3
+  //-               label.field-label Used :
+  //-             .col-md-9
+  //-               label.field-label 0
+  //-     .col-md-8
+  .panel.panel-default
+    .panel-body
+      .row(style="padding-bottom: 20px")
+        .col-md-9
+          h3(style="color: #008584; height: 100%") Project
+        .col-md-3
+          a.btn-homegreen(type="button", data-toggle="modal", data-target="#saveProjectModal", style="margin: 0;") Add Project
+            i.mdi.mdi-add-circle-outline.add-icon
 
-      //- Add Project
-      .panel-body.project-panel
-        .row
-          .col-md-6
-            button.btn.btn-flat.btn-link.btn-link-style(type="button", style='color: #008584;', data-toggle="modal", data-target="#saveProjectModal") Add Projects
-        .row#allProjects_panel
-          each project_val in allProjects
-            .col-md-4(id="#{project_val.project_id}")
-              .panel.panel-default
-                .panel-heading
+      .row#allProjects_panel
+        each project_val in allProjects
+          .col-md-4.col-dashboard(id="#{project_val.project_id}")
+            .panel.panel-default.panel-project.panel-hover
+              .panel-heading.panel-head-project
+                form(method="post", action="/user/project")
                   .row
-                    form.col-md-8(method="post", action="/user/project")
+                    button.close.close-icon(type='button', aria-hidden='true',onclick='deleteProject($(this))', data-projectId= "#{project_val.project_id}" ) ×
+                    i.mdi.mdi-settings.edit-icon#editProject(onclick='editProject($(this))', data-projectId= "#{project_val.project_id}", data-projectName = "#{project_val.project_name}" , data-projectDescription = "#{project_val.project_description}")
+                  .row
+                    .col-md-12
                       input(type="hidden",name="projectId",value="#{project_val.project_id}")
                       button.btn-projectName(type='submit')
-                        h3.projectName= project_val.project_name
-                    .col-md-4(style = "text-align: right; display: block")
-                      button.btn.btn-raised.btn-xs#editProject(style="margin: 10px 10px 10px 10px", onclick='editProject($(this))', data-projectId= "#{project_val.project_id}", data-projectName = "#{project_val.project_name}" , data-projectDescription = "#{project_val.project_description}") Edit
-                      button.close(type='button', aria-hidden='true',onclick='deleteProject($(this))', data-projectId= "#{project_val.project_id}" ) ×
-                .panel-body
-                  label.projectDescription= project_val.project_description
+                        h2.ellipsis.projectName= project_val.project_name
+              .panel-body.panel-des-project
+                .row
+                  .col-md-5
+                    label Thing :
+                  .col-md-7
+                    label (No. of Thing)
+                label.ellipsis.fontDes.projectDescription.panel-des-project Description : 
+                  = project_val.project_description
+
+    //- .panel.panel-default
+    //-   .panel-heading
+    //-     .row
+    //-       .col-md-6
+    //-         h2(style="color: #008584; margin-top: 10px;") #{session.email}
+    //-       .col-md-6(style='text-align: right;')
+    //-         a.btn.btn-flat.btn-link.btn-link-style(href='/loginPage/logout', style='color: #008584;') Logout
+    //-   .panel-body
+    //-     .row
+    //-       .col-md-6
+    //-         label.field-label Username for Broker : #{usernameBroker}
+    //-       .col-md-6 
+    //-         label.field-label Password for Broker : #{passwordBroker}
+
+    //-   //- Add Project
+    //-   .panel-body.project-panel
+    //-     .row
+    //-       .col-md-6
+    //-         button.btn.btn-flat.btn-link.btn-link-style(type="button", style='color: #008584;', data-toggle="modal", data-target="#saveProjectModal") Add Projects
+    //-     .row#allProjects_panel
+    //-       each project_val in allProjects
+    //-         .col-md-4(id="#{project_val.project_id}")
+    //-           .panel.panel-default
+    //-             .panel-heading
+    //-               .row
+    //-                 form.col-md-8(method="post", action="/user/project")
+    //-                   input(type="hidden",name="projectId",value="#{project_val.project_id}")
+    //-                   button.btn-projectName(type='submit')
+    //-                     h3.projectName= project_val.project_name
+    //-                 .col-md-4(style = "text-align: right; display: block")
+    //-                   button.btn.btn-raised.btn-xs#editProject(style="margin: 10px 10px 10px 10px", onclick='editProject($(this))', data-projectId= "#{project_val.project_id}", data-projectName = "#{project_val.project_name}" , data-projectDescription = "#{project_val.project_description}") Edit
+    //-                   button.close(type='button', aria-hidden='true',onclick='deleteProject($(this))', data-projectId= "#{project_val.project_id}" ) ×
+    //-             .panel-body
+    //-               label.projectDescription= project_val.project_description
 
 
 
