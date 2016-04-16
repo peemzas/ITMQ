@@ -122,6 +122,9 @@ block panel
                 label
                   input.deviceType(type='radio', value='subscriber', name='deviceType')
                   |  Subscriber
+                label
+                  input.deviceType(type='radio', value='both', name='deviceType')
+                  |  Both
           .modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal') Close
             button#saveDevice.btn.btn-primary(type='button', data-projectId="#{projectId}") Ok
@@ -154,4 +157,9 @@ block panel
       }
       console.log("Client event msg from Server : " + status);
       //- socket.emit("deviceStatus", "From Client : " + message);
+    })
+
+    socket.on("restartServer", function(status){
+      $('label[data-deviceId]').text(status);
+      console.log('restart : ' + status)
     })
