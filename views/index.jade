@@ -29,61 +29,61 @@ block content
         .table-cell
           .row
             .col-sm-6.text-center
-              img(src='/images/MQTT-LogoBig.png', style='width:100%')
+              img.logo-home(src='/images/MQTT-LogoBig.png')
             .col-sm-6
               p.content-main
                 | ITMQ BROKER FOR IoT
               p.content-main.content-main-small
                 | " Let your devices connected "
-              .col-sm-6
+              .col-sm-4.col-sm-offset-2
                 if !session || !session.email
-                  a.btn-homegreen(href='/signup', style="margin-left: 100px;") Start Now
+                  a.btn-homegreen(href='/signup') Start Now
                 else
-                  a.btn-homegreen(href='/user', style="margin-left: 100px;") Start Now
-              .col-sm-6
-                a.btn-homewhite(href='/demo', style="margin-right: 100px;") See Demo
+                  a.btn-homegreen(href='/user') Start Now
+              .col-sm-4
+                a.btn-homewhite(href='/demo') See Demo
         .clear
     .section.page.page2
       #about-anchor(data-anchor='iotPage',style="position:absolute;top: -50px;")
       .container-iot-bg
         .container
           .col-xs-12.text-center
-            img(src='/images/iot.jpg',style='width:65%')
+            img.img-iot(src='/images/iot.jpg')
       .container.container-main.container-iot
         .col-sm-12
           //- .row
           //-   p.th-font(style="font-size: 36px; text-align: center") About Internet of Things
           .row.content-iot
-            .col-md-4
+            .col-sm-4
               .panel.panel-about(type="button", data-toggle="modal", data-target="#iotModal")
                 .cover
                   p.readmore READ MORE
                 .row.text-center
                   img(src='/images/internet.png').pic-size
                 .row
-                  p.p-about.heading.text-center
+                  p.p-about.text-center
                     | Internet of Things
                   //- p
                   //-   | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เทคโนโลยี Internet of Things (IoT) เป็นเทคโนโลยีที่จะทำให้เครื่องมือ สิ่งของ หรืออุปกรณ์ต่างๆสามารถติดต่อกันได้ โดยผ่านระบบเครือข่ายหรืออินเตอร์เน็ต เพื่อให้อุปกรณ์เชื่อมต่อแลกเปลี่ยนข้อมูล ติดต่อสื่อสาร สั่งการจากระยะทางไกล หรือเพื่อเพิ่มขีดจำกัดความสามารถในการใช้งานให้กับอุปกรณ์นั้นได้
-            .col-md-4
+            .col-sm-4
               .panel.panel-about(type="button", data-toggle="modal", data-target="#mqttModal")
                 .cover
                   p.readmore READ MORE
                 .row.text-center
                   img(src='/images/cloud.png').pic-size
                 .row
-                  p.p-about.heading.text-center
+                  p.p-about.text-center
                     | MQTT Protocol
                   //- p
                   //-   | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MQTT  เป็นโปรโตคอลที่ใช้หลักการ Machine-to-Machine (M2M) โดยจะใช้หลักการ Publish, Subscribe (Pub/Sub) ในการรับส่งข้อมูล มีหลักการคือมีอุปกรณ์เชื่อมต่อกับตัวกลาง เรียกว่า MQTT Broker
-            .col-md-4
+            .col-sm-4
               .panel.panel-about(type="button", data-toggle="modal", data-target="#webSocModal")
                 .cover
                   p.readmore READ MORE
                 .row.text-center
                   img(src='/images/websocket.png').pic-size
                 .row
-                  p.p-about.heading.text-center
+                  p.p-about.text-center
                     | WebSockets
                   //- p
                   //-   | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WebSockets เป็นเทคโนโลยีใช้ในการติดต่อสื่อสารระหว่าง Web server กับ Client แบบ Real time โดย WebSockets จะสร้างการเชื่อต่อโดยตรงระหว่าง Server กับ Client ไว้ ทำให้สามารถรับส่งข้อมูลได้โดยตรง
@@ -93,8 +93,10 @@ block content
     .section.page.page3(data-anchor='aboutPage')
       .container.container-main.container-about
         .row.text-center
-          img(src='/images/MQTT-Logo-Green.png')
-          span.label-what-is คืออะไร ?
+          .col-sm-5.col-sm-offset-1
+            img.logo-what-is(src='/images/MQTT-Logo-Green.png')
+          .col-sm-5
+            label.label-what-is คืออะไร ?
         .row
           .panel.panel-itmq
             span.green-txt
@@ -146,53 +148,52 @@ block content
       //-               | 999 THB / Month
     .section.page4.fp-auto-height(data-anchor='contactPage')
       .footer.footer-main
-        .container.container-main
-          .row(style='padding-left: 20px; padding-bottom: 20px')
-            .col-md-6
+        .container.container-main.container-footer
+          .row.content-contact
+            .col-sm-6
               .row
                 | พิเชฐ เลิศกิตติธร
               .row
-                .col-md-2
-                  img(src='/images/google.png', style='width:100%')
-                .col-md-10
+                .col-xs-2
+                  .flaticon-circle(style="color: #dd4b39")
+                .col-xs-10
                   | peemzas@gmail.com
               .row
-                .col-md-2
-                  img(src='/images/facebook.png', style='width:100%')
-                .col-md-10
+                .col-xs-2
+                  .flaticon-social(style="color: #3b5998")
+                .col-xs-10
                   | facebook.com/PeeMzZ
               .row
-                .col-md-2
-                  img(src='/images/twitter.png', style='width:100%')
-                .col-md-10
+                .col-xs-2
+                  .flaticon-social-media(style="color: #55acee")
+                .col-xs-10
                   | @PeeMz_Kael
-            .col-md-6
+            .col-sm-6
               .row
                 | วรัตม์ จีระเรืองรัตนา
               .row
-                .col-md-2
-                  img(src='/images/google.png', style='width:100%')
-                .col-md-10
+                .col-xs-2
+                  .flaticon-circle(style="color: #dd4b39")
+                .col-xs-10
                   | bestzwarat@gmail.com
               .row
-                .col-md-2
-                  img(src='/images/facebook.png', style='width:100%')
-                .col-md-10
+                .col-xs-2
+                  .flaticon-social(style="color: #3b5998")
+                .col-xs-10
                   | facebook.com/bestzwarat
               .row
-                .col-md-2
-                  img(src='/images/twitter.png', style='width:100%')
-                .col-md-10
+                .col-xs-2
+                  .flaticon-social-media(style="color: #55acee")
+                .col-xs-10
                   | @bestzwarat
           .row
-            .col-xs-12
-              .col-md-2.text-center
-                img(src='/images/kmitl.png', style='width:60%')
-              .col-md-10
-                p.footer-it
-                  | คณะเทคโนโลยีสารสนเทศ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง
-                p.footer-it
-                  | Faculty of Informaation Technology, King Mongkut's Institute of Technology Lad krabang
+            .row.text-center
+              img.kmitl(src='/images/kmitl.png')
+            .row.text-center
+              p.footer-it
+                | คณะเทคโนโลยีสารสนเทศ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง
+              p.footer-it
+                | Faculty of Information Technology, King Mongkut's Institute of Technology Ladkrabang
 
             //- .col-md-6.text-center
             //-   img(src='/images/MQTT-Logo-Green.png')

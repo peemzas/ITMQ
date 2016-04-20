@@ -1,7 +1,7 @@
 extends user_head
 
 block content
-  .container.container-main.container-home.container-user.en-font(style="padding-top: 100px;")
+  .container.container-main.container-home.container-user.en-font.padding-nav
     //- .panel.panel-default.panel-user
     //-   .panel-heading.panel-user
     //-     .row
@@ -10,29 +10,29 @@ block content
     .row
       .col-md-4
         .panel.panel-default
-          .panel-body(style="color: #4d4d4d; height: 100%;")
+          .panel-body.content-user-info
             .row
-              .col-md-12
-                h3(style="color: #008584") User info
+              .col-sm-12
+                p.p-user-head User info
             .row
-              .col-md-7
+              .col-xs-7
                 label.field-label Username for Broker : 
-              .col-md-5
+              .col-xs-5
                 label.field-label #{usernameBroker}
             .row
-              .col-md-7
+              .col-xs-7
                 label.field-label Password for Broker : 
-              .col-md-5
+              .col-xs-5
                 label.field-label #{passwordBroker}
             .row
-              .col-md-7
+              .col-xs-7
                 label.field-label Plan :
-              .col-md-5
+              .col-xs-5
                 label.field-label Free
             .row
-              .col-md-7
+              .col-xs-7
                 label.field-label Thing : 
-              .col-md-5
+              .col-xs-5
                 label.field-label #{total} / 10
             //- .row
             //-   .col-md-12
@@ -112,19 +112,19 @@ block content
 
 
 
-  #saveProjectModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
-    .modal-dialog
-        .modal-content
-          .modal-header
-            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-            h4.modal-title Add Projects
-          .modal-body(style='padding: 20px 20px 20px 20px')
-            .form-group
-              label.control-label Project Name
-              input#projectName.form-control(type='text', name='projectName')
-            .form-group
-              label.control-label Project Description
-              input#projectDescription.form-control(type='text', name='projectDescription')
-          .modal-footer
-            button.btn.btn-default(type='button', data-dismiss='modal') Close
-            button#saveProject.btn.btn-primary(type='button') Ok
+  //- #saveProjectModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+  //-   .modal-dialog
+  //-       .modal-content
+  //-         .modal-header
+  //-           button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+  //-           h4.modal-title Add Projects
+  //-         .modal-body(style='padding: 20px 20px 20px 20px')
+  //-           .form-group
+  //-             label.control-label Project Name
+  //-             input#projectName.form-control(type='text', name='projectName')
+  //-           .form-group
+  //-             label.control-label Project Description
+  //-             input#projectDescription.form-control(type='text', name='projectDescription')
+  //-         .modal-footer
+  //-           button.btn.btn-default(type='button', data-dismiss='modal') Close
+  //-           button#saveProject.btn.btn-primary(type='button') Ok

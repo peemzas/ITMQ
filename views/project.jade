@@ -1,19 +1,19 @@
 extends user_info
 
 block project
-  a.btn-back-project(href="/user") Select Project
+  a.btn-back-project(href="/user") Back To Select Project
   .panel.panel-default(id="#{projectId}")
-    .panel.panel-default
-      .panel-heading.panel-head-project.panel-project-des
-        //- .row#rowProject
-        //-   i.mdi.mdi-settings.edit-icon#editProject(style='padding-right: 20px', onclick='editProjectDevicePage($(this))', data-projectId= "#{projectId}", data-projectName = "#{projectName}" , data-projectDescription = "#{projectDescription}")
+    .panel.panel-default.panel-project(style="height: auto")
+      .panel-heading.panel-head-project.panel-head-project-des
+        .row
+          i.mdi.mdi-settings.edit-icon#editProject(style='padding-right: 20px', onclick='editProject($(this))', data-projectId= "#{projectId}", data-projectName = "#{projectName}" , data-projectDescription = "#{projectDescription}")
         .row
           .col-md-12
             input(type="hidden",name="projectId",value="#{projectId}", data-projectName = "#{projectName}", data-projectDescription = "#{projectDescription}")
-            button.btn-projectName(style="height: auto; min-height: 150px", type='submit')
-              h2.projectName.break-word(style="height: 100%") #{projectName}
+            button.btn-projectName2(href="/user/project", type='submit')
+              p.p-project-name.projectName.break-word(style="padding-bottom: 10px") #{projectName}
       .panel-body
-        label.projectDescription.panel-des-project.break-word #{projectDescription}
+        label.p-project-des.projectDescription.break-word Description :  #{projectDescription}
 
 block panel
   //- .container.container-main.container-home.padding-nav.en-font(style="padding-top: 100px;")
@@ -61,16 +61,17 @@ block panel
   .panel.panel-default
     .panel-body
       .row(style="padding-bottom: 20px")
-        .col-md-9
-          h3.ellipsis(style="color: #008584; height: 100%") Project / #{projectName}
-        .col-md-3
+        .col-lg-9.col-md-8.col-sm-7
+          p.p-project-head.ellipsis Project / #{projectName}
+        .col-lg-3.col-md-4.col-sm-5.col-xs-12
           a.btn-addDevice(type="button", data-toggle="modal", data-target="#saveDeviceModal") Add Thing
             i.mdi.mdi-add-circle-outline.add-icon
+
       .row#allDevices_panel
         if allDevices.length > 0
           each device_val in allDevices
             if device_val.project_id == projectId
-              .col-md-4.col-dashboard(id="#{device_val.device_id}")
+              .col-md-4.col-sm-6.col-dashboard(id="#{device_val.device_id}")
                 .panel.panel-default.panel-device.panel-hover
                   .panel-heading.panel-head-device
                     form(method="post", action="/user/device")
@@ -86,18 +87,18 @@ block panel
                         .col-md-12
                           input(type="hidden",name="deviceId",value="#{device_val.device_id}", data-deviceName = "#{device_val.device_name}" , data-deviceDescription = "#{device_val.device_description}")
                           button.btn-deviceName(type='submit')
-                            h2.ellipsis.deviceName= device_val.device_name
-                  .panel-body.panel-des-project
+                            p.p-device-name.ellipsis.deviceName= device_val.device_name
+                  .panel-body.panel-des-device
                     //- label Status :
                     //-     label(data-deviceId="#{device_val.device_id}")= device_val.status
                     //- br
                     .row
                       .col-md-12
-                        label.fontDes Client ID : 
+                        label Client ID : 
                           = device_val.device_id
                     .row
                       .col-md-12
-                        label.ellipsis.fontDes.deviceDescription Description : 
+                        label.ellipsis.p-device-des.deviceDescription Description : 
                           = device_val.device_description
 
   #saveDeviceModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
