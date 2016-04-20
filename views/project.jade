@@ -2,15 +2,15 @@ extends user_info
 
 block project
   a.btn-back-project(href="/user") Select Project
-  .panel.panel-default(id="#{project_id}")
+  .panel.panel-default(id="#{projectId}")
     .panel.panel-default
       .panel-heading.panel-head-project.panel-project-des
-        .row
-          i.mdi.mdi-settings.edit-icon#editProject(style='padding-right: 20px', onclick='editProject($(this))', data-projectId= "#{projectId}", data-projectName = "#{projectName}" , data-projectDescription = "#{projectDescription}")
+        //- .row#rowProject
+        //-   i.mdi.mdi-settings.edit-icon#editProject(style='padding-right: 20px', onclick='editProjectDevicePage($(this))', data-projectId= "#{projectId}", data-projectName = "#{projectName}" , data-projectDescription = "#{projectDescription}")
         .row
           .col-md-12
-            input(type="hidden",name="projectId",value="#{projectId}")
-            button.btn-projectName(style="height: auto; min-height: 90px", type='submit')
+            input(type="hidden",name="projectId",value="#{projectId}", data-projectName = "#{projectName}", data-projectDescription = "#{projectDescription}")
+            button.btn-projectName(style="height: auto; min-height: 150px", type='submit')
               h2.projectName.break-word(style="height: 100%") #{projectName}
       .panel-body
         label.projectDescription.panel-des-project.break-word #{projectDescription}
@@ -75,16 +75,16 @@ block panel
                   .panel-heading.panel-head-device
                     form(method="post", action="/user/device")
                       .row
-                        button.close.close-icon(type='button', aria-hidden='true',onclick='deleteDevice($(this))', data-deviceId= "#{device_val.device_id}" ) ×
+                        button.close.close-icon#deleteDeviceButton(type='button', aria-hidden='true',onclick='deleteDevice($(this))', data-deviceId= "#{device_val.device_id}" ) ×
                         i.mdi.mdi-settings.edit-icon#editDevice(onclick='editDevice($(this))', data-deviceId= "#{device_val.device_id}", data-deviceName = "#{device_val.device_name}" , data-deviceDescription = "#{device_val.device_description}")
                         if device_val.status == 'disconnect'
-                          i.mdi.mdi-brightness-1.show-status.disconnected#showStatus(data-toggle="tooltip", data-placement="right", data-original-title="Disconnected")
+                          i.mdi.mdi-brightness-1.show-status.disconnected#showStatus(data-toggle="tooltip", data-placement="right", data-original-title="Disconnected", data-deviceId="#{device_val.device_id}")
                         else if device_val.status == 'connect'
-                          i.mdi.mdi-brightness-1.show-status.connected#showStatus(data-toggle="tooltip", data-placement="right", data-original-title="Connected")
-                        label.device-type Publisher
+                          i.mdi.mdi-brightness-1.show-status.connected#showStatus(data-toggle="tooltip", data-placement="right", data-original-title="Connected", data-deviceId="#{device_val.device_id}")
+                        label.device-type= device_val.device_type
                       .row
                         .col-md-12
-                          input(type="hidden",name="deviceId",value="#{device_val.device_id}")
+                          input(type="hidden",name="deviceId",value="#{device_val.device_id}", data-deviceName = "#{device_val.device_name}" , data-deviceDescription = "#{device_val.device_description}")
                           button.btn-deviceName(type='submit')
                             h2.ellipsis.deviceName= device_val.device_name
                   .panel-body.panel-des-project
@@ -117,14 +117,23 @@ block panel
               label.control-label Device Type
               .radio.radio-primary
                 label
-                  input.deviceType(type='radio', value='publisher', name='deviceType')
+                  input.deviceType(type='radio', value='Publisher', name='deviceType' checked)
                   |  Publisher
                 label
-                  input.deviceType(type='radio', value='subscriber', name='deviceType')
+                  input.deviceType(type='radio', value='Subscriber', name='deviceType')
                   |  Subscriber
                 label
-                  input.deviceType(type='radio', value='both', name='deviceType')
+                  input.deviceType(type='radio', value='Both', name='deviceType')
                   |  Both
+            .form-group
+              label.control-label Category
+              .radio.radio-primary
+                label
+                  input.Category(type='radio', value='Sensor', name='Category' checked)
+                  |  Sensor value
+                label
+                  input.Category(type='radio', value='Message', name='Category')
+                  |  Message
           .modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal') Close
             button#saveDevice.btn.btn-primary(type='button', data-projectId="#{projectId}") Ok
@@ -143,7 +152,7 @@ block panel
       console.log(message);
       var clientId = message["clientId"];
       var status = message["deviceStatus"][clientId];
-      var showStatus = $('#showStatus');
+      var showStatus = $('#showStatus[data-deviceId="'+clientId+'"]');
       //- $('label[data-deviceId="'+clientId+'"]').text(status);
       if (status == 'connect') {
         showStatus.removeClass('disconnected');

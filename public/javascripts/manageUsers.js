@@ -7,21 +7,21 @@ $(document).ready(function(){
 			if(isEmail($('#userforregis').val()) == false){
 				//console.log(isEmail($('#userforregis').val()));
 				alert('Incorrect Email Type. (Example@example.com)');
-			}else{
+			}else if(allLetter($('#passforregis').val()) && allLetter($('#confirmpassforregis').val())){
 				$.ajax({
 					type: 'POST',
-					url: '/loginPage/regis',
+					url: '/signup',
 					data:{
 						email: $('#userforregis').val(),
-						password: $('#passforregis').val(),
-						package: $("input[name='package']:checked").val()
+						password: $('#passforregis').val()
+						// package: $("input[name='package']:checked").val()
 					},
 					success: function(data){
-						if(data[1]){
-							alert(data[0]);
-							window.location.reload();
+						if(data.status){
+							alert(data.alert);
+							window.location.replace('/loginPage');
 						}else{
-							alert(data[0]);
+							alert(data.alert);
 						}
 					}
 				});
@@ -34,7 +34,7 @@ $(document).ready(function(){
 	$('#loginButton').on('click', function(){
 		if($('#userforlogin').val() == '' || $('#passforlogin').val() == ''){
 			alert("Please fill your username or password")
-		}else{
+		}else if(isEmail($('#userforlogin').val()) == true && allLetter($('#passforlogin').val())){
 			$.ajax({
 				type: 'POST',
 				url: '/loginPage/login',
@@ -43,11 +43,11 @@ $(document).ready(function(){
 					password: $('#passforlogin').val()
 				},
 				success: function(data){
-					if(data[1]){
-						alert(data[0]);
+					if(data.status){
+						alert(data.alert);
 						window.location.replace('/user');
 					}else{
-						alert(data[0]);
+						alert(data.alert);
 					}
 				}
 			});
@@ -58,4 +58,14 @@ $(document).ready(function(){
 function isEmail(email) {
   var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   return regex.test(email);
+}
+
+function allLetter(inputtxt){  
+	var letters = /^[A-Za-z0-9]+$/;  
+	if(inputtxt.match(letters)){  
+		return true;  
+	}else{  
+		alert('Please input alphabet characters only');  
+		return false;  
+	}  
 }

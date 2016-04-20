@@ -10,7 +10,8 @@ block content
           .col-md-6(style='text-align: right;')
             a.btn.btn-flat.btn-link.btn-link-style(href='/loginPage/logout', style='color: #008584;') Logout
 
-      .panel-body#chartdiv(style='width: 100%; height: 500px')
+      if allMessageToGraph.length > 0
+        .panel-body#chartdiv
 
       .panel-body
         table.table.table-striped.table-hover
@@ -21,27 +22,27 @@ block content
               th Payload
               th Time
           tbody#tbody
-            if deviceType == 'both'
+            if deviceType == 'Both'
               each device_message in allMessage['publish']
                 tr
                   td Publish
                   td= device_message.topic
                   td= device_message.payload
-                  td= device_message.date
+                  td.date= device_message.date
               each device_message in allMessage['subscribe']
                 tr
                   td Subscribe
                   td= device_message.topic
                   td= device_message.payload
-                  td= device_message.date
-            else if deviceType == 'publisher'
+                  td.date= device_message.date
+            else if deviceType == 'Publisher'
               if allMessage.length > 0
                 each device_message in allMessage
                   tr
                     td Publish
                     td= device_message.topic
                     td= device_message.payload
-                    td= device_message.date
+                    td.date= device_message.date
             else
               if allMessage.length > 0
                 each device_message in allMessage
@@ -49,13 +50,21 @@ block content
                     td Subscribe
                     td= device_message.topic
                     td= device_message.payload
-                    td= device_message.date
+                    td.date= device_message.date
 
-  script(src='/javascripts/amcharts/amcharts.js')
-  script(src='/javascripts/amcharts/serial.js')
-  script(src='/javascripts/amcharts/themes/dark.js')
-  script(src='/javascripts/deviceChart.js')
+
+  script(src='/javascripts/moment/moment.js')
+  script(src='/javascripts/moment/moment-with-locales.min.js')
+  script(src='/javascripts/lodash/lodash.js')
+  script(src='/javascripts/randomColor.js')
   script.
+    $(document).ready(function(){
+      moment.locale('th');
+      $.each($(".date"),function(){
+        $(this).text(moment($(this).text()).format('LLL'))
+      });
+    })
+
     function getSubscribe(deviceId){
       var subTopic = $.ajax({
         type:"POST",
@@ -70,25 +79,30 @@ block content
     }
 
     var allMessage = !{JSON.stringify(allMessage)};
+    var allMessageToGraph = !{JSON.stringify(allMessageToGraph)};
     var deviceId = "#{deviceId}";
     var deviceType = "#{deviceType}";
     var deviceStatus = "#{deviceStatus}";
+    var category = "#{category}";
     var subTopic;
     var socket = io('http://neutron.it.kmitl.ac.th:5000');
     var sk = io('http://neutron.it.kmitl.ac.th:5000');
-    console.log(allMessage['subscribe']);
+    
+    // console.log(allMessage);
     console.log(deviceType);
+    console.log(category);
+    
     function connectSocket(subTopic){
       sk.close();
       sk = io('http://neutron.it.kmitl.ac.th:5000');
       if(subTopic.length > 0){
         for(var i=0; i < subTopic.length; i++){
           sk.on(subTopic[i], function(message){
-            $('#tbody').append('<tr>'+
+            $('#tbody').prepend('<tr>'+
                                 '<td>Subscribe</td>'+
                                 '<td>'+message.topic+'</td>'+
                                 '<td>'+message.payload+'</td>'+
-                                '<td>'+message.date+'</td>'+
+                                '<td class=date>'+moment(message.date).format('LLL')+'</td>'+
                               '</tr>');
             console.log(message);
             console.log(subTopic);
@@ -102,18 +116,18 @@ block content
     })
 
 
-    if(deviceType == 'publisher'){
+    if(deviceType == 'Publisher'){
       socket.on(deviceId, function(message){
-        $('#tbody').append('<tr>'+
+        $('#tbody').prepend('<tr>'+
                               '<td>Publish</td>'+
                               '<td>'+message.topic+'</td>'+
                               '<td>'+message.payload+'</td>'+
-                              '<td>'+message.date+'</td>'+
+                              '<td class=date>'+moment(message.date).format('LLL')+'</td>'+
                             '</tr>');
         
         console.log(message.topic);
       })
-    }else if(deviceType == 'subscriber'){
+    }else if(deviceType == 'Subscriber'){
       console.log(deviceStatus);
       if(deviceStatus == 'connect'){
         // connect before this page
@@ -186,11 +200,11 @@ block content
     }else{
       // Type Both
       socket.on(deviceId, function(message){
-        $('#tbody').append('<tr>'+
+        $('#tbody').prepend('<tr>'+
                               '<td>Publish</td>'+
                               '<td>'+message.topic+'</td>'+
                               '<td>'+message.payload+'</td>'+
-                              '<td>'+message.date+'</td>'+
+                              '<td class=date>'+moment(message.date).format('LLL')+'</td>'+
                             '</tr>');
         
         console.log(message.topic);
@@ -266,4 +280,8 @@ block content
         })
       }
     }
-    
+
+  script(src='/javascripts/amcharts/amcharts.js')
+  script(src='/javascripts/amcharts/serial.js')
+  script(src='/javascripts/amcharts/themes/dark.js')
+  script(src='/javascripts/deviceChart.js')

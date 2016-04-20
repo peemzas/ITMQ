@@ -13,7 +13,7 @@ var routes = require('./controller/index');
 var demo = require('./controller/demo');
 var login = require('./controller/login');
 var user = require('./controller/user');
-var signup = require('./routes/signup');
+var signup = require('./controller/signup');
 var newuser = require('./routes/newuser');
 // var showData = require('./routes/showData');
 
