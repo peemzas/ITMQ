@@ -51,15 +51,15 @@ block panel
   .panel.panel-default
     .panel-body
       .row(style="padding-bottom: 20px")
-        .col-md-9
-          h3(style="color: #008584; height: 100%") Project
-        .col-md-3
-          a.btn-homegreen(type="button", data-toggle="modal", data-target="#saveProjectModal", style="margin: 0;") Add Project
+        .col-lg-9.col-md-8.col-sm-7.col-xs-6
+          p.p-user-head Project
+        .col-lg-3.col-md-4.col-sm-5.col-xs-6
+          a.btn-addProject(type="button", data-toggle="modal", data-target="#saveProjectModal") Add Project
             i.mdi.mdi-add-circle-outline.add-icon
 
       .row#allProjects_panel
         each project_val in allProjects
-          .col-md-4.col-dashboard(id="#{project_val.project_id}")
+          .col-md-4.col-sm-6.col-dashboard(id="#{project_val.project_id}")
             .panel.panel-default.panel-project.panel-hover
               .panel-heading.panel-head-project
                 form(method="post", action="/user/project")
@@ -70,14 +70,14 @@ block panel
                     .col-md-12
                       input(type="hidden",name="projectId",value="#{project_val.project_id}")
                       button.btn-projectName(type='submit')
-                        h2.ellipsis.projectName= project_val.project_name
+                        p.p-project-name.ellipsis.projectName= project_val.project_name
               .panel-body.panel-des-project
                 .row
-                  .col-md-5
+                  .col-xs-5
                     label Thing :
-                  .col-md-7
-                    label (No. of Thing)
-                label.ellipsis.fontDes.projectDescription.panel-des-project Description : 
+                  .col-xs-7
+                    label 0
+                label.ellipsis.p-project-des.projectDescription Description : 
                   = project_val.project_description
 
     //- .panel.panel-default

@@ -49,41 +49,36 @@ $(document).ready(function(){
 				  //               							'</div>'+
 				  //           								'</div>'+
 				  //       									'</div>');
-						$('#allDevices_panel').append('<div id='+data.deviceId+' class="col-md-4 col-dashboard">'+
+						$('#allDevices_panel').append('<div id='+data.deviceId+' class="col-md-4 col-sm-6 col-dashboard">'+
 														'<div class="panel panel-default panel-device panel-hover">'+
 															'<div class="panel-heading panel-head-device">'+
 																'<form method="post" action="/user/device">'+
 																	'<div class="row">'+
 																		'<button type="button" aria-hidden="true" onclick="deleteDevice($(this))" data-deviceid="'+data.deviceId+'" class="close close-icon">×</button>'+
-																		'<i id="editDevice" onclick="editDevice($(this))"'+
-														 				'data-deviceid="'+data.deviceId+'"'+
-														 				'data-devicename="'+data.deviceName+'"'+
-														 				'data-devicedescription="'+data.deviceDescription+'"'+
-														 				'class="mdi mdi-settings edit-icon"></i>'+
-														 				'<i id="showStatus" data-toggle="tooltip" data-placement="right" data-original-title="Disconnected"'+
-														 				'class="mdi mdi-brightness-1 show-status disconnected"></i>'+
-														 				'<label class="device-type">Publisher</label>'+  // << type is here!!!
-														 			'</div>'+
-														 			'<div class="row">'+
-														 				'<div class="col-md-12">'+
-														 					'<input type="hidden" name="deviceId" value="'+data.deviceId+'">'+
-														 					'<button type="submit" class="btn-deviceName"><h2 class="deviceName ellipsis ">'+data.deviceName+'</h2></button>'+
-														 				'</div>'+
-														 			'</div>'+
-														 		'</form>'+
-														 	'</div>'+
-														 '<div class="panel-body panel-des-project">'+
-														 	'<div class="row">'+
-														 		'<div class="col-md-12">'+
-														 			'<label class="fontDes"> Client ID : '+data.deviceId+'</label>'+
-														 		'</div>'+
-														 	'</div>'+
-														 	'<div class="row">'+
-														 		'<div class="col-md-12">'+
-														 			'<label class="ellipsis fontDes deviceDescription">Description : '+data.deviceDescription+'</label>'+
-														 		'</div>'+
-														 	'</div>'+
-														 '</div>'+
+																		'<i id="editDevice" onclick="editDevice($(this))" data-deviceid="'+data.deviceId+'" data-devicename="'+data.deviceName+'" data-devicedescription="'+data.deviceDescription+'" class="mdi mdi-settings edit-icon"></i>'+
+																		'<i id="showStatus" data-toggle="tooltip" data-placement="right" data-original-title="Disconnected" class="mdi mdi-brightness-1 show-status disconnected"></i>'+
+																		'<label class="device-type">Publisher</label>'+			 // << type is here!!!
+																	'</div>'+
+																	'<div class="row">'+
+																		'<div class="col-md-12">'+
+																			'<input type="hidden" name="deviceId" value="'+data.deviceId+'">'+
+																			'<button type="submit" class="btn-deviceName"><p class="p-device-name ellipsis deviceName">'+data.deviceName+'</p></button>'+
+																		'</div>'+
+																	'</div>'+
+																'</form>'+
+															'</div>'+
+															'<div class="panel-body panel-des-device">'+
+																'<div class="row">'+
+																	'<div class="col-md-12">'+
+																		'<label>Client ID : '+data.deviceId+'</label>'+
+																	'</div>'+
+																'</div>'+
+																'<div class="row">'+
+																	'<div class="col-md-12">'+
+																		'<label class="ellipsis p-device-des deviceDescription">Description : '+data.deviceDescription+'</label>'+
+																	'</div>'+
+																'</div>'+
+															'</div>'+
 														'</div>'+
 													'</div>');
 						alert(data.alert)
@@ -136,39 +131,35 @@ $(document).ready(function(){
 				  //               							'</div>'+
 				  //           								'</div>'+
 				  //       									'</div>');
-						$('#allProjects_panel').append('<div id='+data.projectId+' class="col-md-4 col-dashboard">'+
+						$('#allProjects_panel').append('<div id='+data.projectId+' class="col-md-4 col-sm-6 col-dashboard">'+
 															'<div class="panel panel-default panel-project panel-hover">'+
-															'<div class="panel-heading panel-head-project">'+
-																'<form method="post" action="/user/project">'+
-																	'<div class="row">'+
-																		'<button type="button" aria-hidden="true" onclick="deleteProject($(this))" data-projectid="'+data.projectId+'" '+
-																		'class="close close-icon">×</button>'+
-																		'<i id="editProject" onclick="editProject($(this))" data-projectid="'+data.projectId+'" '+data.projectName+'" '+
-																		'data-projectdescription="'+data.projectDescription+'" '+
-																		'class="mdi mdi-settings edit-icon"></i>'+
-																	'</div>'+
-																	'<div class="row">'+
-																		'<div class="col-md-12">'+
-																			'<input type="hidden" name="projectId" value="'+data.projectId+'">'+
-																			'<button type="submit" class="btn-projectName">'+
-																			'<h2 class="projectName ellipsis">'+data.projectName+'</h2>'+
-																		'</button>'+
+																'<div class="panel-heading panel-head-project">'+
+																	'<form method="post" action="/user/project">'+
+																		'<div class="row">'+
+																			'<button type="button" aria-hidden="true" onclick="deleteProject($(this))" data-projectid="'+data.projectId+'" class="close close-icon">×</button>'+
+																			'<i id="editProject" onclick="editProject($(this))" data-projectid="'+data.projectId+'" data-projectname="'+data.projectName+'" data-projectdescription="'+data.projectDescription+'" class="mdi mdi-settings edit-icon"></i>'+
 																		'</div>'+
-																	'</div>'+
+																		'<div class="row">'+
+																			'<div class="col-md-12">'+
+																				'<input type="hidden" name="projectId" value="'+data.projectId+'">'+
+																				'<button type="submit" class="btn-projectName">'+
+																					'<p class="p-project-name ellipsis projectName">'+data.projectName+'</p>'+
+																				'</button>'+
+																			'</div>'+
+																		'</div>'+
 																	'</form>'+
 																'</div>'+
-																'<div class="panel-body">'+
-																	'<label class="projectDescription panel-des-project ellipsis">'+data.projectDescription+'</label>'+
+																'<div class="panel-body panel-des-project">'+
 																	'<div class="row">'+
-																		'<div class="col-md-5">'+
+																		'<div class="col-xs-5">'+
 																			'<label>Thing :</label>'+
 																		'</div>'+
-																		'<div class="col-md-7">'+
-																			'<label>(No. of Thing)</label>'+
+																		'<div class="col-xs-7">'+
+																			'<label>0</label>'+
 																		'</div>'+
 																	'</div>'+
+																	'<label class="ellipsis p-project-des projectDescription">Description : '+data.projectDescription+'</label>'+
 																'</div>'+
-															'</div>'+
 															'</div>');
 						alert(data.alert)
 						$('#saveProjectModal').modal('hide');
@@ -247,9 +238,9 @@ function saveEditProject(project){
 				project.attr('data-projectName', data.editProjectName);
 				project.attr('data-projectDescription', data.editProjectDescription);
 				editProjectName.replaceWith('<button class="btn-projectName" type="submit">'+ 
-																			'<h2 class="projectName ellipsis">'+data.editProjectName+'</h2>'+
+																			'<p class="p-project-name projectName ellipsis">'+data.editProjectName+'</p>'+
 																		'</button>');
-				editProjectDescription.replaceWith('<label class="projectDescription panel-des-project ellipsis fontDes">Description : '+data.editProjectDescription+'</label>');
+				editProjectDescription.replaceWith('<p class="projectDescription ellipsis p-project-des">Description : '+data.editProjectDescription+'</p>');
 				editProjectButton.removeClass('mdi-done-all');
 				editProjectButton.addClass('mdi-settings');
 				editProjectButton.attr('onclick','editProject($(this))');

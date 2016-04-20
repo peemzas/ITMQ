@@ -1,7 +1,7 @@
 extends itmq_head
 
 block content
-  .container.container-main.container-home.en-font.padding-nav
+  .container.container-main.container-home.en-font.padding-nav-login
     //- .row
     //-   .col-sm-6(style="text-align: center; float:none; margin: 0 auto;")
     //-     h2.dark-green Sign up
@@ -33,14 +33,14 @@ block content
                 label.field-label(for="confirmpassforregis") Confirm Password
                 input.field-input(type='password', id="confirmpassforregis")
                 br
-              .col-md-12(style="padding-top: 10px; color: #aaaaaa;")
-                .checkbox
-                  label
-                    input(type='checkbox')
-                    |  I have read and agree to the 
-                    a(href='') Terms of Service
-                    |  & 
-                    a(href='') Privacy Policy
+              //- .col-md-12(style="padding-top: 10px; color: #aaaaaa;")
+              //-   .checkbox
+              //-     label
+              //-       input(type='checkbox')
+              //-       |  I have read and agree to the 
+              //-       a(href='') Terms of Service
+              //-       |  & 
+              //-       a(href='') Privacy Policy
               .col-md-12(style="padding: 0;")
                 a#signupButton.btn-homegreen(style="margin-top: 20px;") Sign Up
               .col-md-12(style="margin-top: 20px; color: #aaaaaa; text-align: center;")

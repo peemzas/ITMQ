@@ -8,9 +8,9 @@ block link
     -var login = true;
 
 block content
-  .container.container-main.padding-nav(style="padding-top: 100px;")
-    .row
-      .col-xs-12
+  .container.container-main.container-demo.en-font.padding-nav
+    //- .row
+    //-   .col-xs-12
         //- .panel
         //-   .panel-heading
         //-     h2 Connection
@@ -67,13 +67,12 @@ block content
         //-         textarea#LWMInput.form-control.resize-vertical
     .row
       .col-md-8
-        .panel.shadow-z-2
-          .panel-heading
-            if session.email
-              h2 Publish to (Host: neutron.it.kmitl.ac.th Port: 8883)
-            else
-              h2 Publish to (Host: neutron.it.kmitl.ac.th Port: 1883)
+        .panel
           .panel-body
+            if session.email
+              p.p-demo-head.break-word Publish to (Host: neutron.it.kmitl.ac.th Port: 8883)
+            else
+              p.p-demo-head.break-word Publish to (Host: neutron.it.kmitl.ac.th Port: 1883)
             form
               //- .col-md-6
               .col-md-10
@@ -93,20 +92,18 @@ block content
               .col-md-12
                 label Message
                 textarea#publishPayload.form-control.resize-vertical
-              .col-md-12.text-center(style='padding-top: 20px')
-                a#publishButton.btn.btn-primary.btn-raised.btn-material-blue Publish
+              .col-md-12.text-center(style='padding-top: 10px')
+                a#publishButton.btn-homegreen Publish
                   //- (onclick="websocketclient.publish($('#publishTopic').val(),$('#publishPayload').val(),parseInt($('#publishQoSInput').val(),10),$('#publishRetain').is(':checked'))") 
-        .panel.shadow-z-2
-          .panel-heading
-            h2 Messages
+        .panel
           .panel-body
+            p.p-demo-head Messages
             .row
               ul#messEdit.col-md-12
       .col-md-4
-        .panel.shadow-z-2
-          .panel-heading
-            h2 Subscribtions
+        .panel
           .panel-body
+            p.p-demo-head Subscribtions
             .col-md-12
               label Topic
               input#subscribeTopic.form-control(type='text', value='TestTopic')
@@ -116,8 +113,8 @@ block content
               select#subscribeQoSInput.form-control.hidden-field()
                   option(value=0) 0
                   option(value=1) 1
-            .col-md-12.text-center(style='padding: 20px 0')
-              a#addSubButton.btn.btn-primary.btn-raised.btn-material-blue Add New Topic Subscription
+            .col-md-12.text-center(style='padding: 10px; padding-bottom: 20px')
+              a#addSubButton.btn-homegreen Add New Topic Subscription
               //- a#addSubButton.small.button.addSubButton(href='#data') Add New Topic Subscription
             .col-md-12
               ul#subTopicEdit.col-md-12

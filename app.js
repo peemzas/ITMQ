@@ -15,11 +15,10 @@ var login = require('./controller/login');
 var user = require('./controller/user');
 var signup = require('./routes/signup');
 var newuser = require('./routes/newuser');
+var pricing = require('./routes/pricing');
 // var showData = require('./routes/showData');
 
 var app = express();
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -57,6 +56,7 @@ app.use('/signup', signup);
 app.use('/loginPage', login);
 app.use('/user', user);
 app.use('/newuser', newuser);
+app.use('/pricing', pricing);
 // app.use('/showData', showData);
 
 // catch 404 and forward to error handler

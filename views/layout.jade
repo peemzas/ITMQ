@@ -1,6 +1,10 @@
 doctype html
 html
   head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    
     title ITMQ Broker
 
     // Material Design
@@ -17,6 +21,7 @@ html
 
     // icon
     link(rel='stylesheet', href='../node_modules/bootstrap-material-design-icons/css/material-icons.css')
+    link(rel='stylesheet', href='/stylesheets/flaticon.css')
 
     // fullPage.js
     link(rel='stylesheet', href='/fullpage/jquery.fullPage.css')
@@ -37,7 +42,7 @@ html
       -var login = false;
     else
       -var login = true;
-  body
+  body(style="background: #e9e9e9")
     .navbar.navbar-green.navbar-fixed-top
       .container
         .navbar-header
@@ -85,7 +90,7 @@ html
                   li
                     a(href='javascript:void(0)') Doc
                   li
-                    a(href='javascript:void(0)') Settings
+                    a(href='/pricing') Pricing & Plan
                   li
                     a(href='/loginPage/logout') Log Out
 
