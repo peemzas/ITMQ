@@ -75,14 +75,17 @@ block content
               p.p-demo-head.break-word Publish to (Host: neutron.it.kmitl.ac.th Port: 1883)
             form
               //- .col-md-6
-              .col-md-10
+              .col-md-12
                 label Topic
-                input#publishTopic.form-control(type='text', value='TestTopic')
-              .col-md-2
-                label(for='publishQoSInput') QoS
-                select#publishQoSInput.form-control.hidden-field()
-                  option(value=0) 0
-                  option(value=1) 1
+                if session.email
+                  input#publishTopic.form-control(type='text', value='#{usernameBroker}/TestTopic')
+                else
+                  input#publishTopic.form-control(type='text', value='TestTopic')
+              //- .col-md-2
+                //- label(for='publishQoSInput') QoS
+                //- select#publishQoSInput.form-control.hidden-field()
+                //-   option(value=0) 0
+                //-   option(value=1) 1
                 br
               //- .col-md-2
               //-   label Retain
@@ -106,13 +109,16 @@ block content
             p.p-demo-head Subscribtions
             .col-md-12
               label Topic
-              input#subscribeTopic.form-control(type='text', value='TestTopic')
+              if session.email 
+                input#subscribeTopic.form-control(type='text', value='#{usernameBroker}/TestTopic')
+              else
+                input#subscribeTopic.form-control(type='text', value='TestTopic')
               br
-             .col-md-4
-              label QoS  
-              select#subscribeQoSInput.form-control.hidden-field()
-                  option(value=0) 0
-                  option(value=1) 1
+             //- .col-md-4
+             //-  label QoS  
+             //-  select#subscribeQoSInput.form-control.hidden-field()
+             //-      option(value=0) 0
+             //-      option(value=1) 1
             .col-md-12.text-center(style='padding: 10px; padding-bottom: 20px')
               a#addSubButton.btn-homegreen Add New Topic Subscription
               //- a#addSubButton.small.button.addSubButton(href='#data') Add New Topic Subscription
@@ -201,37 +207,31 @@ block content
           $('#publishButton').on('click', function(){
             var publishPayload = $('#publishPayload').val();
             if("#{session.email}"){
-              var publishTopic = "#{usernameBroker}/" + $('#publishTopic').val();
+              var publishTopic = $('#publishTopic').val();
             }else{
               var publishTopic = $('#publishTopic').val();
             }
-            var publishQoSInput = parseInt($("#publishQoSInput :selected").val());
+            //- var publishQoSInput = parseInt($("#publishQoSInput :selected").val());
 
             message = new Paho.MQTT.Message(publishPayload);
             message.destinationName = publishTopic;
-            message.qos = publishQoSInput;
+            //- message.qos = publishQoSInput;
             client.send(message);
-            console.log(publishQoSInput);
+            //- console.log(publishQoSInput);
           });
 
           $('#addSubButton').on('click', function(){
             subscribeTopic = $('#subscribeTopic').val();
-            subscribeQoSInput = parseInt($("#subscribeQoSInput :selected").val());
+            //- subscribeQoSInput = parseInt($("#subscribeQoSInput :selected").val());
             if("#{session.email}"){
-              client.subscribe("#{usernameBroker}/" + subscribeTopic, 
-                                {qos: subscribeQoSInput,
-                                 onSuccess: subscribeSubccess,
+              client.subscribe(subscribeTopic, 
+                                {onSuccess: subscribeSubccess,
                                  onFailure: subscribeFail});
             }else{
               client.subscribe(subscribeTopic, 
-                                {qos: subscribeQoSInput,
-                                 onSuccess: subscribeSubccess,
+                                {onSuccess: subscribeSubccess,
                                  onFailure: subscribeFail});
             }
-            
-            
-            
-            console.log(subscribeQoSInput);
 
             var childPanel = $("#subTopicEdit .panel");
             for(var i=0;i<childPanel.length;i++){  
@@ -263,28 +263,28 @@ block content
             $("#messEdit").prepend('<div class="panel">'+
                                     '<div class="panel-body">'+
                                         '<label class="disc">'+
-                                            'from topic : ' + message.destinationName.split('/').slice(1, this.length).join('/') + '<br>'+
+                                            'from topic : ' + message.destinationName + '<br>'+
                                             'Message : ' + message.payloadString + '<br>'+
-                                            'QoS : ' + message.qos + '<br>'+
+                                            //- 'QoS : ' + message.qos + '<br>'+
                                         '</label>'+
                                     '</div>'+
                                 '</div>');
             console.log("onMessageArrived:"+message.destinationName);
             console.log("onMessageArrived:"+message.payloadString);
-            console.log("onMessageArrived:"+message.qos);
+            //- console.log("onMessageArrived:"+message.qos);
           }else{
             $("#messEdit").prepend('<div class="panel">'+
                                     '<div class="panel-body">'+
                                         '<label class="disc">'+
                                             'from topic : ' + message.destinationName + '<br>'+
                                             'Message : ' + message.payloadString + '<br>'+
-                                            'QoS : ' + message.qos + '<br>'+
+                                            //- 'QoS : ' + message.qos + '<br>'+
                                         '</label>'+
                                     '</div>'+
                                 '</div>');
             console.log("onMessageArrived:"+message.destinationName);
             console.log("onMessageArrived:"+message.payloadString);
-            console.log("onMessageArrived:"+message.qos);
+            //- console.log("onMessageArrived:"+message.qos);
           }
           
         }

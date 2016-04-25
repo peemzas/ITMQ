@@ -283,7 +283,7 @@ function cancleEditProject(project){
 	editProjectName.replaceWith('<button class="btn-projectName" type="submit">'+ 
 																			'<h2 class="projectName ellipsis">'+projectName+'</h2>'+
 																		'</button>');
-	editProjectDescription.replaceWith('<label class="projectDescription panel-des-project ellipsis fontDes">Description : '+projectDescription+'</label>');
+	editProjectDescription.replaceWith('<label class="ellipsis p-project-des projectDescriptionn">Description : '+projectDescription+'</label>');
 	editProjectButton.removeClass('mdi-done-all');
 	editProjectButton.addClass('mdi-settings');
 	editProjectButton.attr('onclick','editProject($(this))');
@@ -322,7 +322,7 @@ function saveEditProject(project){
 					editProjectName.replaceWith('<button class="btn-projectName" type="submit">'+ 
 																				'<p class="p-project-name projectName ellipsis">'+data.editProjectName+'</p>'+
 																			'</button>');
-					editProjectDescription.replaceWith('<p class="projectDescription ellipsis p-project-des">Description : '+data.editProjectDescription+'</p>');
+					editProjectDescription.replaceWith('<p class="ellipsis p-project-des projectDescription">Description : '+data.editProjectDescription+'</p>');
 					editProjectButton.removeClass('mdi-done-all');
 					editProjectButton.addClass('mdi-settings');
 					editProjectButton.attr('onclick','editProject($(this))');
@@ -394,7 +394,7 @@ function cancleEditDevice(device){
 	editDeivceName.replaceWith('<button class="btn-deviceName" type="submit">'+ 
 																				'<h2 class="deviceName ellipsis">'+deviceName+'</h2>'+
 																			'</button>');
-	editDeivceDescription.replaceWith('<label class="deviceDescription panel-des-project ellipsis fontDes">Description : '+deviceDescription+'</label>');
+	editDeivceDescription.replaceWith('<label class="ellipsis p-device-des deviceDescription">Description : '+deviceDescription+'</label>');
 	editDeivceButton.removeClass('mdi-done-all');
 	editDeivceButton.addClass('mdi-settings');
 	editDeivceButton.attr('onclick','editDevice($(this))');
@@ -433,7 +433,7 @@ function saveEditDevice(device){
 					editDeivceName.replaceWith('<button class="btn-deviceName" type="submit">'+ 
 																				'<h2 class="deviceName ellipsis">'+data.editDeivceName+'</h2>'+
 																			'</button>');
-					editDeivceDescription.replaceWith('<label class="deviceDescription panel-des-project ellipsis fontDes">Description : '+data.editDeivceDescription+'</label>');
+					editDeivceDescription.replaceWith('<label class="ellipsis p-device-des deviceDescription">Description : '+data.editDeivceDescription+'</label>');
 					editDeivceButton.removeClass('mdi-done-all');
 					editDeivceButton.addClass('mdi-settings');
 					editDeivceButton.attr('onclick','editDevice($(this))');
@@ -454,6 +454,32 @@ function saveEditDevice(device){
 	console.log(editDeivceName);
 	console.log(editDeivceDescription);
 }
+
+// function deleteHistoryTopic(topic){
+// 	var deviceId = topic.attr('data-deviceId');
+// 	var selectTopic = topic.attr('data-topic');
+
+// 	var confirmDelete = confirm('Do you want to delete this topic?');
+// 	if(confirmDelete){
+// 		$.ajax({
+// 			type: 'POST',
+// 			url: '/user/deleteHistoryTopic',
+// 			data: {
+// 				deviceId: deviceId,
+// 				topic: selectTopic
+// 			},
+// 			success: function(data){
+// 				if(data.status){
+// 					alert(data.alert);
+// 					topic.parent().remove();
+// 				}else{
+// 					alert(data.alert);
+// 				}
+// 				console.log(data);
+// 			}
+// 		})
+// 	}
+// }
 
 function allLetter(inputtxt){  
 	var letters = /^[A-Za-z0-9\s]+$/;  
