@@ -7,12 +7,26 @@ block content
         .row
           .col-md-6
             h2(style="color: #008584; margin-top: 10px;") #{deviceName}
-          .col-md-6(style='text-align: right;')
-            a.btn.btn-flat.btn-link.btn-link-style(href='/loginPage/logout', style='color: #008584;') Logout
+          //- .col-md-6(style='text-align: right;')
+          //-   a.btn.btn-flat.btn-link.btn-link-style(href='/loginPage/logout', style='color: #008584;') Logout
 
-      if allMessageToGraph.length > 0
+      if deviceType == 'Both'
+        if allMessageToGraph.publish.length > 0 || allMessageToGraph.subscribe.length > 0
+          .panel-body#chartdiv
+      else if allMessageToGraph.length > 0 
         .panel-body#chartdiv
 
+
+      //- .panel-body
+      //-   .btn-group
+      //-     a.btn.btn-primary.btn-raised(href='javascript:void(0)') History Topic
+      //-     a.btn.btn-primary.btn-raised.dropdown-toggle(data-target='#', data-toggle='dropdown')
+      //-       span.caret
+      //-     ul.dropdown-menu#historySub
+      //-       each sub in subscribe
+      //-         li
+      //-           p= sub
+      //-           button.close(type='button', onclick="deleteHistoryTopic($(this))", data-topic= sub, data-deviceId="#{deviceId}" aria-hidden='true' style='position: absolute; right: 7px; top: 0px;') ×
       .panel-body
         table.table.table-striped.table-hover
           thead
@@ -84,9 +98,11 @@ block content
     var deviceType = "#{deviceType}";
     var deviceStatus = "#{deviceStatus}";
     var category = "#{category}";
+    var subscribe = "#{subscribe}";
     var subTopic;
     var socket = io('http://neutron.it.kmitl.ac.th:5000');
     var sk = io('http://neutron.it.kmitl.ac.th:5000');
+    var socketId;
     
     // console.log(allMessage);
     console.log(deviceType);
@@ -112,6 +128,7 @@ block content
     }
 
     socket.on("send id", function(data){
+      socketId = data;
       console.log("Socket connected : " + data);
     })
 
@@ -135,7 +152,14 @@ block content
 
           socket.on('subtopic', function(data){
             subTopic = getSubscribe(deviceId);
-            connectSocket(subTopic)
+            connectSocket(subTopic);
+            // var index = _.findIndex(subTopic,function(o){ return o==data.topic;});
+            // if(index != -1){
+            //   $('#historySub').append('<li>'+
+            //                           '<p>'+data.topic+'</p>'+
+            //                           '<button class="close" type="button" onclick="deleteHistoryTopic($(this))" data-topic="'+data.topic+'" data-deviceId="'+data.deviceId+'" aria-hidden="true" style="position: absolute; right: 7px; top: 0px;"> × </button>'+
+            //                         '</li>');
+            // }
             console.log(subTopic);
           })
 
@@ -153,7 +177,14 @@ block content
 
             socket.on('subtopic', function(data){
               subTopic = getSubscribe(deviceId);
-              connectSocket(subTopic)
+              connectSocket(subTopic);
+              // var index = _.findIndex(subTopic,function(o){ return o==data.topic;});
+              // if(index != -1){
+              //   $('#historySub').append('<li>'+
+              //                           '<p>'+data.topic+'</p>'+
+              //                           '<button class="close" type="button" onclick="deleteHistoryTopic($(this))" data-topic="'+data.topic+'" data-deviceId="'+data.deviceId+'" aria-hidden="true" style="position: absolute; right: 7px; top: 0px;"> × </button>'+
+              //                         '</li>');
+              // }
               console.log(subTopic);
             })
 
@@ -179,7 +210,14 @@ block content
 
             socket.on('subtopic', function(data){
               subTopic = getSubscribe(deviceId);
-              connectSocket(subTopic)
+              connectSocket(subTopic);
+              // var index = _.findIndex(subTopic,function(o){ return o==data.topic;});
+              // if(index != -1){
+              //   $('#historySub').append('<li>'+
+              //                           '<p>'+data.topic+'</p>'+
+              //                           '<button class="close" type="button" onclick="deleteHistoryTopic($(this))" data-topic="'+data.topic+'" data-deviceId="'+data.deviceId+'" aria-hidden="true" style="position: absolute; right: 7px; top: 0px;"> × </button>'+
+              //                         '</li>');
+              // }
               console.log(subTopic);
             })
 
@@ -217,7 +255,14 @@ block content
 
           socket.on('subtopic', function(data){
             subTopic = getSubscribe(deviceId);
-            connectSocket(subTopic)
+            connectSocket(subTopic);
+            // var index = _.findIndex(subTopic,function(o){ return o==data.topic;});
+            // if(index != -1){
+            //   $('#historySub').append('<li>'+
+            //                           '<p>'+data.topic+'</p>'+
+            //                           '<button class="close" type="button" onclick="deleteHistoryTopic($(this))" data-topic="'+data.topic+'" data-deviceId="'+data.deviceId+'" aria-hidden="true" style="position: absolute; right: 7px; top: 0px;"> × </button>'+
+            //                         '</li>');
+            // }
             console.log(subTopic);
           })
 
@@ -235,7 +280,14 @@ block content
 
             socket.on('subtopic', function(data){
               subTopic = getSubscribe(deviceId);
-              connectSocket(subTopic)
+              connectSocket(subTopic);
+              // var index = _.findIndex(subTopic,function(o){ return o==data.topic;});
+              // if(index != -1){
+              //   $('#historySub').append('<li>'+
+              //                           '<p>'+data.topic+'</p>'+
+              //                           '<button class="close" type="button" onclick="deleteHistoryTopic($(this))" data-topic="'+data.topic+'" data-deviceId="'+data.deviceId+'" aria-hidden="true" style="position: absolute; right: 7px; top: 0px;"> × </button>'+
+              //                         '</li>');
+              // }
               console.log(subTopic);
             })
 
@@ -261,7 +313,14 @@ block content
 
             socket.on('subtopic', function(data){
               subTopic = getSubscribe(deviceId);
-              connectSocket(subTopic)
+              connectSocket(subTopic);
+              // var index = _.findIndex(subTopic,function(o){ return o==data.topic;});
+              // if(index != -1){
+              //   $('#historySub').append('<li>'+
+              //                           '<p>'+data.topic+'</p>'+
+              //                           '<button class="close" type="button" onclick="deleteHistoryTopic($(this))" data-topic="'+data.topic+'" data-deviceId="'+data.deviceId+'" aria-hidden="true" style="position: absolute; right: 7px; top: 0px;"> × </button>'+
+              //                         '</li>');
+              // }
               console.log(subTopic);
             })
 
@@ -280,6 +339,76 @@ block content
         })
       }
     }
+
+    var win = $(window);
+    var skip = 2;
+    // Each time the user scrolls
+    win.scroll(function() {
+      // End of the document reached?
+      if ($(document).height() - win.height() == win.scrollTop()) {
+        $.ajax({
+          url: '/user/getData',
+          type: 'POST',
+          data:{
+            email: "#{session.email}",
+            deviceId: deviceId,
+            skip: skip
+          },
+          success: function(message) {
+            console.log(message.deviceType);
+            if(message.deviceType == 'Publisher'){
+              if(message.allMessage.length > 0){
+                for (var i = 0; i < message.allMessage.length; i++) {
+                  $('#tbody').append('<tr>'+
+                                      '<td>Publish</td>'+
+                                      '<td>'+message.allMessage[i].topic+'</td>'+
+                                      '<td>'+message.allMessage[i].payload+'</td>'+
+                                      '<td class=date>'+moment(message.allMessage[i].date).format('LLL')+'</td>'+
+                                    '</tr>');
+                  console.log(message.allMessage[i].payload);
+                }
+              }
+            }else if(message.deviceType == 'Subscriber'){
+              if(message.allMessage.length > 0){
+                for (var i = 0; i < message.allMessage.length; i++) {
+                  $('#tbody').append('<tr>'+
+                                      '<td>Subscribe</td>'+
+                                      '<td>'+message.allMessage[i].topic+'</td>'+
+                                      '<td>'+message.allMessage[i].payload+'</td>'+
+                                      '<td class=date>'+moment(message.allMessage[i].date).format('LLL')+'</td>'+
+                                    '</tr>');
+                  console.log(message.allMessage[i].payload);
+                }
+              }
+            }else{
+              if(message.allMessage['publish'].length > 0){
+                for (var i = 0; i < message.allMessage['publish'].length; i++) {
+                  $('#tbody').append('<tr>'+
+                                      '<td>Publish</td>'+
+                                      '<td>'+message.allMessage['publish'][i].topic+'</td>'+
+                                      '<td>'+message.allMessage['publish'][i].payload+'</td>'+
+                                      '<td class=date>'+moment(message.allMessage['publish'][i].date).format('LLL')+'</td>'+
+                                    '</tr>');
+                }
+              }
+
+              if(message.allMessage['subscribe'].length > 0){
+                for (var i = 0; i < message.allMessage['subscribe'].length; i++) {
+                  $('#tbody').append('<tr>'+
+                                      '<td>Subscribe</td>'+
+                                      '<td>'+message.allMessage['subscribe'][i].topic+'</td>'+
+                                      '<td>'+message.allMessage['subscribe'][i].payload+'</td>'+
+                                      '<td class=date>'+moment(message.allMessage['subscribe'][i].date).format('LLL')+'</td>'+
+                                    '</tr>');
+                }
+              }
+            }
+            skip = skip + 2;
+            console.log(skip);
+          }
+        });
+      }
+    });
 
   script(src='/javascripts/amcharts/amcharts.js')
   script(src='/javascripts/amcharts/serial.js')

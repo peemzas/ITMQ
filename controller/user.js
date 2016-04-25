@@ -16,8 +16,11 @@ socket.on('connect', function(socket) {
 socket.on('subtopic', function(data){
   console.log("on sub : ");
   console.log(data);
-  currentSubscribe.push(data);
-  console.log(currentSubscribe);
+  var index = currentSubscribe.map(function(e) { return (e.deviceId==data.deviceId && e.topic==data.topic) ? data.topic : null; }).indexOf(data.topic);
+  if(index == -1){
+    currentSubscribe.push(data);
+    console.log(currentSubscribe);
+  }
 })
 
 socket.on('unsubtopic', function(data){
@@ -129,7 +132,7 @@ userPage.post('/project', function(req,res,next){
 userPage.post('/device', function(req,res,next){
   var user = req.session.email;
   var deviceId = req.body.deviceId;
-  var subscribe;
+  var subscribe = [];
   if(user){
     userDB.find({'email': user ,'devices.device_id': deviceId}, function(err, userData){
       for (var i = 0; i < userData[0].devices.length; i++) {
@@ -138,12 +141,16 @@ userPage.post('/device', function(req,res,next){
           var deviceType = userData[0].devices[i].device_type;
           var deviceStatus = userData[0].devices[i].status;
           var category = userData[0].devices[i].category;
-          subscribe = userData[0].devices[i].subscribe;
+          for (var j = 0; j < userData[0].devices[i].subscribe.length; j++) {
+            subscribe.push(userData[0].devices[i].subscribe[j]);
+            console.log("test:   " + userData[0].devices[i].subscribe[j]);
+            console.log(subscribe);
+          }
         }
       }
 
       if(deviceType == 'Publisher'){
-        messageDB.find({'email': user, device_id: deviceId}).sort('-date').exec(function(err,messageData){
+        messageDB.find({'email': user, device_id: deviceId}).limit(2).sort('-date').exec(function(err,messageData){
           var allMessage = messageData;
 
           messageDB.find({'email': user, device_id: deviceId}).sort('date').exec(function(err,messageData){
@@ -154,10 +161,10 @@ userPage.post('/device', function(req,res,next){
 
         })
       }else if(deviceType == 'Subscriber'){
-        messageDB.find({'email': user, 'topic':{$in: subscribe}}).sort('-date').exec(function(err,messageData){
+        messageDB.find({'email': user, 'subscriber': deviceId}).limit(2).sort('-date').exec(function(err,messageData){
           var allMessage = messageData;
 
-          messageDB.find({'email': user, 'topic':{$in: subscribe}}).sort('date').exec(function(err,messageData){
+          messageDB.find({'email': user, 'subscriber': deviceId}).sort('date').exec(function(err,messageData){
             var allMessageToGraph = messageData;
             res.render('device', {session: req.session, category: category, deviceType:deviceType, deviceName: deviceName, deviceId: deviceId, allMessage: allMessage, allMessageToGraph:allMessageToGraph, subscribe: subscribe, deviceStatus: deviceStatus});
           })
@@ -166,17 +173,17 @@ userPage.post('/device', function(req,res,next){
       }else{
         var allMessage = {};
         var allMessageToGraph = {};
-        messageDB.find({'email': user, device_id: deviceId}).sort('-date').exec(function(err,messageData){
+        messageDB.find({'email': user, device_id: deviceId}).limit(2).sort('-date').exec(function(err,messageData){
           allMessage['publish'] = messageData;
 
           messageDB.find({'email': user, device_id: deviceId}).sort('date').exec(function(err,messageData){
             allMessageToGraph['publish'] = messageData;
           })
 
-          messageDB.find({'email': user, 'topic':{$in: subscribe}}).sort('-date').exec(function(err,messageData){
+          messageDB.find({'email': user, 'subscriber': deviceId}).limit(2).sort('-date').exec(function(err,messageData){
             allMessage['subscribe'] = messageData;
 
-            messageDB.find({'email': user, 'topic':{$in: subscribe}}).sort('date').exec(function(err,messageData){
+            messageDB.find({'email': user, 'subscriber': deviceId}).sort('date').exec(function(err,messageData){
               allMessageToGraph['subscribe'] = messageData;
               res.render('device', {session: req.session, category: category, deviceType:deviceType, deviceName: deviceName, deviceId: deviceId, allMessage: allMessage, allMessageToGraph:allMessageToGraph, subscribe: subscribe, deviceStatus: deviceStatus});
             })
@@ -395,5 +402,66 @@ userPage.post('/editDevice', function(req,res,next){
     }
   });                 
 });
+
+// userPage.post('/deleteHistoryTopic', function(req,res,next){
+//   var user = req.session.email;
+//   var deviceId = req.body.deviceId;
+//   var topic = req.body.topic;
+
+//   userDB.update({'email': user, 'devices.device_id': deviceId},{$pull:{'devices.$.subscribe': topic}},function(err,data){
+//     if(err){
+//       res.send({alert: 'Delete subscribe fail', status: false});
+//     }else{
+//       var index = currentSubscribe.map(function(e) { return (e.topic == topic && e.deviceId == deviceId) ? topic : null; }).indexOf(topic);
+//       if(index != -1){
+//         currentSubscribe.splice(index,1);
+//         socket.emit('deleteHistoryTopic', {topic: topic, deviceId: deviceId});
+//         console.log(currentSubscribe);
+//       }
+//       res.send({alert: 'Delete subscribe success', status: true });
+//     }
+//   });
+// })
+
+userPage.post('/getData', function(req,res,next){
+  var user = req.session.email;
+  var deviceId = req.body.deviceId;
+  var skipCount = req.body.skip;
+
+  if(user){
+    userDB.find({'email': user ,'devices.device_id': deviceId}, function(err, userData){
+      for (var i = 0; i < userData[0].devices.length; i++) {
+        if(userData[0].devices[i].device_id == deviceId){
+          var deviceType = userData[0].devices[i].device_type;
+        }
+      }
+
+      if(deviceType == 'Publisher'){
+            messageDB.find({'email': user, device_id: deviceId}).skip(skipCount).limit(2).sort('-date').exec(function(err,messageData){
+              var allMessage = messageData;
+              res.send({session: req.session, allMessage: allMessage, deviceType: deviceType});
+            })
+
+          }else if(deviceType == 'Subscriber'){
+            messageDB.find({'email': user, 'subscriber': deviceId}).skip(skipCount).limit(2).sort('-date').exec(function(err,messageData){
+              var allMessage = messageData;
+              res.send({session: req.session, allMessage: allMessage, deviceType: deviceType});
+            })
+
+          }else{
+            var allMessage = {};
+            messageDB.find({'email': user, device_id: deviceId}).skip(skipCount).limit(2).sort('-date').exec(function(err,messageData){
+              allMessage['publish'] = messageData;
+
+              messageDB.find({'email': user, 'subscriber': deviceId}).skip(skipCount).limit(2).sort('-date').exec(function(err,messageData){
+                allMessage['subscribe'] = messageData;
+                res.send({session: req.session, allMessage: allMessage, deviceType: deviceType});
+              })
+
+            })
+          }
+    })
+  }
+})
 
 module.exports = userPage;

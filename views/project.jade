@@ -5,13 +5,13 @@ block project
   .panel.panel-default(id="#{projectId}")
     .panel.panel-default.panel-project(style="height: auto")
       .panel-heading.panel-head-project.panel-head-project-des
-        .row
-          i.mdi.mdi-settings.edit-icon#editProject(style='padding-right: 20px', onclick='editProject($(this))', data-projectId= "#{projectId}", data-projectName = "#{projectName}" , data-projectDescription = "#{projectDescription}")
+        //- .row
+        //-   i.mdi.mdi-settings.edit-icon#editProject(style='padding-right: 20px', onclick='editProject($(this))', data-projectId= "#{projectId}", data-projectName = "#{projectName}" , data-projectDescription = "#{projectDescription}")
         .row
           .col-md-12
             input(type="hidden",name="projectId",value="#{projectId}", data-projectName = "#{projectName}", data-projectDescription = "#{projectDescription}")
             button.btn-projectName2(href="/user/project", type='submit')
-              p.p-project-name.projectName.break-word(style="padding-bottom: 10px") #{projectName}
+              p.p-project-name.projectName.break-word(style="padding-bottom: 10px; margin-top: 40px;") #{projectName}
       .panel-body
         label.p-project-des.projectDescription.break-word Description :  #{projectDescription}
 
