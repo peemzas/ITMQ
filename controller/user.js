@@ -150,7 +150,7 @@ userPage.post('/device', function(req,res,next){
       }
 
       if(deviceType == 'Publisher'){
-        messageDB.find({'email': user, device_id: deviceId}).limit(2).sort('-date').exec(function(err,messageData){
+        messageDB.find({'email': user, device_id: deviceId}).limit(30).sort('-date').exec(function(err,messageData){
           var allMessage = messageData;
 
           messageDB.find({'email': user, device_id: deviceId}).sort('date').exec(function(err,messageData){
@@ -161,7 +161,7 @@ userPage.post('/device', function(req,res,next){
 
         })
       }else if(deviceType == 'Subscriber'){
-        messageDB.find({'email': user, 'subscriber': deviceId}).limit(2).sort('-date').exec(function(err,messageData){
+        messageDB.find({'email': user, 'subscriber': deviceId}).limit(30).sort('-date').exec(function(err,messageData){
           var allMessage = messageData;
 
           messageDB.find({'email': user, 'subscriber': deviceId}).sort('date').exec(function(err,messageData){
@@ -173,14 +173,14 @@ userPage.post('/device', function(req,res,next){
       }else{
         var allMessage = {};
         var allMessageToGraph = {};
-        messageDB.find({'email': user, device_id: deviceId}).limit(2).sort('-date').exec(function(err,messageData){
+        messageDB.find({'email': user, device_id: deviceId}).limit(30).sort('-date').exec(function(err,messageData){
           allMessage['publish'] = messageData;
 
           messageDB.find({'email': user, device_id: deviceId}).sort('date').exec(function(err,messageData){
             allMessageToGraph['publish'] = messageData;
           })
 
-          messageDB.find({'email': user, 'subscriber': deviceId}).limit(2).sort('-date').exec(function(err,messageData){
+          messageDB.find({'email': user, 'subscriber': deviceId}).limit(30).sort('-date').exec(function(err,messageData){
             allMessage['subscribe'] = messageData;
 
             messageDB.find({'email': user, 'subscriber': deviceId}).sort('date').exec(function(err,messageData){
@@ -437,23 +437,23 @@ userPage.post('/getData', function(req,res,next){
       }
 
       if(deviceType == 'Publisher'){
-            messageDB.find({'email': user, device_id: deviceId}).skip(skipCount).limit(2).sort('-date').exec(function(err,messageData){
+            messageDB.find({'email': user, device_id: deviceId}).skip(skipCount).limit(10).sort('-date').exec(function(err,messageData){
               var allMessage = messageData;
               res.send({session: req.session, allMessage: allMessage, deviceType: deviceType});
             })
 
           }else if(deviceType == 'Subscriber'){
-            messageDB.find({'email': user, 'subscriber': deviceId}).skip(skipCount).limit(2).sort('-date').exec(function(err,messageData){
+            messageDB.find({'email': user, 'subscriber': deviceId}).skip(skipCount).limit(10).sort('-date').exec(function(err,messageData){
               var allMessage = messageData;
               res.send({session: req.session, allMessage: allMessage, deviceType: deviceType});
             })
 
           }else{
             var allMessage = {};
-            messageDB.find({'email': user, device_id: deviceId}).skip(skipCount).limit(2).sort('-date').exec(function(err,messageData){
+            messageDB.find({'email': user, device_id: deviceId}).skip(skipCount).limit(10).sort('-date').exec(function(err,messageData){
               allMessage['publish'] = messageData;
 
-              messageDB.find({'email': user, 'subscriber': deviceId}).skip(skipCount).limit(2).sort('-date').exec(function(err,messageData){
+              messageDB.find({'email': user, 'subscriber': deviceId}).skip(skipCount).limit(10).sort('-date').exec(function(err,messageData){
                 allMessage['subscribe'] = messageData;
                 res.send({session: req.session, allMessage: allMessage, deviceType: deviceType});
               })
