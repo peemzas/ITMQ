@@ -16,6 +16,7 @@ var user = require('./controller/user');
 var signup = require('./controller/signup');
 var newuser = require('./routes/newuser');
 var pricing = require('./routes/pricing');
+var doc = require('./controller/doc');
 // var showData = require('./routes/showData');
 
 var app = express();
@@ -30,7 +31,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
@@ -57,6 +57,7 @@ app.use('/loginPage', login);
 app.use('/user', user);
 app.use('/newuser', newuser);
 app.use('/pricing', pricing);
+app.use('/doc', doc);
 // app.use('/showData', showData);
 
 // catch 404 and forward to error handler

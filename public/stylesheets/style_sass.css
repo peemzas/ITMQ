@@ -976,6 +976,21 @@
     .btn-back-project {
       font-size: 12px; } }
 
+.sidebar {
+  max-width: 300px;
+  font-size: 12px;
+  position: fixed;
+  top: 100px; }
+  @media (max-width: 768px) {
+    .sidebar {
+      display: none; } }
+
+.doc {
+  font-size: 18px; }
+
+.code-height {
+  height: 400px; }
+
 #chartdiv {
   width: 100%;
   height: 500px;

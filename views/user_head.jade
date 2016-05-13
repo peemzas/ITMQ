@@ -3,7 +3,10 @@ html
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui')
+    //- meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='apple-mobile-web-app-capable' content='yes')
+
     
     title ITMQ Broker
 
@@ -30,6 +33,9 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/style_sass.css')
 
+    // prism.js
+    link(rel='stylesheet', href='/prism/prism.css')
+
     //Mobile Support
     meta(name='viewport', content='width=device-width, initial-scale=1')
   body(style="background: #e9e9e9")
@@ -53,7 +59,7 @@ html
                 li
                   a(href='/demo') WebSocket
                 li
-                  a(href='javascript:void(0)') Doc
+                  a(href='/doc') Doc
                 li
                   a(href='/pricing') Pricing & Plan
                 li
