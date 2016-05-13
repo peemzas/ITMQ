@@ -4,6 +4,7 @@ html
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='apple-mobile-web-app-capable' content='yes')
     
     title ITMQ Broker
 
@@ -19,7 +20,7 @@ html
     link(rel='stylesheet', href='//fezvrasta.github.io/snackbarjs/dist/snackbar.min.css')
 
     // icon
-    link(rel='stylesheet', href='../node_modules/bootstrap-material-design-icons/css/material-icons.css')
+    link(rel='stylesheet', href='/bootstrap-material-design-icons/css/material-icons.css')
     link(rel='stylesheet', href='/stylesheets/flaticon.css')
 
     // fullPage.js
@@ -31,6 +32,8 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/style_sass.css')
 
+    // prism.js
+    link(rel='stylesheet', href='/prism/prism.css')
 
     //Mobile Support
     meta(name='viewport', content='width=device-width, initial-scale=1')
@@ -51,7 +54,7 @@ html
             span.icon-bar
           a.navbar-brand(href='/')
             img(src='/images/MQTT-Logo.png', style='height:100%')
-        if (selected === 'default') || (selected === 'demo' && !login)
+        if (selected === 'default') || (selected === 'demo' && !login) || (selected === 'doc' && !login)
           .navbar-collapse.collapse.navbar-responsive-collapse
             ul#navigator.nav.navbar-nav.navbar-left
               li(data-menuanchor="homePage" class="active")
@@ -64,6 +67,8 @@ html
                 a(href='/#contactPage') Contact
             ul.nav.navbar-nav.navbar-right
               li
+                a(href='/doc') Doc
+              li
                 a#webdemo(href='/demo') WebSocket Demo
               li
                 if !session || !session.email
@@ -75,7 +80,7 @@ html
                     a.btn-raised.btn-material-green.btn-navbar.btn-nav(href='/loginPage') LOG IN
                 else
                     a.btn-raised.btn-material-green.btn-navbar.btn-nav(href='/user') LOG IN
-        else if (selected === 'demo' && login)
+        else if ((selected === 'demo' || selected === 'doc') && login)
           .navbar-collapse.collapse.navbar-responsive-collapse
             ul.nav.navbar-nav.navbar-right
               li.dropdown
@@ -87,7 +92,7 @@ html
                   li
                     a(href='/demo') WebSocket
                   li
-                    a(href='javascript:void(0)') Doc
+                    a(href='/doc') Doc
                   li
                     a(href='/pricing') Pricing & Plan
                   li
@@ -120,3 +125,4 @@ html
           responsiveHeight: 300
         });
       });
+        

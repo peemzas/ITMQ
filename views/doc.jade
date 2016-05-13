@@ -1,0 +1,407 @@
+extends layout
+
+block link
+  -var selected = 'doc';
+  if !session.email
+    -var login = false;
+  else
+    -var login = true;
+
+block content
+  .container.container-main.container-demo.th-font.padding-nav
+    .col-sm-3.col-xs-0
+      #sidebar.nav.nav-pills.nav-stacked.sidebar.en-font
+        li(class="active")
+          a(href='#arduino') Arduino & NodeMCU
+        li
+          a(href='#python') Python
+        li
+          a(href='#node') NodeJS
+        li
+          a(href='#websocket') WebSocket Example
+        //- li.dropdown
+        //-   a.dropdown-toggle(data-toggle='dropdown', href='bootstrap-elements.html', data-target='#', aria-expanded='false')
+        //-     | Dropdown 
+        //-     span.caret
+        //-   ul.dropdown-menu
+        //-     li
+        //-       a(href='javascript:void(0)') Action
+        //-     li
+        //-       a(href='javascript:void(0)') Another action
+        //-     li
+        //-       a(href='javascript:void(0)') Something else here
+        //-     li.divider
+        //-     li
+        //-       a(href='javascript:void(0)') Separated link
+    .col-sm-9
+      h1 Get Started
+
+      //- Arduino
+      #arduino
+      h3 Arduino & NodeMCU
+      span.doc &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arduino มี Library สำหรับการ Publish/Subscribe ผ่าน MQTT Protocol ชื่อว่า  
+      a.doc(href="https://github.com/knolleary/pubsubclient") pubsubclient
+      br
+      br
+      h4 Arduino Ethernet Shield
+      span.doc &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arduino UNO Board + Ethernet Shield สำหรับการเชื่อมต่อ ใช้ผ่าน library 
+      a.doc(href="https://github.com/knolleary/pubsubclient") pubsubclient
+      br
+      br
+      span.doc Ex. username for broker/your topic
+      pre.code-height
+        code.language-cpp
+          | #include &lt;SPI.h&gt;
+          | #include &lt;Ethernet.h&gt;
+          | #include &lt;PubSubClient.h&gt;
+          |  
+          | char* inTopic = "itmqTopic";
+          | char* outTopic = "itmqTopic";
+          | char* clientId = "your client id";
+          | char* payload = "test message";
+          | char MQTT_SERVER[]="neutron.it.kmitl.ac.th";
+          |  
+          | const char* userBroker   = "username for broker";
+          | const char* passBroker = "password for broker";
+          |  
+          | byte mac[] = { 0x00, 0x19, 0xB9, 0x46, 0xAF, 0x5B };  //กำหนด Mac Address
+          |  
+          | EthernetClient ethClient; // Ethernet object
+          | PubSubClient client( MQTT_SERVER, port, 0, ethClient);  //port ==&gt; 8883 (Authentication Broker) and 1883 (Public Broker)
+          |  
+          | //เป็น callback function ที่ทำหลังจากที่มีข้อมูลเข้ามาตามที่ได้ subscribe ไว้
+          | void callback(char* topic, byte* payload, unsigned int length) {
+          |   Serial.println(topic);
+          |   Serial.print("] ");
+          |   for (int i = 0; i &lt; length; i++) {
+          |     Serial.print((char)payload[i]);
+          |   }
+          |   Serial.println();
+          | }
+          |   
+          | void setup() {
+          |   Serial.begin(9600);
+          |   Serial.println("Net begin");
+          |  
+          |   if (Ethernet.begin(mac) == 0) // Get connected!
+          |   {
+          |     Serial.println("Failed to configure Ethernet using DHCP");
+          |     return;
+          |   }
+          |   
+          |   Serial.print("IP: "); // A little debug.. show IP address
+          |   Serial.println(Ethernet.localIP());
+          |   
+          |   if (client.connect(clientId, userBroker, passBroker)) { // userBroker and passBroker are optional for Public Broker
+          |     Serial.println("Successfully connected with MQTT");
+          |     client.subscribe(inTopic); // Subcription
+          |     client.publish(outTopic, payload); // publish
+          |   } else {
+          |     Serial.println("cant connected with MQTT");
+          |   }
+          |   client.setCallback(callback);
+          | }
+          |  
+          | void loop() {
+          |   client.publish(outTopic, payload);
+          |   delay(5000);
+          | }
+      span.doc *** ถ้าเป็น Authentication Broker ในส่วนของ topic ในการ publish และ subscribe นั้นจะต้องใส่ username for broker ก่อนแล้วตามด้วย topic ( คั่นด้วย / )
+      br
+      br
+      h4 NodeMCU & ESP8266 WiFi Module
+      span.doc &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arduino UNO Board + ESP8266 Module and ESP8266 NodeMCU สำหรับการติดตั้ง Arduino IDE ลงบน ESP8266 NodeMCU สามารถดูได้ 
+      a.doc(href="http://www.thaieasyelec.com/article-wiki/embedded-electronics-application/getting-started-with-esp8266-nodemcu.html") ที่นี่
+      br
+      br
+      span.doc Ex. username for broker/your topic
+      pre.code-height
+        code.language-cpp
+          | #include &lt;PubSubClient.h&gt;
+          | #include &lt;ESP8266WiFi.h&gt;
+          |  
+          | const char* ssid     = "Your WIfi ssid";
+          | const char* password = "Your WIfi password";
+          |  
+          | char* inTopic = "itmqTopic";
+          | char* outTopic = "itmqTopic";
+          | char* clientId = "your client id";
+          | char* payload = "test message";
+          |  
+          | char MQTT_SERVER[] = "neutron.it.kmitl.ac.th";
+          |  
+          | WiFiClient espClient;
+          | PubSubClient client( MQTT_SERVER, port, 0, espClient);  //port ==&gt; 8883 (Authentication Broker) and 1883 (Public Broker)
+          |  
+          | const char* userBroker   = "username for broker";
+          | const char* passBroker = "password for broker";
+          |  
+          | //เป็น callback function ที่ทำหลังจากที่มีข้อมูลเข้ามาตามที่ได้ subscribe ไว้
+          | void callback (char* topic, byte* payload, unsigned int length) {
+          |   Serial.println(topic);
+          |   Serial.print("] ");
+          |   for (int i = 0; i &lt; length; i++) {
+          |     Serial.print((char)payload[i]);
+          |   }
+          |   Serial.println();
+          | }
+          |  
+          | void setup() {
+          |   Serial.begin(115200);
+          |   delay(10);
+          |  
+          |   Serial.println();
+          |   Serial.println();
+          |   Serial.print("Connecting to ");
+          |   Serial.println(ssid);
+          |  
+          |   WiFi.begin(ssid, password);
+          |  
+          |   while (WiFi.status() != WL_CONNECTED) {
+          |     delay(500);
+          |     Serial.print(".");
+          |   }
+          |  
+          |   Serial.println("");
+          |   Serial.println("WiFi connected");  
+          |   Serial.println("IP address: ");
+          |   Serial.println(WiFi.localIP());
+          |  
+          |   if (client.connect(clientId, userBroker, passBroker)) { // userBroker and passBroker are optional for Public Broker
+          |     Serial.println("Successfully connected with MQTT");
+          |     client.subscribe(inTopic); // Subcription
+          |     client.publish(outTopic, payload); // publish
+          |   } else {
+          |     Serial.println("cant connected with MQTT");
+          |   }
+          |  
+          |   client.setCallback(callback);
+          | }
+          |  
+          | void loop() {
+          |   client.publish(outTopic, payload);
+          |   delay(5000);
+          |  }
+      span.doc *** ถ้าเป็น Authentication Broker ในส่วนของ topic ในการ publish และ subscribe นั้นจะต้องใส่ username for broker ก่อนแล้วตามด้วย topic ( คั่นด้วย / )
+      hr(style="background: #4d4d4d; margin-bottom: 60px;")
+
+      //- Python
+      #python
+      h3 Python
+      span.doc &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Library ที่เหมาะสำหรับ MQTT client ในภาษา Python คือ paho-mqtt ซึ่ง paho-mqtt จะมีฟังก์ชั่นสำหรับการ publish และ subscribe ที่เข้าใจได้ง่าย ง่ายต่อการใช้งาน ดูรายละเอียดและวิธีการใช้งาน paho-mqtt ได้ 
+      a.doc(href="https://eclipse.org/paho/clients/python/") ที่นี่
+      br
+      span.doc &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;บอร์ด Raspberry Pi สามารถใช้ภาษา Python ในการพัฒนาเป็น MQTT Client
+      br
+      br
+      span.doc Ex. username for broker/your topic
+      pre.code-height
+        code.language-python
+          | import paho.mqtt.client as mqtt
+          |  
+          | #เป็น callback function ที่ทำหลังจาก client ได้รับการตอบกลับจาก broker เมื่อเชื่อมต่อสำเร็จ
+          | def on_connect(client, userdata, flags, rc):
+          |   print("connected with the result code "+str(rc))
+          |   mqttc.subscribe("itmqTopic") #ทำการ subscribe ทันทีเมื่อเชื่อมต่อสำเร็จ
+          |  
+          | #เป็น callback function ที่ทำหลังจากที่มีข้อมูลเข้ามาตามที่ได้ subscribe ไว้
+          | def on_message(client, userdata, msg):
+          |   print(msg.topic+" "+str(msg.payload))
+          |  
+          | #เป็น callback function ที่ทำหลังจาก client ได้ทำการ publish ข้อมูลไปยัง broker
+          | def on_publish(client, userdata, mid):
+          |   print("message published")
+          |      
+          | client = mqtt.Client(clientId)
+          |  
+          | client.on_connect = on_connect
+          | client.on_message = on_message
+          | client.on_publish = on_publish
+          | client.username_pw_set(username for broker, password for broker)
+          |  
+          | client.connect("node.it.kmitl.ac.th", port) #port ==&gt; 8883 (Authentication Broker) and 1883 (Public Broker)
+          |  
+          | client.publish("itmqTopic","Hello ITMQ")
+          |  
+          | client.loop_forever()
+      span.doc *** ถ้าเป็น Authentication Broker ในส่วนของ topic ในการ publish และ subscribe นั้นจะต้องใส่ username for broker ก่อนแล้วตามด้วย topic ( คั่นด้วย / )
+      hr(style="background: #4d4d4d; margin-bottom: 60px;")
+
+      //- NodeJS
+      #node
+      h3 NodeJS
+      span.doc &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;npm ที่เหมาะสำหรับการใช้ MQTT Protocol คือ MQTT.jsสามารถดูวิธีการใช้งานได้ 
+      a.doc(href="https://www.npmjs.com/package/mqtt") ที่นี่
+      br
+      br
+      span.doc Ex. username for broker/your topic
+      pre.code-height
+        code.language-javascript
+          | var mqtt    = require('mqtt');
+          |  
+          | var options = {
+          |   clientId: Your Client Id,
+          |   host: 'neutron.it.kmitl.ac.th',
+          |   port: port, // 8883 (Authentication Broker) and 1883 (Public Broker)
+          |   username: username for Broker,  // Optional for Public Broker 
+          |   password: password for Broker   // Optional for Public Broker 
+          | };
+          |  
+          | var client  = mqtt.connect(options);
+          |   
+          | client.on('connect', function () { // เมื่อทำการเชื่อต่อสำเร็จ
+          |   client.subscribe('itmqTopic');
+          |   client.publish('itmqTopic', 'Hello ITMQ');
+          | });
+          |   
+          | //  เมื่อมีขอมูลเข้ามา  สามารถนำข้อมูลนั้นมาใช้ต่อได้
+          | client.on('message', function(topic, message, packet) {
+          |   console.log("Received '" + message + "' on '" + topic + "'");
+          | });
+      span.doc *** ถ้าเป็น Authentication Broker ในส่วนของ topic ในการ publish และ subscribe นั้นจะต้องใส่ username for broker ก่อนแล้วตามด้วย topic ( คั่นด้วย / )
+      hr(style="background: #4d4d4d; margin-bottom: 60px;")
+
+      //- WebSocket
+      #websocket
+      h3 WebSocket Example
+      span.doc &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ITMQ รองรับการใช้งาน MQTT ใน WebSockets ซึ่งคุณสามารถรับข้อมูลของคุณจากอุปกรณ์ หรือส่งข้อมูลไปยังอุปกรณ์ของคุณได้ และสามารถนำมาแสดงผลบนเว็บได้ทันที โดย Paho JavaScript Client เป็น Library ที่สามารถทำให้เว็บเบราว์เซอร์เชื่อต่อไปยัง MQTT Broker สามารถดูรายละเอียดและวิธีการใช้งาน Paho JavaScript Client ได้ 
+      a.doc(href="https://eclipse.org/paho/clients/js/") ที่นี่
+      br
+      br
+      span.doc Ex. username for broker/your topic
+      pre.code-height
+        code.language-javascript
+          | &lt;script src="mqttws31.js" type="text/javascript"&gt;&lt;/script&gt;
+          | &lt;script type="text/javascript"&gt;
+          |  
+          | // เริ่มสร้าง client
+          | client = new Paho.MQTT.Client("host", port,"client_id"); 
+          | // เช่น   client = new Paho.MQTT.Client("neutron.it.kmitl.ac.th", port, Your Client Id);
+          | //Websockets จะเปิดให้ใช้บริการบนพอร์ต  8884 (Authentication Broker) and 1884 (Public Broker)
+          |  
+          | // ตั้งค่า callback ฟังก์ชั่น
+          | client.onConnectionLost = onConnectionLost;
+          | client.onMessageArrived = onMessageArrived;
+          |   
+          | // ตั้งค่าข้อมูลของ Client ที่จะทำการเชื่อมต่อ
+          | var options = {
+          |   useSSL: false,
+          |   userName: "username for Broker", // Optional for Public Broker 
+          |   password: "password for Broker", // Optional for Public Broker 
+          |   onSuccess:onConnect,
+          |   onFailure:doFail
+          | }
+          |   
+          | // เชิ่อมต่อ Client ไปยัง Broker
+          | client.connect(options);
+          |   
+          | // เรียกฟังก์ชั่นตอน Client เชื่อมต่อสำเร็จ
+          | function onConnect() { // Client ทำการ ติดตาม (subscribe)และ ส่งข้อมูล (publish)
+          |   console.log("onConnect");
+          |   client.subscribe("itmqTopic");
+          |   message = new Paho.MQTT.Message("Hello ITMQ");
+          |   message.destinationName = "itmqTopic";
+          |   client.send(message); 
+          | }
+          |   
+          | function doFail(e) {
+          |   console.log(e);
+          | }
+          |   
+          | // เรียกฟังก์ชั่นตอน Client ขาดการเชื่อมต่อจาก Broker
+          | function onConnectionLost(responseObject) {
+          |   if (responseObject.errorCode !== 0) {
+          |     console.log("onConnectionLost:"+responseObject.errorMessage);
+          |   }
+          | }
+          |   
+          | // เรียกฟังก์ชั่นตอน Client ได้รับข้อมูล หรือมีข้อมูลส่งมาตามที่ได้ ติดตาม(subscribe)ไว้
+          | function onMessageArrived(message) {
+          |   console.log("onMessageArrived:"+message.payloadString);
+          | }
+          | &lt;/script&gt;
+      span.doc *** ถ้าเป็น Authentication Broker ในส่วนของ topic ในการ publish และ subscribe นั้นจะต้องใส่ username for broker ก่อนแล้วตามด้วย topic ( คั่นด้วย / )
+      hr(style="background: #4d4d4d; margin-bottom: 60px;")
+  script(src='/prism/prism.js')
+  script.
+    //- $(function() {
+    //-   var $sidebar   = $("#sidebar"), 
+    //-       $window    = $(window),
+    //-       offset     = $sidebar.offset(),
+    //-       topPadding = 100;
+
+    //-   $window.scroll(function() {
+    //-       if ($window.scrollTop() > offset.top) {
+    //-           $sidebar.stop().animate({
+    //-               marginTop: $window.scrollTop() - offset.top + topPadding
+    //-           });
+    //-       } else {
+    //-           $sidebar.stop().animate({
+    //-               marginTop: 0
+    //-           });
+    //-     }
+    //-   });
+    //- });
+
+    //- function goToByScroll(id){
+    //-   // Remove "link" from the ID
+    //-   id = id.replace("link", "");
+    //-   // Scroll
+    //-   $('html,body').animate({
+    //-       scrollTop: $("#"+id).offset().top - 70},
+    //-       'slow');
+    //- }
+    $(function () {
+      $(document).on("scroll", onScroll);
+      
+      //smoothscroll
+      $('a[href^="#"]').on('click', function (e) {
+          e.preventDefault();
+          $(document).off("scroll");
+          
+          $('li').each(function () {
+              $(this).removeClass('active');
+          })
+          $(this).parent().addClass('active');
+        
+          var target = this.hash,
+              menu = target;
+          $target = $(target);
+          $('html, body').stop().animate({
+              'scrollTop': $target.offset().top-70
+          }, 500, 'swing', function () {
+              window.location.hash = target;
+              $(document).on("scroll", onScroll);
+          });
+      });
+    });
+
+    function onScroll(event){
+      var scrollPos = $(document).scrollTop();
+      $('#sidebar a').each(function () {
+          var currLink = $(this);
+          var refElement = $(currLink.attr("href"));
+          //- console.log( refElement.position().top + refElement.height() > scrollPos)
+          if (refElement.position().top <= scrollPos) {
+              $('#sidebar li').removeClass("active");
+              currLink.parent().addClass("active");
+              //- console.log("aa")
+          }
+          else{
+              currLink.parent().removeClass("active");
+
+
+          }
+      });
+      if($($('#sidebar a').first().attr("href")).position().top > scrollPos){
+        $('#sidebar li').removeClass("active");
+        $('#sidebar li').first().addClass("active");
+
+      }
+      if($(window).scrollTop() + $(window).height() == $(document).height()) {
+
+        $('#sidebar li').removeClass("active");
+        $('#sidebar li').last().addClass("active");
+
+      }
+    }

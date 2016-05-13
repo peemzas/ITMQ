@@ -75,14 +75,14 @@ block content
               p.p-demo-head.break-word Publish to (Host: neutron.it.kmitl.ac.th Port: 1883)
             form
               //- .col-md-6
-              .col-md-10
+              .col-md-12
                 label Topic
                 input#publishTopic.form-control(type='text', value='TestTopic')
-              .col-md-2
-                label(for='publishQoSInput') QoS
-                select#publishQoSInput.form-control.hidden-field()
-                  option(value=0) 0
-                  option(value=1) 1
+              //- .col-md-2
+              //-   label(for='publishQoSInput') QoS
+              //-   select#publishQoSInput.form-control.hidden-field()
+              //-     option(value=0) 0
+              //-     option(value=1) 1
                 br
               //- .col-md-2
               //-   label Retain
@@ -108,11 +108,11 @@ block content
               label Topic
               input#subscribeTopic.form-control(type='text', value='TestTopic')
               br
-             .col-md-4
-              label QoS  
-              select#subscribeQoSInput.form-control.hidden-field()
-                  option(value=0) 0
-                  option(value=1) 1
+             //- .col-md-4
+             //-  label QoS  
+             //-  select#subscribeQoSInput.form-control.hidden-field()
+             //-      option(value=0) 0
+             //-      option(value=1) 1
             .col-md-12.text-center(style='padding: 10px; padding-bottom: 20px')
               a#addSubButton.btn-homegreen Add New Topic Subscription
               //- a#addSubButton.small.button.addSubButton(href='#data') Add New Topic Subscription
