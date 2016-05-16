@@ -134,7 +134,7 @@ block content
       var unSubTopic = element.next().find(".topic").text();
       if (confirm("Do you want to unsubscribe?") == true) {
           element.parent().parent().remove();
-          client.unsubscribe("#{usernameBroker}/"+unSubTopic);
+          client.unsubscribe(unSubTopic);
           subscribed.splice(subscribed.indexOf(unSubTopic), 1);
           console.log(unSubTopic);
       }
