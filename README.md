@@ -1,4 +1,4 @@
-# MQTT_Broker
+# ITMQ
 Senior Project : ITMQ
 
 This project is a web client side to use for IoT technology.
